@@ -2052,7 +2052,7 @@ TuyaHomeSdk.getTimerManagerInstance().getAllTimerWithDeviceId(mDevId, new IGetAl
 
 ```java
 //创建群组
-TuyaGroup.getGroupInstance().createNewGroup("productId", "name", devIds, new ICreateGroupCallback() {
+TuyaHomeSdk.newHomeInstance("homeId").createNewGroup("productId", "name", devIds, new ICreateGroupCallback() {
     @Override
     public void onSuccess(long groupId) {
 //返回groupId
@@ -2079,14 +2079,14 @@ TuyaGroup.getGroupInstance().createNewGroup("productId", "name", devIds, new ICr
 *
 * @param productId    产品id 可从 DeviceBean.getProductId获取
 * @param callback 回调
-TuyaGroup.getGroupInstance().getGroupDevList(String productId,IGetDevsFromGroupByPidCallback callback)
+TuyaHomeSdk.newHomeInstance("homeId").getGroupDevList(String productId,IGetDevsFromGroupByPidCallback callback)
 ```
 
 ##### 【代码范例】
 
 ```java
 //云端获取群组列表
-TuyaGroup.getGroupInstance().getGroupDevList("productId", new IGetDevsFromGroupByPidCallback() {
+TuyaHomeSdk.newHomeInstance("homeId").queryDeviceListToAddGroup("productId", new IGetDevsFromGroupByPidCallback() {
     @Override
     public void onSuccess(List<GroupDeviceBean> bizResult) {
 
@@ -2106,7 +2106,7 @@ TuyaGroup.getGroupInstance().getGroupDevList("productId", new IGetDevsFromGroupB
 ```java
 * 群组实例化
 * @param groupId 群组Id
-ITuyaGroup mITuyaGroup= TuyaHomeGroup(groupId);
+ITuyaGroup mITuyaGroup= TuyaHomeSdk.newGroupInstance(groupId);
 ```
 
 #### (1) 群组修改名称
