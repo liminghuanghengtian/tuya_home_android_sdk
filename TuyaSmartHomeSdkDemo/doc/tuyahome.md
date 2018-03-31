@@ -297,7 +297,7 @@ TuyaHomeSdk.getUserInstance().loginWithPhone(String countryCode, String phone, S
 
 ```java
 //获取手机验证码
-TuyaUser.getUserInstance.getValidateCode("86","13666666666", new IValidateCallback(){
+TuyaHomeSdk.getUserInstance().getValidateCode("86","13666666666", new IValidateCallback(){
     @Override
     public void onSuccess() {
         Toast.makeText(mContext, "获取验证码成功", Toast.LENGTH_SHORT).show();
