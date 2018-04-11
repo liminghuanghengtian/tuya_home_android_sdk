@@ -1218,12 +1218,12 @@ IDevListener.onDpUpdate(String devId,String dpStr)
 ##### 【方法调用】
 ```java
 //重命名
-mDevice.renameGw(String name,IControlCallback callback);
+mDevice.renameDevice(String name,IControlCallback callback);
 ```
 ##### 【代码范例】
 
 ```java
-mDevice.renameGw("设备名称", new IControlCallback() {
+mDevice.renameDevice("设备名称", new IControlCallback() {
     @Override
     public void onError(String code, String error) {
         //重命名失败
