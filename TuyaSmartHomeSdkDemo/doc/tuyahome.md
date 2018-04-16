@@ -968,19 +968,13 @@ TuyaGwSubDevActivatorBuilder builder = new TuyaGwSubDevActivatorBuilder()
 ### 6.1 设备信息获取
 ##### 【描述】
 
-涂鸦智能提供了丰富的接口供开发者实现设备信息的获取和管理能力(移除等)。设备相关的返回数据都采用异步消息的方式通知接受者。我们采用了EventBus的方案来实现消息通知。因此在每个设备操作页面都需要注册和销毁通知对象。具体请参考demo实现。
+涂鸦智能提供了丰富的接口供开发者实现设备信息的获取和管理能力(移除等)。设备相关的返回数据都采用异步消息的方式通知接受者.
 
-##### 【方法调用】
-
-```java
-
-```
 
 ##### 【注意事项】
 
 
 * schema dp数据相关介绍[详见功能点相关概念][3]
-* 分享设备是不能被删除的
 
 ---
 
@@ -1195,7 +1189,7 @@ mDevice.onDestroy();
 ##### 【方法调用】
 
 ```java
-mDevice.getDp(String dpId, IControlCallback callback);
+mDevice.getDp(String dpId, IResultCallback callback);
 ```
 ##### 【代码范例】
 
@@ -1218,12 +1212,12 @@ IDevListener.onDpUpdate(String devId,String dpStr)
 ##### 【方法调用】
 ```java
 //重命名
-mDevice.renameDevice(String name,IControlCallback callback);
+mDevice.renameDevice(String name,IResultCallback callback);
 ```
 ##### 【代码范例】
 
 ```java
-mDevice.renameDevice("设备名称", new IControlCallback() {
+mDevice.renameDevice("设备名称", new IResultCallback() {
     @Override
     public void onError(String code, String error) {
         //重命名失败
@@ -1285,11 +1279,11 @@ mDevice.getDataPointStat(DataPointTypeEnum.DAY, startTime, number, dpId, new IGe
  *
  * @param callback
  */
-void removeDevice(IControlCallback callback);
+void removeDevice(IResultCallback callback);
 ```
 ##### 【代码范例】
 ```java
-mDevice.removeDevice(new IControlCallback() {
+mDevice.removeDevice(new IResultCallback() {
     @Override
     public void onError(String errorCode, String errorMsg) {
     }
@@ -3798,6 +3792,7 @@ public interface ITuyaHomeChangeListener {
 ### 14.3 房间管理类
 ITuyaRoom 提供房间的管理类，负责房间的新增、删除设备或群组
 可以通过 TuyaHomeSdk.newRoomInstance() 去创建
+
 ```
 
 
@@ -3861,6 +3856,7 @@ ITuyaRoom 提供房间的管理类，负责房间的新增、删除设备或群�
 ### 14.4 对家庭的缓存数据操作
 
 ```
+
 获取此数据前，应该调用家庭的初始化接口 getHomeDetail、或者getHomeLocalCache 之后才会有
 
 public interface ITuyaHomeDataManager {
@@ -3935,9 +3931,62 @@ public interface ITuyaHomeDataManager {
     HomeBean getHomeBean(long homeId);
 }
 
+```
+
+##15、网关
+
+网关类封装了ZigBee网关的相关操作，包括控制，查询子设备，监听子设备状态等。
+可以通过TuyaHomeSdk.newGatewayInstance()去初始化网关。
 
 ```
 
+public interface ITuyaGateway {
+    /**
+     * 发送命令
+     *
+     * @param dps
+     * @param callback
+     */
+    void publishDps(String localId, String dps, IResultCallback callback);
+
+    /**
+     * 广播控制设备
+     *
+     * @param dps
+     * @param callback
+     */
+    void broadcastDps(String dps, IResultCallback callback);
+
+    /**
+     * 组播控制设备
+     *
+     * @param localId
+     * @param dps
+     * @param callback
+     */
+    void multicastDps(String localId, String dps, IResultCallback callback);
+
+    /**
+     * 获取网关子设备
+     *
+     * @param callback
+     */
+    void getSubDevList(ITuyaDataCallback<List<DeviceBean>> callback);
+
+    /**
+     * 注册子设备信息变更
+     *
+     * @param listener
+     */
+    void registerSubDevListener(ISubDevListener listener);
+
+    /**
+     * 注销子设备信息变更
+     */
+    void unRegisterSubDevListener();
+}
+
+```
 
 ---
 
