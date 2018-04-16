@@ -3933,7 +3933,7 @@ public interface ITuyaHomeDataManager {
 
 ```
 
-##15、网关
+## 15、网关
 
 网关类封装了ZigBee网关的相关操作，包括控制，查询子设备，监听子设备状态等。
 可以通过TuyaHomeSdk.newGatewayInstance()去初始化网关。
