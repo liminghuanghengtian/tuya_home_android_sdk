@@ -641,13 +641,13 @@ TuyaHomeSdk.getUserInstance().loginWithUid("86", "1234", "123456", new ILoginCal
 * @param uid         用户uid
 * @param passwd      用户密码
 * @param callback    uid 登陆回调接口
-TuyaHomeSdk.getUserInstance().loginWithUidOrRegister(String countryCode, String uid, String passwd, ILoginCallback callback);
+TuyaHomeSdk.getUserInstance().loginOrRegisterWithUid(String countryCode, String uid, String passwd, ILoginCallback callback);
 ```
 ##### 【代码范例】
 
 ```java
 //uid登陆
-TuyaHomeSdk.getUserInstance().loginWithUidOrRegister("86", "1234", "123456", new ILoginCallback() {
+TuyaHomeSdk.getUserInstance().loginOrRegisterWithUid("86", "1234", "123456", new ILoginCallback() {
     @Override
     public void onSuccess(User user) {
         Toast.makeText(mContext, "登录成功，用户名：" , Toast.LENGTH_SHORT).show();
