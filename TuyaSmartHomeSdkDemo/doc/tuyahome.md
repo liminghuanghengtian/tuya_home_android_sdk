@@ -619,7 +619,36 @@ TuyaHomeSdk.getUserInstance().loginWithUid("86", "1234", "123456", new ILoginCal
     @Override
     public void onError(String code, String error) {
         Toast.makeText(mContext, "code: " + code + "error:" + error, Toast.LENGTH_SHORT).show();
-    }    @Override
+    }
+});
+```
+#### (3) 用户uid重置密码
+##### 【描述】
+
+用户uid重置密码，需要通过云云对接的方式进行重置密码。详看云端API文档
+
+
+
+#### (4) 用户uid登陆注册接口
+##### 【描述】
+
+用户UID 登陆注册合成一个接口。
+##### 【方法调用】
+
+```java
+//uid 登陆
+* @param countryCode 国家号码
+* @param uid         用户uid
+* @param passwd      用户密码
+* @param callback    uid 登陆回调接口
+TuyaHomeSdk.getUserInstance().loginWithUidOrRegister(String countryCode, String uid, String passwd, ILoginCallback callback);
+```
+##### 【代码范例】
+
+```java
+//uid登陆
+TuyaHomeSdk.getUserInstance().loginWithUidOrRegister("86", "1234", "123456", new ILoginCallback() {
+    @Override
     public void onSuccess(User user) {
         Toast.makeText(mContext, "登录成功，用户名：" , Toast.LENGTH_SHORT).show();
     }
@@ -630,36 +659,6 @@ TuyaHomeSdk.getUserInstance().loginWithUid("86", "1234", "123456", new ILoginCal
     }
 });
 ```
-#### (3) 用户uid重置密码
-##### 【描述】
-
-用户uid重置密码
-##### 【方法调用】
-
-```java
-//用户uid重置密码
-* @param countryCode 国家号码
-* @param uid         用户uid
-* @param passwd      用户密码
-* @param callback    重置UID 密码回调接口
-TuyaHomeSdk.getUserInstance().resetUidPassword(String countryCode, String uid, String passwd, IResetPasswordCallback callback);
-```
-##### 【代码范例】
-
-```java
-//重置uid密码
-TuyaHomeSdk.getUserInstance().resetUidPassword("86", "1234", "123456", new IResetPasswordCallback() {
-    @Override
-    public void onSuccess() {
-        Toast.makeText(mContext, "重置密码成功", Toast.LENGTH_SHORT).show();
-    }
-    @Override
-    public void onError(String code, String error) {
-        Toast.makeText(mContext, "code: " + code + "error:" + error, Toast.LENGTH_SHORT).show();
-    }
-});
-```
-
 ### 4.5 上传用户头像
 上传用户的头像。
 ##### 【描述】
@@ -2033,7 +2032,7 @@ TuyaHomeSdk.getTimerManagerInstance().getAllTimerWithDeviceId(mDevId, new IGetAl
 ### 9.1 创建群组
 ##### 【描述】
 
-涂鸦智能提供一些设备群组控制的接口。
+涂鸦智能提供一些设备群组控制的接口。这里的群组控制是指WiFi群组，目前只有群控的功能。群组功能默认关闭，如果需要开通群组功能，联系我们业务人员
 
 ##### 【方法调用】
 
