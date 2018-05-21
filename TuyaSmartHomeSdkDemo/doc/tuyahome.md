@@ -1605,6 +1605,71 @@ TuyaHomeSdk.getDeviceShareInstance().getReceivedShareInfo(memberId, new ITuyaRes
     }
 });
 ```
+#### (7) 邀请分享
+
+##### 【描述】
+
+可分享给未注册用户
+
+##### 【方法调用】
+
+```java
+
+ @param devId       分享的设备id
+ @param userAccount 账户
+ @param countryCode 国家码
+ @param callback    返回分享id
+void inviteShare(String devId, String userAccount, String countryCode, ITuyaResultCallback<Integer> callback);
+
+```
+
+##### 【代码范例】
+
+```java
+
+TuyaHomeSdk.getDeviceShareInstance().inviteShare(String devId, String userAccount, String countryCode, new ITuyaResultCallback<Integer>() {
+    @Override
+    public void onError(String code, String error) {
+        
+    }
+
+    @Override
+    public void onSuccess(Integer shareId) {
+       // shareId 用于邀请分享确认的参数
+    }
+});
+```
+
+#### (8) 邀请分享确认
+
+##### 【描述】
+
+可分享给未注册用户
+
+##### 【方法调用】
+
+```java
+
+@param shareId  分享id 从邀请分享接口那里可获取该参数
+void confirmShareInviteShare(int shareId, final IResultCallback callback);
+
+```
+
+##### 【代码范例】
+
+```java
+TuyaHomeSdk.getDeviceShareInstance().confirmShareInviteShare(int shareId, new IResultCallback() {
+    @Override
+    public void onError(String code, String error) {
+        
+    }
+
+    @Override
+    public void onSuccess() {
+
+    }
+});
+```
 
 
 ### 7.3 移除分享
