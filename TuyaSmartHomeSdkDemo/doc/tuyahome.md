@@ -6,7 +6,7 @@ published: true
 # 涂鸦全屋智能Android SDK 接入指南
 
 
-## 1.功能概述
+## 功能概述
 涂鸦全屋智能SDK提供了以家庭为单位，对硬件设备、涂鸦云通讯的接口封装，加速应用开发过程，主要包括了以下功能：
 
 - 硬件设备相关（配网、控制、状态上报、定时任务、群组、固件升级、共享）
@@ -19,7 +19,7 @@ published: true
 
 ---
 
-## 2.集成准备
+## 集成准备
 
 ### 获取App ID和App Secret
 
@@ -29,8 +29,8 @@ published: true
 
 ---
 
-## 3.集成SDK
-### 3.1 集成准备
+## 集成SDK
+### 集成准备
 #### （1）创建工程
 
 在Android Studio中建立你的工程。
@@ -200,7 +200,7 @@ public void onEvent*(**);
 ```
 
 
-### 3.2 在代码中使用SDK功能
+### 在代码中使用SDK功能
 
 	TuyaHomeSdk 是一切全屋智能API对外的接口，包含：配网、初始化、控制、房间、群组、ZigBee等一系列的操作。
 #### (1) Application中初始化涂鸦智能sdk。
@@ -270,8 +270,8 @@ public class TuyaSmartApp extends Application {
 
 
 
-## 4.用户管理
-### 4.1 用户手机验证码登陆
+## 用户管理
+### 用户手机验证码登陆
 
 涂鸦智能提供手机验证码登陆体系。
 #### (1)手机验证码登陆
@@ -320,7 +320,7 @@ TuyaHomeSdk.getUserInstance().loginWithPhone("86", "13355555555", "123456", new 
     }
 });
 ```
-### 4.2 用户手机密码登陆
+### 用户手机密码登陆
 
 涂鸦智能提供手机密码登陆体系。
 #### (1)手机密码注册
@@ -449,7 +449,7 @@ TuyaHomeSdk.getUserInstance().resetPhonePassword("86", "13555555555", "123456", 
     }
 });
 ```
-### 4.3 用户邮箱密码登陆
+### 用户邮箱密码登陆
 涂鸦智能提供邮箱密码登陆体系。
 #### (1) 用户邮箱密码注册
 ##### 【描述】
@@ -560,7 +560,7 @@ TuyaHomeSdk.getUserInstance().resetEmailPassword("86", "123456@123.com", "123123
     }
 });
 ```
-### 4.4 用户uid登陆体系
+### 用户uid登陆体系
 涂鸦智能提供uid登陆体系。如果客户自有用户体系，那么可以通过uid登陆体系，接入我们的sdk。
 #### (1) 用户uid注册
 
@@ -659,7 +659,7 @@ TuyaHomeSdk.getUserInstance().loginOrRegisterWithUid("86", "1234", "123456", new
     }
 });
 ```
-### 4.5 上传用户头像
+### 上传用户头像
 上传用户的头像。
 ##### 【描述】
 用于上传用户自定义的头像。
@@ -689,7 +689,7 @@ TuyaHomeSdk.getUserInstance().uploadUserAvatar(
 });
 ```
 
-### 4.6 退出登录接口
+### 退出登录接口
 
 用户账号切换的时候需要调用退出登录接口
 
@@ -707,7 +707,7 @@ TuyaHomeSdk.getUserInstance().uploadUserAvatar(
 
 ```
 
-### 4.7 数据模型
+### 数据模型
 用户相关的数据模型。
 
 #### User
@@ -721,7 +721,477 @@ TuyaHomeSdk.getUserInstance().uploadUserAvatar(
 * headPic 用户头像路径
 
 ----
-## 5.设备配网
+
+
+## 家庭
+
+
+### 家庭操作类
+
+ITuyaHome 提供了家庭相关的操作类，负责处理家庭的数据和信息的更新。
+ITuyaHome 需要通过TuyaHomeSdk.newHomeInstance(homeId) 初始化
+#### 初始化家庭下的所有数据
+
+```java 
+    void getHomeDetail(ITuyaHomeResultCallback callback);
+
+```
+
+#### 获取本地缓存中的数据信息 
+
+
+```java 
+	
+	获取家庭下面的本地cache
+    void getHomeLocalCache(ITuyaHomeResultCallback callback);
+
+```
+#### 更新家庭信息
+
+```java
+
+    /**
+     * 更新家庭信息
+     *
+     * @param name     家庭名称
+     * @param lon      当前家庭的经度
+     * @param lat      当前家庭的纬度
+     * @param geoName  地理位置的地址
+     * @param callback
+     */
+    void updateHome(String name, double lon, double lat, String geoName, IResultCallback callback);
+```
+
+#### 解散家庭
+
+```java
+	/**
+     * 解散家庭
+     *
+     * @param callback
+     */
+    void dismissHome(IResultCallback callback);
+
+```
+
+#### 排序
+
+```java
+
+    /**
+     * 排序
+     *
+     * @param idList homeId list 
+     * @param callback
+     */
+    void sortHome(List<Long> idList, IResultCallback callback);
+```
+
+#### 添加房间
+
+```java
+   /**
+     * 添加房间
+     *
+     * @param name
+     * @param callback
+     */
+    void addRoom(String name, ITuyaRoomResultCallback callback);
+```
+
+#### 移除家庭下面的房间
+
+```
+ /**
+     * 移除房间
+     *
+     * @param roomId
+     * @param callback
+     */
+    void removeRoom(long roomId, IResultCallback callback);
+
+```
+
+#### 排序家庭下面的房间
+
+```java
+
+ /**
+     * 排序房间
+     *
+     * @param idList   房间id的list
+     * @param callback
+     */
+    void sortRoom(List<Long> idList, IResultCallback callback);
+
+```
+
+#### 查询房间列表
+
+```java
+   /**
+     * 查询房间列表
+     *
+     * @param callback
+     */
+    void queryRoomList(ITuyaGetRoomListCallback callback);
+
+```
+
+#### Home下面添加成员
+
+```java
+    /**
+     * 给这个Home下面添加成员
+     *
+     * @param countryCode 国家码
+     * @param userAccount 用户名
+     * @param name        昵称
+     * @param admin       是否拥有管理员权限
+     * @param callback
+     */
+    void addMember(int countryCode, String userAccount, String name, boolean admin, ITuyaMemberResultCallback callback);
+
+```
+
+#### 移除Home下面的成员
+
+```java
+   /**
+     * 移除Home下面的成员
+     *
+     * @param id
+     * @param callback
+     */
+    void removeMember(long id, IResultCallback callback);
+```
+
+#### 查询Home下面的成员列表
+
+```java
+   /**
+     * 查询Home下面的成员列表
+     *
+     * @param callback
+     */
+    void queryMemberList(ITuyaGetMemberListCallback callback);
+```
+
+#### 创建群组
+
+```java
+    /**
+     * 创建群组
+     *
+     * @param productId 产品ID
+     * @param name      群组名称
+     * @param devIdList 设备ID List
+     * @param callback
+     */
+    void createGroup(String productId, String name, List<String> devIdList, final ITuyaResultCallback<Long> callback);
+
+```
+
+#### 根据设备查询房间信息
+```java
+    /**
+     * 根据设备查询房间信息
+     *
+     * @param deviceList
+     * @return
+     */
+    List<RoomBean> queryRoomInfoByDevice(List<DeviceBean> deviceList);
+```
+
+#### 监听家庭下面信息的变更
+```java
+
+    /**
+     * 监听家庭下面信息(设备的新增或者删除)变更的监听
+     *
+     * @param listener
+     */
+    void registerHomeStatusListener(ITuyaHomeStatusListener listener);
+    
+    
+public interface ITuyaHomeStatusListener {
+
+    /**
+     * 设备新增
+     * @param devId
+     */
+    void onDeviceAdded(String devId);
+
+    /**
+     * 设备删除
+     * @param devId
+     */
+    void onDeviceRemoved(String devId);
+
+}
+
+```
+#### 注销家庭下面信息变更的监听
+```java
+    /**
+     * 注销家庭下面信息变更的监听
+     *
+     * @param listener
+     */
+    void unRegisterHomeStatusListener(ITuyaHomeStatusListener listener);
+```
+
+#### 查询用户下面相同产品且支持群组的设备列表
+
+```java
+    void queryDeviceListToAddGroup(String productId, final ITuyaResultCallback<List<GroupDeviceBean>> callback);
+```
+
+#### 销毁
+```java
+    void onDestroy();
+```
+
+
+### 家庭管理类
+ITuyaHomeManager 提供了创建家庭、获取家庭列表以及监听家庭相关的变更
+
+可以通过TuyaHomeSdk.getHomeManagerInstance()获取
+#### 获取家庭列表
+
+```java
+
+/**
+     * @param callback
+     */
+    void queryHomeList(ITuyaGetHomeListCallback callback);
+```
+#### 创建家庭
+
+```java
+ /**
+     *
+     * @param name     家庭名称
+     * @param lon      经度
+     * @param lat      纬度
+     * @param geoName  家庭地理位置名称
+     * @param rooms    房间列表
+     * @param callback
+     */
+    void createHome(String name, double lon, double lat, String geoName, List<String> rooms, ITuyaHomeResultCallback callback);
+
+
+```
+
+#### 家庭信息的变更
+
+```
+
+	 /**
+     * 注册家庭信息的变更
+     * 有：家庭的增加、删除、信息变更、分享列表的变更和服务器连接成功的监听
+     *
+     * @param listener
+     */
+    void registerTuyaHomeChangeListener(ITuyaHomeChangeListener listener);
+    
+    
+    /**
+     * 注销家庭信息的变更
+     *
+     * @param listener
+     */
+    void unRegisterTuyaHomeChangeListener(ITuyaHomeChangeListener listener);
+    
+    
+public interface ITuyaHomeChangeListener {
+    /**
+     * 家庭添加成功
+     * 用于多设备数据同步
+     *
+     * @param homeId
+     */
+    void onHomeAdded(long homeId);
+
+    /**
+     * 家庭删除成功
+     * 用于多设备数据同步
+     *
+     * @param homeId
+     */
+    void onHomeRemoved(long homeId);
+
+    /**
+     * 家庭信息变更
+     * 用于多设备数据同步
+     *
+     * @param homeId
+     */
+    void onHomeInfoChanged(long homeId);
+
+    /**
+     * 分享设备列表变更
+     * 用于多设备数据同步
+     *
+     * @param sharedDeviceList
+     */
+    void onSharedDeviceList(List<DeviceBean> sharedDeviceList);
+
+    /**
+     *
+     * 手机连接涂鸦云服务器成功，特别注意接收到此通知，在一些情况下，本地数据与服务端数据可能会不一致，可以调用Home下面getHomeDetail接口重新刷新数据。
+     *
+     */
+    void onServerConnectSuccess();
+}
+```
+
+
+###  房间管理类
+ITuyaRoom 提供房间的管理类，负责房间的新增、删除设备或群组
+可以通过 TuyaHomeSdk.newRoomInstance() 去创建
+
+```
+
+
+    /**
+     * 更新房间名称
+     *
+     * @param name     新房间名称
+     * @param callback
+     */
+    void updateRoom(String name, IResultCallback callback);
+
+    /**
+     * 添加设备
+     *
+     * @param devId
+     * @param callback
+     */
+    void addDevice(String devId, IResultCallback callback);
+
+    /**
+     * 添加群组
+     *
+     * @param groupId
+     * @param callback
+     */
+    void addGroup(long groupId, IResultCallback callback);
+
+    /**
+     * 删除设备
+     *
+     * @param devId
+     * @param callback
+     */
+    void removeDevice(String devId, IResultCallback callback);
+
+    /**
+     * 删除群组
+     *
+     * @param groupId
+     * @param resultCallback
+     */
+    void removeGroup(Long groupId, IResultCallback resultCallback);
+
+    /**
+     * 把群组或者设备移除房间
+     *
+     * @param list
+     * @param callback
+     */
+    void moveDevGroupListFromRoom(List<DeviceAndGroupInRoomBean> list, IResultCallback callback);
+
+    /**
+     * 对房间里的群组或者设备进行排序
+     * @param list
+     * @param callback
+     */
+    void sortDevInRoom(List<DeviceAndGroupInRoomBean> list, IResultCallback callback);
+
+```
+
+### 对家庭的缓存数据操作
+
+```
+
+获取此数据前，应该调用家庭的初始化接口 getHomeDetail、或者getHomeLocalCache 之后才会有
+
+public interface ITuyaHomeDataManager {
+
+    /**
+     * 家庭下面的设备、群组、房间列表
+     */
+
+    List<RoomBean> getHomeRoomList(long homeId);
+
+    /**
+     * 获取家庭下面的设备列表
+     *
+     * @param homeId 家庭ID
+     * @return
+     */
+    List<DeviceBean> getHomeDeviceList(long homeId);
+
+    /**
+     * 获取家庭下面的群组列表
+     *
+     * @param homeId
+     * @return
+     */
+    List<GroupBean> getHomeGroupList(long homeId);
+
+    //获取群组
+    GroupBean getGroupBean(long groupId);
+
+    //获取设备
+    DeviceBean getDeviceBean(String devId);
+
+    //根据群组ID获取房间
+    RoomBean getGroupRoomBean(long groupId);
+
+    //获取房间
+    RoomBean getRoomBean(long roomId);
+
+    //根据设备获取房间信息
+    RoomBean getDeviceRoomBean(String devId);
+
+    //获取群组下面的设备列表
+    List<DeviceBean> getGroupDeviceList(long groupId);
+
+    //获取mesh下面的群组列表
+    List<GroupBean> getMeshGroupList(String meshId);
+
+    List<DeviceBean> getMeshDeviceList(String meshId);
+
+    /**
+     * 根据房间ID获取房间下面的设备列表
+     *
+     * @param roomId
+     * @return
+     */
+    List<DeviceBean> getRoomDeviceList(long roomId);
+
+    /**
+     * 根据房间ID获取房间下面的群组列表
+     *
+     * @param roomId
+     * @return
+     */
+    List<GroupBean> getRoomGroupList(long roomId);
+
+    /**
+     * 获取Home数据
+     *
+     * @param homeId
+     * @return
+     */
+    HomeBean getHomeBean(long homeId);
+}
+
+```
+
+## 设备配网
 TuyaActivator 集成了WiFi配网、ZigBee配网、蓝牙mesh配网等。
 
 ### WiFi配网
@@ -962,9 +1432,9 @@ TuyaGwSubDevActivatorBuilder builder = new TuyaGwSubDevActivatorBuilder()
 
 ```
 
-## 6.设备控制
+## 设备控制
 
-### 6.1 设备信息获取
+### 设备信息获取
 ##### 【描述】
 
 涂鸦智能提供了丰富的接口供开发者实现设备信息的获取和管理能力(移除等)。设备相关的返回数据都采用异步消息的方式通知接受者.
@@ -977,7 +1447,7 @@ TuyaGwSubDevActivatorBuilder builder = new TuyaGwSubDevActivatorBuilder()
 
 ---
 
-### 6.2 设备操作控制
+### 设备操作控制
 
 ITuyaDevice类提供了设备状态通知能力，通过注册回调函数，开发者可以方便的获取设备数据接受、设备移除、设备上下线、手机网络变化的通知。同时也提供了控制指令下发，设备固件升级的接口。
 ```java
@@ -1315,11 +1785,11 @@ mDevice.removeDevice(new IResultCallback() {
 
 ---
 
-## 7.共享设备
+## 共享设备
 
 涂鸦智能提供了向好友分享控制设备的能力。支持分享者和被分享者对分享的设备进行增加、删除、查询、修改。
 
-### 7.1 添加分享
+###  添加分享
 
 #### (1)添加多个设备共享（覆盖）
 ##### 【描述】
@@ -1442,7 +1912,7 @@ TuyaHomeSdk.getDeviceShareInstance().disableDevShare (devId, memberId, new IResu
 ```
 
 
-### 7.2 查询分享
+### 查询分享
 
 #### (1)查询主动分享的关系列表
 ##### 【描述】
@@ -1672,7 +2142,7 @@ TuyaHomeSdk.getDeviceShareInstance().confirmShareInviteShare(int shareId, new IR
 ```
 
 
-### 7.3 移除分享
+### 移除分享
 
 #### (1)删除共享关系
 ##### 【描述】
@@ -1775,7 +2245,7 @@ TuyaHomeSdk.getDeviceShareInstance().removeReceivedDevShare(devId,new IResultCal
 })
 ```
 
-### 7.4 修改备注名
+### 修改备注名
 
 #### (1)修改发出的分享人的备注名
 ##### 【描述】
@@ -1832,13 +2302,13 @@ TuyaHomeSdk.getDeviceShareInstance().renameReceivedShareNickname(memberId, name,
 ```
 
 ---
-## 8.定时任务
+## 定时任务
 
 涂鸦智能提供了基本的定时能力，支持设备（包括WiFi设备，蓝牙mesh子设备，zigbee子设备）和群组。并封装了针对设备dp点的定时器信息的增删改查接口。APP通过定时接口设置好定时器信息后，硬件模块会自动根据定时要求进行预订的操作。每个定时任务下可以包含多个定时器。如下图所示：
 ![timer](./images/ios-sdk-timer.jpg)
 
 定时相关的所有方法都在`TuyaHomeSdk.getTimerManagerInstance()`中
-### 8.1 增加定时器
+### 增加定时器
 ##### 【 描述】
 
 增加一个定时器
@@ -1871,7 +2341,7 @@ TuyaHomeSdk.getTimerManagerInstance().addTimerWithTask("task01", mDevId, "111111
 });
 ```
 
-### 8.2 获取某设备下的所有定时任务状态
+### 获取某设备下的所有定时任务状态
 ##### 【描述】
 
 获取某设备下的所有定时任务状态
@@ -1899,7 +2369,7 @@ TuyaHomeSdk.getTimerManagerInstance().getTimerTaskStatusWithDeviceId(mDevId, new
     }
 });
 ```
-### 8.3 控制定时任务中所有定时器的开关状态
+### 控制定时任务中所有定时器的开关状态
 ##### 【描述】
 
 控制定时任务中所有定时器的开关状态
@@ -1930,7 +2400,7 @@ TuyaHomeSdk.getTimerManagerInstance().updateTimerTaskStatusWithTask(taskName, mD
 });
 ```
 
-### 8.4 控制某个定时器的开关状态
+### 控制某个定时器的开关状态
 ##### 【描述】
 
 控制某个定时器的开关状态
@@ -1962,7 +2432,7 @@ TuyaHomeSdk.getTimerManagerInstance().updateTimerStatusWithTask(taskName, mDevId
     });
 ```
 
-### 8.5 删除定时器
+### 删除定时器
 ##### 【描述】
 
 删除定时器
@@ -1992,7 +2462,7 @@ TuyaHomeSdk.getTimerManagerInstance().removeTimerWithTask(taskName, mDevId, time
     }
 });
 ```
-### 8.6 更新定时器的状态
+### 更新定时器的状态
 ##### 【描述】
 
 更新定时器的状态 该接口可以修改一个定时器的所有属性。
@@ -2033,7 +2503,7 @@ TuyaHomeSdk.getTimerManagerInstance().updateTimerWithTask(taskName,"0011001", mD
     }
 });
 ```
-### 8.7 获取定时任务下所有定时器
+### 获取定时任务下所有定时器
 ##### 【描述】
 
 获取定时任务下所有定时器
@@ -2061,7 +2531,7 @@ TuyaHomeSdk.getTimerManagerInstance().getTimerWithTask(taskName, mDevId, new IGe
     }
 });
 ```
-### 8.8 获取设备所有定时任务下所有定时器
+### 获取设备所有定时任务下所有定时器
 ##### 【描述】
 
 获取设备所有定时任务下所有定时器
@@ -2090,11 +2560,11 @@ TuyaHomeSdk.getTimerManagerInstance().getAllTimerWithDeviceId(mDevId, new IGetAl
 });
 ```
 
-## 9.群组管理
+## 群组管理
 涂鸦云支持群组管理体系：可以创建群组，修改群组名称，管理群组设备，通过群组管理多个设备，解散群组。
 
 
-### 9.1 创建群组
+### 创建群组
 ##### 【描述】
 
 涂鸦智能提供一些设备群组控制的接口。这里的群组控制是指WiFi群组，目前只有群控的功能。群组功能默认关闭，如果需要开通群组功能，联系我们业务人员
@@ -2128,7 +2598,7 @@ TuyaHomeSdk.newHomeInstance("homeId").createNewGroup("productId", "name", devIds
 群组默认不支持创建，如果你的产品需要这个功能，那么请联系我们对产品进行开启这项功能。
 
 
-### 9.2 群组列表获取
+### 群组列表获取
 ##### 【描述】
 此接口主要是从云端拉取最新群组列表。
 ##### 【方法调用】
@@ -2156,7 +2626,7 @@ TuyaHomeSdk.newHomeInstance("homeId").queryDeviceListToAddGroup("productId", new
     }
 });
 ```
-### 9.3 群组操作
+### 群组操作
 ##### 【描述】
 涂鸦智能群组操作，主要是基于对主设备的操作，主设备是指当前群组在线的第一个设备。在线和离线状态、数据上报都是依赖于主设备的变更。发送控制命令是面对群组的所有设备。
 ##### 【实例化】
@@ -2353,7 +2823,7 @@ mITuyaGroup.onDestroy();
 ```
 
 
-## 10.智能
+## 智能
 ### 简介
 智能分为场景和自动化。场景是用户添加动作，手动触发；自动化是由用户设定条件，当条件触发后自动执行设定的动作。
 
@@ -2364,7 +2834,7 @@ mITuyaGroup.onDestroy();
 <strong>以下文档中手动场景和自动化场景简称为场景。</strong>
 
 
-### 10.1 获取场景列表
+### 获取场景列表
 ##### 【描述】
 获取场景列表，当场景首页初始化时使用。通过SceneBean的getConditions()判断手动场景和自动化，当手动场景时值为空
 ##### 【方法原型】
@@ -2423,7 +2893,7 @@ TuyaHomeSdk.getSceneManagerInstance().getSceneList(new ITuyaResultCallback<List<
 ```
 
 
-### 10.2 自动化条件
+### 自动化条件
 
 用户可设置的条件包括天气状况、设备状况、定时。
 	
@@ -2492,7 +2962,7 @@ rule-条件规则有四种规则:
 	
 - 数值型
 	
-	以温度为例，数值型条件的最终表达式为"temp > 20"的格式。您可以从[获取条件列表接口](####10.2.1)获得目前支持的温度最大值、最小值、粒度（步进)，您可以从[获取条件列表](####10.2.1)获取支持的温度等。在用户界面上完成配置后， 调用`ValueRule.newInstance`方法构建规则，并用规则构成条件。
+	以温度为例，数值型条件的最终表达式为"temp > 20"的格式。您可以从获取条件列表接口获得目前支持的温度最大值、最小值、粒度（步进)，您可以从获取条件列表获取支持的温度等。在用户界面上完成配置后， 调用`ValueRule.newInstance`方法构建规则，并用规则构成条件。
 	
 	例:
 	
@@ -2521,7 +2991,7 @@ rule-条件规则有四种规则:
 	
 - 枚举型
 	
-	以天气状况为例, 枚举型条件的最终表达式为"condition == rainy"的格式，您可以从[获取条件列表](####10.2.1)接口获得目前支持的天气状况，包括每种天气状况的code和名称。在用户界面上完成配置后， 调用`EnumRule.newInstance`方法构建规则，并用规则构成条件。
+	以天气状况为例, 枚举型条件的最终表达式为"condition == rainy"的格式，您可以从获取条件列表接口获得目前支持的天气状况，包括每种天气状况的code和名称。在用户界面上完成配置后， 调用`EnumRule.newInstance`方法构建规则，并用规则构成条件。
 	
 	例:
 	
@@ -2551,7 +3021,7 @@ rule-条件规则有四种规则:
 	
 - 布尔型
 
-    布尔型常见于设备型条件, 最终表达式为"dp1 == true"的格式, 您需要调用[获取条件设备列表](####10.2.2)接口获取支持配置智能场景的设备， 然后根据设备id查询该设备可支持的操作，详见[获取设备支持的操作](####10.2.3)。在用户界面上完成配置后， 调用`BoolRule.newInstance`方法构建规则，并用规则构成条件。
+    布尔型常见于设备型条件, 最终表达式为"dp1 == true"的格式, 您需要调用获取条件设备列表接口获取支持配置智能场景的设备， 然后根据设备id查询该设备可支持的操作，详见获取设备支持的操作。在用户界面上完成配置后， 调用`BoolRule.newInstance`方法构建规则，并用规则构成条件。
 
     例:
     
@@ -2636,7 +3106,7 @@ rule-条件规则有四种规则:
     )
 	
 	```
-#### 10.2.1 获取条件列表
+#### 获取条件列表
 ##### 【接口描述】
 获取当前用户支持配置的条件的列表，通常用于添加或修改条件的第一步。
 ##### 【方法原型】
@@ -2710,7 +3180,7 @@ TuyaHomeSdk.getSceneManagerInstance().getConditionList(new ITuyaDataCallback<Lis
 });
 ```
 
-#### 10.2.2 获取条件设备列表
+####  获取条件设备列表
 ##### 【描述】
 获取可用于条件设置的设备列表。
 ##### 【方法原型】
@@ -2735,7 +3205,7 @@ TuyaHomeSdk.getSceneManagerInstance().getConditionDevList(homeId ,new ITuyaResul
 });
 ```
 
-#### 10.2.3 根据设备id获取设备任务
+#### 根据设备id获取设备任务
 ##### 【描述】
 用于获取在选择设备具体的触发条件时， 可选择的任务。
 ##### 【方法原型】
@@ -2807,7 +3277,7 @@ TuyaHomeSdk.getSceneManagerInstance().getDeviceConditionOperationList(
 }
 ```
 
-#### 10.2.4 获取城市列表
+####  获取城市列表
 ##### 【描述】
 用于在创建天气条件时，选择城市。
 注： 目前城市列表暂时仅支持中国。
@@ -2876,9 +3346,9 @@ TuyaHomeSdk.getSceneManagerInstance().getCityListByCountryCode(
 });
 ```
 
-#### 10.2.5 根据城市id获取城市信息
+#### 根据城市id获取城市信息
 ##### 【描述】
-根据城市id获取城市信息， 用于展示已有的天气条件。城市id可以在[获取城市列表](####10.2.4)接口中获取。
+根据城市id获取城市信息， 用于展示已有的天气条件。城市id可以在获取城市列表接口中获取。
 ##### 【方法原型】
 ```java
 /**
@@ -2904,7 +3374,7 @@ TuyaHomeSdk.getSceneManagerInstance().getCityByCityIndex(
 });
 ```
 
-#### 10.2.6 根据经纬度获取城市信息
+#### 根据经纬度获取城市信息
 ##### 【描述】
 根据经纬度获取城市信息， 用于展示已有的天气条件。
 ##### 【方法原型】
@@ -2935,10 +3405,10 @@ TuyaHomeSdk.getSceneManagerInstance().getCityByLatLng(
 ```
 
 
-### 10.3 场景动作
+### 场景动作
 场景动作指当条件触发时执行的控制设备动作。手动场景可执行的动作包含自动化场景和智能设备，自动化场景可执行的动作包含手动场景、其他自动化场景和智能设备。用户可设定的任务视用户的设备而定，请注意，并不是每一款产品都支持场景。
 
-####10.3.1 获取执行动作支持的设备列表
+#### 获取执行动作支持的设备列表
 ##### 【描述】
 获取支持场景动作的设备列表， 用于选择添加到要执行的动作中。
 ##### 【方法原型】
@@ -3004,7 +3474,7 @@ TuyaHomeSdk.getSceneManagerInstance().getTaskDevList(new ITuyaResultCallback<Lis
 });
 ```
 
-#### 10.3.2 根据设备id获取可执行的动作
+#### 根据设备id获取可执行的动作
 ##### 【描述】
 用于在创建动作时， 获取设备可执行的任务。设备id可以从[获取执行动作支持的设备列表](####10.3.1)获取
 ##### 【方法原型】
@@ -3076,7 +3546,7 @@ TuyaHomeSdk.getSceneManagerInstance().getTaskList(
 ```
 
 
-### 10.4 创建场景
+### 创建场景
 ##### 【描述】
 用于将条件和动作组装成场景并创建新的场景， 成功后会返回场景数据。
 两种创建方法，唯一区别是否含有stickyOnTop参数
@@ -3167,7 +3637,7 @@ TuyaHomeSdk.newSceneInstance(sceneId).modifyScene(
 ```
 
 
-### 10.6 执行场景
+### 执行场景
 ##### 【描述】
 用于执行手动场景。
 ##### 【方法原型】
@@ -3195,7 +3665,7 @@ TuyaHomeSdk.newSceneInstance(sceneId).executeScene(new IResultCallback() {
 });
 ```
 
-### 10.7 删除场景
+### 删除场景
 ##### 【描述】
 用于删除场景。
 ##### 【方法原型】
@@ -3224,7 +3694,7 @@ IResultCallback() {
 });
 ```
 
-### 10.8 开启关闭自动化场景
+### 开启关闭自动化场景
 ##### 【描述】
 用于开启或关闭自动化场景
 ##### 【方法原型】
@@ -3274,7 +3744,7 @@ IResultCallback() {
     }
 });
 ```
-### 10.9 场景排序
+### 场景排序
 ##### 【描述】
 手动场景或自动化场景排序。注意：只能单独对手动场景或自动化场景排序，不能混排。
 ##### 【方法原型】
@@ -3302,7 +3772,7 @@ TuyaHomeSdk.getSceneManagerInstance().sortSceneList(
         }
 });
 ```
-### 10.10 销毁
+### 销毁
 ##### 【描述】
 如果退出场景的activity，应该调用场景的销毁方法，以回收内存，提升体验
 ##### 【代码范例】
@@ -3312,9 +3782,9 @@ TuyaHomeSdk.getSceneManagerInstance().onDestroy();
 TuyaHomeSdk.newSceneInstance(sceneId).onDestroy();
 ```
 
-## 11.消息中心
+## 消息中心
 
-### 11.1 获取消息列表
+### 获取消息列表
 ##### 【描述】
 用于获取全部消息列表。
 ##### 【方法原型】
@@ -3410,7 +3880,7 @@ TuyaHomeSdk.getMessageInstance().getMessageList(new ITuyaDataCallback<List<Messa
 });
 ```
 
-### 11.2 删除消息
+### 删除消息
 ##### 【描述】
 用于批量删除消息。
 ##### 【方法原型】
@@ -3443,9 +3913,9 @@ TuyaMessage.getInstance().deleteMessages(
 ```
 
 
-## 12.意见反馈
+## 意见反馈
 	意见反馈接口需要整理一下，在开放
-## 13.集成Push
+## 集成Push
 基于Tuya SDK开发的app，Tuya平台支持Push功能，支持给用户发送运营Push和产品的告警Push。
 
 ### 集成友盟
@@ -3529,475 +3999,7 @@ public class MyPushIntentService extends UmengMessageService {
 
 
 
-## 14、家庭
-
-
-### 14.1家庭操作类
-
-ITuyaHome 提供了家庭相关的操作类，负责处理家庭的数据和信息的更新。
-
-#### 初始化家庭下的所有数据
-
-```java 
-    void getHomeDetail(ITuyaHomeResultCallback callback);
-
-```
-
-#### 获取本地缓存中的数据信息 
-
-
-```java 
-	
-	获取家庭下面的本地cache
-    void getHomeLocalCache(ITuyaHomeResultCallback callback);
-
-```
-#### 更新家庭信息
-
-```java
-
-    /**
-     * 更新家庭信息
-     *
-     * @param name     家庭名称
-     * @param lon      当前家庭的经度
-     * @param lat      当前家庭的纬度
-     * @param geoName  地理位置的地址
-     * @param callback
-     */
-    void updateHome(String name, double lon, double lat, String geoName, IResultCallback callback);
-```
-
-#### 解散家庭
-
-```java
-	/**
-     * 解散家庭
-     *
-     * @param callback
-     */
-    void dismissHome(IResultCallback callback);
-
-```
-
-#### 排序
-
-```java
-
-    /**
-     * 排序
-     *
-     * @param idList homeId list 
-     * @param callback
-     */
-    void sortHome(List<Long> idList, IResultCallback callback);
-```
-
-#### 添加房间
-
-```java
-   /**
-     * 添加房间
-     *
-     * @param name
-     * @param callback
-     */
-    void addRoom(String name, ITuyaRoomResultCallback callback);
-```
-
-#### 移除家庭下面的房间
-
-```
- /**
-     * 移除房间
-     *
-     * @param roomId
-     * @param callback
-     */
-    void removeRoom(long roomId, IResultCallback callback);
-
-```
-
-#### 排序家庭下面的房间
-
-```java
-
- /**
-     * 排序房间
-     *
-     * @param idList   房间id的list
-     * @param callback
-     */
-    void sortRoom(List<Long> idList, IResultCallback callback);
-
-```
-
-#### 查询房间列表
-
-```java
-   /**
-     * 查询房间列表
-     *
-     * @param callback
-     */
-    void queryRoomList(ITuyaGetRoomListCallback callback);
-
-```
-
-#### Home下面添加成员
-
-```java
-    /**
-     * 给这个Home下面添加成员
-     *
-     * @param countryCode 国家码
-     * @param userAccount 用户名
-     * @param name        昵称
-     * @param admin       是否拥有管理员权限
-     * @param callback
-     */
-    void addMember(int countryCode, String userAccount, String name, boolean admin, ITuyaMemberResultCallback callback);
-
-```
-
-#### 移除Home下面的成员
-
-```java
-   /**
-     * 移除Home下面的成员
-     *
-     * @param id
-     * @param callback
-     */
-    void removeMember(long id, IResultCallback callback);
-```
-
-#### 查询Home下面的成员列表
-
-```java
-   /**
-     * 查询Home下面的成员列表
-     *
-     * @param callback
-     */
-    void queryMemberList(ITuyaGetMemberListCallback callback);
-```
-
-#### 创建群组
-
-```java
-    /**
-     * 创建群组
-     *
-     * @param productId 产品ID
-     * @param name      群组名称
-     * @param devIdList 设备ID List
-     * @param callback
-     */
-    void createGroup(String productId, String name, List<String> devIdList, final ITuyaResultCallback<Long> callback);
-
-```
-
-#### 根据设备查询房间信息
-```java
-    /**
-     * 根据设备查询房间信息
-     *
-     * @param deviceList
-     * @return
-     */
-    List<RoomBean> queryRoomInfoByDevice(List<DeviceBean> deviceList);
-```
-
-#### 监听家庭下面信息的变更
-```java
-
-    /**
-     * 监听家庭下面信息(设备的新增或者删除)变更的监听
-     *
-     * @param listener
-     */
-    void registerHomeStatusListener(ITuyaHomeStatusListener listener);
-    
-    
-public interface ITuyaHomeStatusListener {
-
-    /**
-     * 设备新增
-     * @param devId
-     */
-    void onDeviceAdded(String devId);
-
-    /**
-     * 设备删除
-     * @param devId
-     */
-    void onDeviceRemoved(String devId);
-
-}
-
-```
-#### 注销家庭下面信息变更的监听
-```java
-    /**
-     * 注销家庭下面信息变更的监听
-     *
-     * @param listener
-     */
-    void unRegisterHomeStatusListener(ITuyaHomeStatusListener listener);
-```
-
-#### 查询用户下面相同产品且支持群组的设备列表
-
-```java
-    void queryDeviceListToAddGroup(String productId, final ITuyaResultCallback<List<GroupDeviceBean>> callback);
-```
-
-#### 销毁
-```java
-    void onDestroy();
-```
-
-
-### 14.2 家庭管理类
-ITuyaHomeManager 提供了创建家庭、获取家庭列表以及监听家庭相关的变更
-
-可以通过TuyaHomeSdk.getHomeManagerInstance()获取
-#### 获取家庭列表
-
-```java
-
-/**
-     * @param callback
-     */
-    void queryHomeList(ITuyaGetHomeListCallback callback);
-```
-#### 创建家庭
-
-```java
- /**
-     *
-     * @param name     家庭名称
-     * @param lon      经度
-     * @param lat      纬度
-     * @param geoName  家庭地理位置名称
-     * @param rooms    房间列表
-     * @param callback
-     */
-    void createHome(String name, double lon, double lat, String geoName, List<String> rooms, ITuyaHomeResultCallback callback);
-
-
-```
-
-#### 家庭信息的变更
-
-```
-
-	 /**
-     * 注册家庭信息的变更
-     * 有：家庭的增加、删除、信息变更、分享列表的变更和服务器连接成功的监听
-     *
-     * @param listener
-     */
-    void registerTuyaHomeChangeListener(ITuyaHomeChangeListener listener);
-    
-    
-    /**
-     * 注销家庭信息的变更
-     *
-     * @param listener
-     */
-    void unRegisterTuyaHomeChangeListener(ITuyaHomeChangeListener listener);
-    
-    
-public interface ITuyaHomeChangeListener {
-    /**
-     * 家庭添加成功
-     * 用于多设备数据同步
-     *
-     * @param homeId
-     */
-    void onHomeAdded(long homeId);
-
-    /**
-     * 家庭删除成功
-     * 用于多设备数据同步
-     *
-     * @param homeId
-     */
-    void onHomeRemoved(long homeId);
-
-    /**
-     * 家庭信息变更
-     * 用于多设备数据同步
-     *
-     * @param homeId
-     */
-    void onHomeInfoChanged(long homeId);
-
-    /**
-     * 分享设备列表变更
-     * 用于多设备数据同步
-     *
-     * @param sharedDeviceList
-     */
-    void onSharedDeviceList(List<DeviceBean> sharedDeviceList);
-
-    /**
-     *
-     * 手机连接涂鸦云服务器成功，特别注意接收到此通知，在一些情况下，本地数据与服务端数据可能会不一致，可以调用Home下面getHomeDetail接口重新刷新数据。
-     *
-     */
-    void onServerConnectSuccess();
-}
-```
-
-
-### 14.3 房间管理类
-ITuyaRoom 提供房间的管理类，负责房间的新增、删除设备或群组
-可以通过 TuyaHomeSdk.newRoomInstance() 去创建
-
-```
-
-
-    /**
-     * 更新房间名称
-     *
-     * @param name     新房间名称
-     * @param callback
-     */
-    void updateRoom(String name, IResultCallback callback);
-
-    /**
-     * 添加设备
-     *
-     * @param devId
-     * @param callback
-     */
-    void addDevice(String devId, IResultCallback callback);
-
-    /**
-     * 添加群组
-     *
-     * @param groupId
-     * @param callback
-     */
-    void addGroup(long groupId, IResultCallback callback);
-
-    /**
-     * 删除设备
-     *
-     * @param devId
-     * @param callback
-     */
-    void removeDevice(String devId, IResultCallback callback);
-
-    /**
-     * 删除群组
-     *
-     * @param groupId
-     * @param resultCallback
-     */
-    void removeGroup(Long groupId, IResultCallback resultCallback);
-
-    /**
-     * 把群组或者设备移除房间
-     *
-     * @param list
-     * @param callback
-     */
-    void moveDevGroupListFromRoom(List<DeviceAndGroupInRoomBean> list, IResultCallback callback);
-
-    /**
-     * 对房间里的群组或者设备进行排序
-     * @param list
-     * @param callback
-     */
-    void sortDevInRoom(List<DeviceAndGroupInRoomBean> list, IResultCallback callback);
-
-```
-
-### 14.4 对家庭的缓存数据操作
-
-```
-
-获取此数据前，应该调用家庭的初始化接口 getHomeDetail、或者getHomeLocalCache 之后才会有
-
-public interface ITuyaHomeDataManager {
-
-    /**
-     * 家庭下面的设备、群组、房间列表
-     */
-
-    List<RoomBean> getHomeRoomList(long homeId);
-
-    /**
-     * 获取家庭下面的设备列表
-     *
-     * @param homeId 家庭ID
-     * @return
-     */
-    List<DeviceBean> getHomeDeviceList(long homeId);
-
-    /**
-     * 获取家庭下面的群组列表
-     *
-     * @param homeId
-     * @return
-     */
-    List<GroupBean> getHomeGroupList(long homeId);
-
-    //获取群组
-    GroupBean getGroupBean(long groupId);
-
-    //获取设备
-    DeviceBean getDeviceBean(String devId);
-
-    //根据群组ID获取房间
-    RoomBean getGroupRoomBean(long groupId);
-
-    //获取房间
-    RoomBean getRoomBean(long roomId);
-
-    //根据设备获取房间信息
-    RoomBean getDeviceRoomBean(String devId);
-
-    //获取群组下面的设备列表
-    List<DeviceBean> getGroupDeviceList(long groupId);
-
-    //获取mesh下面的群组列表
-    List<GroupBean> getMeshGroupList(String meshId);
-
-    List<DeviceBean> getMeshDeviceList(String meshId);
-
-    /**
-     * 根据房间ID获取房间下面的设备列表
-     *
-     * @param roomId
-     * @return
-     */
-    List<DeviceBean> getRoomDeviceList(long roomId);
-
-    /**
-     * 根据房间ID获取房间下面的群组列表
-     *
-     * @param roomId
-     * @return
-     */
-    List<GroupBean> getRoomGroupList(long roomId);
-
-    /**
-     * 获取Home数据
-     *
-     * @param homeId
-     * @return
-     */
-    HomeBean getHomeBean(long homeId);
-}
-
-```
-
-## 15、网关
+## 网关
 
 网关类封装了ZigBee网关的相关操作，包括控制，查询子设备，监听子设备状态等。
 可以通过TuyaHomeSdk.newGatewayInstance()去初始化网关。
