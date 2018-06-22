@@ -1227,9 +1227,13 @@ ITuyaRoom 提供房间的管理类，负责房间的新增、删除设备或群�
 
 ### 对家庭的缓存数据操作
 
+ITuyaHomeDataManager 可以通过 TuyaHomeSdk.getDataInstance() 调用
+
+ITuyaHomeDataManager是内存缓存的快捷操作，从这里获取到的数据都是设备最新数据。在进行此操作之前，APP要加载调用一次getHomeDetail 进行数据初始化。
+如果网络变更后，也需要调用一次getHomeDetail方法进行数据更新
+
 ```
 
-获取此数据前，应该调用家庭的初始化接口 getHomeDetail、或者getHomeLocalCache 之后才会有
 
 public interface ITuyaHomeDataManager {
 
