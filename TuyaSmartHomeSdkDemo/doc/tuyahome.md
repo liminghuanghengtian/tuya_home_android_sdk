@@ -952,45 +952,6 @@ ITuyaHome 需要通过TuyaHomeSdk.newHomeInstance(homeId) 初始化
 
 ```
 
-#### Home下面添加成员
-
-```java
-    /**
-     * 给这个Home下面添加成员
-     *
-     * @param countryCode 国家码
-     * @param userAccount 用户名
-     * @param name        昵称
-     * @param admin       是否拥有管理员权限
-     * @param callback
-     */
-    void addMember(int countryCode, String userAccount, String name, boolean admin, ITuyaMemberResultCallback callback);
-
-```
-
-#### 移除Home下面的成员
-
-```java
-   /**
-     * 移除Home下面的成员
-     *
-     * @param id
-     * @param callback
-     */
-    void removeMember(long id, IResultCallback callback);
-```
-
-#### 查询Home下面的成员列表
-
-```java
-   /**
-     * 查询Home下面的成员列表
-     *
-     * @param callback
-     */
-    void queryMemberList(ITuyaGetMemberListCallback callback);
-```
-
 #### 创建群组
 
 ```java
@@ -1160,6 +1121,67 @@ public interface ITuyaHomeChangeListener {
 }
 ```
 
+### 家庭成员管理类
+ITuyaHomeMember提供了家庭成员管理接口，包括添加、删除成员，更新成员的控制权限、获取家庭成员列表等.调用方式:`TuyaHomeSdk.newMemberInstance(memberId)`.家庭成员管理逻辑主要提供MemberBean用于获取成员信息的接口
+```java
+	private long homeId; //家庭id
+    private String nickName;//备注名
+    private boolean admin;//是否是管理员
+    private long memberId;//成员id
+    private String headPic;//头像地址
+    private String account;//成员账户名称
+    private String uid;//成员唯一标识id
+```
+
+#### Home下面添加成员
+
+```java
+    /**
+     * 给这个Home下面添加成员
+     *
+     * @param countryCode 国家码
+     * @param userAccount 用户名
+     * @param name        昵称
+     * @param admin       是否拥有管理员权限
+     * @param callback
+     */
+    void addMember(int countryCode, String userAccount, String name, boolean admin, ITuyaMemberResultCallback callback);
+
+```
+
+#### 移除Home下面的成员
+
+```java
+   /**
+     * 移除Home下面的成员
+     *
+     * @param id
+     * @param callback
+     */
+    void removeMember(long id, IResultCallback callback);
+```
+
+#### 更新成员备注名和权限
+```java
+/**
+ * 更新成员备注名和权限
+ * @param name 备注名 如果不更改备注名，传入从memberBean获取的nickName
+ * @param admin  是否是管理员
+ * @param callback
+ */
+void updateMember(String name, boolean admin, IResultCallback callback);
+```
+
+#### 查询Home下面的成员列表
+
+```java
+   /**
+     * 查询Home下面的成员列表
+     *
+     * @param callback
+     */
+    void queryMemberList(ITuyaGetMemberListCallback callback);
+```
 
 ###  房间管理类
 ITuyaRoom 提供房间的管理类，负责房间的新增、删除设备或群组
@@ -1231,6 +1253,8 @@ ITuyaHomeDataManager 可以通过 TuyaHomeSdk.getDataInstance() 调用
 
 ITuyaHomeDataManager是内存缓存的快捷操作，从这里获取到的数据都是设备最新数据。在进行此操作之前，APP要加载调用一次getHomeDetail 进行数据初始化。
 如果网络变更后，也需要调用一次getHomeDetail方法进行数据更新
+
+离线操作数据通过这个处理 getHomeLocalCache
 
 ```
 
@@ -1768,6 +1792,97 @@ mDevice.onDestroy();
 *  command 命令字符串 是以`Map<String dpId,Object dpValue>` 数据格式转成JsonString。
 *  command 命令可以一次发送多个dp数据。
 
+#### 固件升级
+
+##### 【描述】
+固件升级主要用于修复设备bug和增加设备新功能。固件升级主要分两种，第一种是设备升级，第二种是MCU升级。升级的接口位于ITuyaOta中。
+#### 查询固件升级信息
+##### 【方法调用】
+```java
+//获取固件升级信息
+TuyaHomeSdk.newOTAInstance(mDevId).getOtaInfo(new IGetOtaInfoCallback({
+	@Override
+	void onSuccess(List<UpgradeInfoBean> list){
+	
+	}
+	@Override
+	void onFailure(String code, String error);
+	
+});
+
+```
+`UpgradeInfoBean`返回固件升级的信息，提供以下信息
+```java
+	private int upgradeStatus;//升级状态，0:无新版本 1:有新版本 2:在升级中
+    private String version;//最新版本
+    private String currentVersion;//当前版本
+    private int timeout;//超时时间，单位：秒
+    private int upgradeType;//0:app提醒升级 2-app强制升级 3-检测升级
+    private int type;//0:wifi设备 1:蓝牙设备 2:GPRS设备 3:zigbee设备（目前只支持zigbee网关）9:MCU
+    private String typeDesc;//模块描述
+    private long lastUpgradeTime;//上次升级时间，单位：毫秒
+```
+##### 【代码范例】
+
+```java
+iTuyaOta.getOtaInfo(new IGetOtaInfoCallback() {
+    @Override
+    public void onSuccess(List<UpgradeInfoBean> list) {
+        
+        }
+    }
+
+    @Override
+    public void onFailure(String code, String error) {
+        L.e(TAG, "check error " + code + "----error=" + error);
+    }
+        });
+```
+
+#### 设置升级状态回调
+
+##### 【描述】
+ota之前需要注册监听，以实时获取升级状态
+
+##### 【方法调用】
+```java
+//otaType 升级的设备类型，同`UpgradeInfoBean`的type字段
+iTuyaOta.setOtaListener(new IOtaListener() {
+    @Override
+    public void onSuccess(int otaType) {
+        
+    }
+
+    @Override
+    public void onFailure(int otaType, String code, String error) {
+
+    }
+
+    @Override
+    public void onProgress(int otaType, int progress) {
+
+    }
+});
+```
+
+#### 开始升级
+
+##### 【描述】
+ 调用以开始升级,调用后注册的ota监听会把升级状态返回回来，以便开发者构建UI
+##### 【方法调用】
+
+```java
+iTuyaOta.startOta();
+```
+
+#### 销毁
+##### 【描述】
+ 离开升级页面后要销毁，回收内存。
+##### 【方法调用】
+
+```java
+iTuyaOta.onDestroy();
+```
 
 #### 设备信息查询
 ##### 【描述】
@@ -1917,7 +2032,7 @@ mDevice.removeDevice(new IResultCallback() {
 
 ```java
 @param homeId	 家庭id
-@param countryCode 国家码
+@param countryCode 手机区号码,例如中国是“86”
 @param userAccount 账号
 @param ShareIdBean 分享内容 目前支持 设备或者mesh
 @param autoSharing 是否自动分享新增的设备，如果为true，则分享者以后新增的设备都会自动分享给该指定用户（mesh暂不支持该选项）
@@ -1949,7 +2064,7 @@ TuyaHomeSdk.getDeviceShareInstance.addShare(homeId, countryCode, userAccount, be
 
 ```java
 @param homeId		分享者家庭id
-@param countryCode   国家区号
+@param countryCode   手机区号码,例如中国是“86”
 @param phoneNumber   手机号码
 @param devIds 		 分享的设备id列表
 
@@ -2206,7 +2321,7 @@ TuyaHomeSdk.getDeviceShareInstance().getReceivedShareInfo(memberId, new ITuyaRes
 
  @param devId       分享的设备id
  @param userAccount 账户
- @param countryCode 国家码
+ @param countryCode 手机区号码,例如中国是“86”
  @param callback    返回分享id
 void inviteShare(String devId, String userAccount, String countryCode, ITuyaResultCallback<Integer> callback);
 
@@ -2427,6 +2542,9 @@ TuyaHomeSdk.getDeviceShareInstance().renameReceivedShareNickname(memberId, name,
 ![timer](./images/ios-sdk-timer.jpg)
 
 定时相关的所有方法都在`TuyaHomeSdk.getTimerManagerInstance()`中
+
+以下多个接口用到了taskName这个参数，具体可描述为一个分组，一个分组可以有多个定时器。每个定时属于或不属于一个分组，分组目前仅用于展示
+
 ### 增加定时器
 ##### 【 描述】
 
@@ -2434,20 +2552,29 @@ TuyaHomeSdk.getDeviceShareInstance().renameReceivedShareNickname(memberId, name,
 ##### 【方法调用】
 
 ```java
-*  增加定时器 
+*  增加定时器 单dp点 默认置为true  支持子设备
 *  @param taskName     定时任务名称
-*  @param devId        设备Id或群组Id
 *  @param loops        循环次数 "0000000", 每一位 0:关闭,1:开启, 从左至右依次表示: 周日 周一 周二 周三 周四 周五 周六
-*  @param dps  dp点键值对 key是dpId，value是dp值
+*  @param devId        设备Id或群组Id
+*  @param dpId  			dp点id
 *  @param time         定时任务下的定时钟
 *  @param callback     回调
+void addTimerWithTask(String taskName, String loops, String devId, String dpId, String time, final IResultStatusCallback callback);
+
+
+/**
+ * 增加定时器         支持子设备新接口
+ * 其他参数值释义同上
+ * @param dps    dp点键值对，key是dpId，value是dpValue,仅支持单dp点
+ * @param callback 回调
+ */
 void addTimerWithTask(String taskName, String devId, String loops, Map<String, Object> dps, String time, final IResultStatusCallback callback);
 ```
 
 ##### 【代码范例】
 
 ```java
-TuyaHomeSdk.getTimerManagerInstance().addTimerWithTask("task01", mDevId, "1111111", dps, "14:29", new IResultStatusCallback() {
+TuyaHomeSdk.getTimerManagerInstance().addTimerWithTask("task01", "1111111",mDevId,  "1", "14:29", new IResultStatusCallback() {
     @Override
     public void onSuccess() {
         Toast.makeText(mContext, "添加定时任务成功", Toast.LENGTH_LONG).show();
@@ -2593,19 +2720,27 @@ TuyaHomeSdk.getTimerManagerInstance().removeTimerWithTask(taskName, mDevId, time
 * @param loops    循环次数 如每周每天传”1111111”
 * @param devId    设备Id或群组Id
 * @param timerId  定时钟Id
-* @param instruct 定时dp点数据 json格式 如:   [{
+* @param dpId     dp点id
+* @param time     定时时间
+* @param isOpen	  是否开启 
+* @param callback 回调
+void updateTimerWithTask(String taskName, String loops, String devId, String timerId, String dpId, String time, boolean isOpen, final IResultStatusCallback callback);
+
+
+/**
+ * 更新定时器的状态
+ * @param taskName 定时任务名称
+ * @param devId    设备Id或群组id
+ * @param timerId  定时钟Id
+ * @param loops    循环次数
+ * @param instruct 定时dp点数据,只支持单dp点 json格式 如:   [{
  *                 "time": "20:00",
  *                 "dps": {
  *                 "1": true
- *                 },
- *                 {
- *                 "time": "22:00",
- *                 "dps": {
- *                 "2": true
  *                 }]
-
-* @param callback 回调
-void updateTimerWithTask(String taskName, String loops, String devId, String timerId, String instruct, IResultStatusCallback callback);
+ * @param callback 回调
+ */
+void updateTimerWithTask(String taskName, String loops, String devId, String timerId, String instruct, final IResultStatusCallback callback);
 ```
 
 ##### 【代码范例】
@@ -4033,7 +4168,297 @@ TuyaMessage.getInstance().deleteMessages(
 
 
 ## 意见反馈
-	意见反馈接口需要整理一下，在开放
+
+用于在用户和企业或开发者之间提供一种沟通通道。
+
+ITuyaFeedbackManager是反馈的管理类，提供了新增反馈、获取反馈列表等接口，调用方式：
+`ITuyaFeedbackManager = TuyaHomeSdk.getTuyaFeekback().getFeedbackManager()`
+
+ITuyaFeedbackMag是针对某一会话的反馈管理类，也提供了新增反馈、获取当前会话的消息列表，调用方式：
+`ITuyaFeedbackMag = TuyaHomeSdk.getTuyaFeekback().getFeedbackMsg(String hdId, int hdType)`
+
+### 获取反馈列表
+#### 【描述】
+获取该用户所有的反馈。
+
+##### 【方法原型】
+```java
+/**
+ * 获取反馈列表
+ *
+ * @param callback 回调
+ */
+void getFeedbackList(final ITuyaDataCallback<List<FeedbackBean>> callback);
+```
+
+其中， `FeedbackTalkBean`类提供以下接口:
+
+```java
+/**
+ * 获取日期和时间 格式: 2018-06-08 17:12:45
+ * 
+ * @return 日期和时间
+ */
+public String getDateTime() {
+    return dateTime;
+}
+
+/**
+ *  获取最新一条反馈内容, 用于显示在列表中
+ *
+ * @return 反馈内容
+ */ 
+public String getContent() {
+    return content;
+}
+
+/**
+ *  获取反馈类目id
+ *
+ * @return 反馈类目id
+ */
+public String getHdId() {
+    return hdId;
+}
+
+/**
+ * 获取反馈类型
+ * 2: 设备故障
+ * 7: 其他
+ *
+ * @return 反馈类型
+ */
+public int getHdType() {
+    return hdType;
+}
+
+/**
+ *  获取反馈类目标题(如果为设备故障反馈即设备名称)
+ *
+ * @return 类目标题
+ */
+public String getTitle() {
+    return title;
+}
+```
+
+##### 【代码范例】
+```java
+TuyaHomeSdk.getTuyaFeekback().getFeedbackManager().getFeedbackList(new ITuyaDataCallback<List<FeedbackBean>>() {
+    @Override
+    public void onSuccess(List<FeedbackBean> feedbackTalkBeans) {
+    }
+
+    @Override
+    public void onError(String errorCode, String errorMessage) {
+    }
+}); 
+```   
+### 获取反馈类型列表
+##### 【描述】
+获取可选择的反馈类型列表，用于创建反馈之前选择。
+
+##### 【方法原型】
+```java
+/**
+ * 获取反馈类型列表
+ *
+ * @param callback 回调
+ */
+void getFeedbackType(final ITuyaDataCallback<List<FeedbackTypeRespBean>> callback);
+```
+其中, `FeedbackTypeRespBean`类提供以下接口:
+
+```java
+/**
+ * 获取反馈类型列表(设备列表和其他列表)
+ *
+ * @return 类型列表
+ */
+public ArrayList<FeedbackTypeBean> getList() {
+    return list;
+}
+
+/**
+ *  获取列表类别(目前仅有设备和其他)
+ * 
+ * @return 列表类别
+ */
+public String getType() {
+    return type;
+}
+```
+
+`FeedbackTypeBean`类提供以下接口:
+
+```java
+/**
+ *  获取反馈类型id
+ *
+ * @return 反馈类型id
+ */
+public String getHdId() {
+    return hdId;
+}
+
+/**
+ * 获取反馈类型
+ * 2: 设备故障
+ * 7: 其他
+ *
+ * @return 反馈类型
+ */
+public int getHdType() {
+    return hdType;
+}
+
+/**
+ *  获取反馈类型标题(如果为设备故障反馈即设备名称)
+ *
+ * @return 类型标题
+ */
+public String getTitle() {
+    return title;
+}
+```
+##### 【代码范例】
+```java
+TuyaHomeSdk.getTuyaFeekback().getFeedbackManager().getFeedbackType(new ITuyaDataCallback<List<FeedbackTypeRespBean>>() {
+    @Override
+    public void onSuccess(List<FeedbackTypeRespBean> feedbackTypeRespBeans) {
+    }
+
+    @Override
+    public void onError(String errorCode, String errorMsg) {
+    }
+});
+```
+###  新增反馈
+##### 【描述】
+新增一条反馈信息。
+##### 【方法原型】
+```java
+/**
+ * 添加反馈
+ *
+ * @param message  反馈内容
+ * @param contact  联系方式（电话或邮箱）
+ * @param hdId     反馈类目id
+ * @param hdType   反馈类型
+ * @param callback 回调
+ */
+void addFeedback(final String message,String contact, String hdId, int hdType, final ITuyaDataCallback<FeedbackMsgBean> callback);
+```
+注 `hdId`, `hdType`变量可以从[获取反馈类型列表]()接口返回的`FeedbackTypeBean`类中获取。
+##### 【代码范例】
+```java
+TuyaHomeSdk.getTuyaFeekback().getFeedbackManager().addFeedback(
+    "设备存在故障", //反馈信息
+    "abc@qq.com",
+    feebackTypeBean.getHdId(), 
+    feebackTypeBean.getHdType(), 
+    new ITuyaDataCallback<FeedbackMsgBean>() {
+        @Override
+        public void onSuccess(FeedbackMsgBean feedbackMsgBean) {
+        }
+
+        @Override
+        public void onError(String errorCode, String errorMsg) {
+        }
+});
+```
+###  反馈消息管理
+由[获取反馈列表](###)接口返回的反馈列表中，每个反馈对象都对应者一组消息(对话)。请用该接口返回的`FeedbackBean`对象的参数来调用`TuyaHomeSdk.getTuyaFeekback().getFeedbackMsg(String hdId, int hdType)`方法来初始化消息管理类。
+
+例:
+```java
+ITuyaFeedbackMag mFeedbackMag = TuyaHomeSdk.getTuyaFeekback().getFeedbackMsg(
+    feedbackBean.getHdId(),
+    feedbackBean.getHdType()
+);
+```
+####  获取反馈消息列表
+##### 【描述】
+用于获取当前反馈话题（会话场景）的消息列表。
+
+##### 【方法原型】
+```java
+/**
+ * 获取反馈消息列表
+ *
+ *  @param callback 回调
+ */
+void getMsgList(ITuyaDataCallback<List<FeedbackMsgBean>> callback);
+```
+其中, `FeedbackMsgBean`提供以下接口:
+
+```java
+/**
+ *  获取消息内容
+ * 
+ * @return 消息内容
+ */
+public String getContent() {
+    return content;
+}
+
+/**
+ *  获取消息时间
+ *
+ * @return 消息时间
+ */
+public int getCtime() {
+    return ctime;
+}
+/**
+ * 区分用户和后台发送的消息
+ * 0代表用户
+ */
+public int getType() {
+    return type;
+}
+```
+##### 【代码范例】
+```java
+mFeedbackMsg.getMsgList(new ITuyaDataCallback<List<FeedbackMsgBean>>() {
+    @Override
+    public void onSuccess(List<FeedbackMsgBean> result) {
+    }
+
+    @Override
+    public void onError(String errorCode, String errorMessage) {
+    }
+});
+```
+####  添加新反馈
+##### 【描述】
+用于在当前对话中添加新的反馈消息。
+##### 【方法原型】
+```java
+/**
+ * 添加新反馈
+ *
+ * @param msg      反馈内容
+ * @param contact  联系方式
+ * @param callback 回调
+ */
+void addMsg(String msg, String  contact,ITuyaDataCallback<FeedbackMsgBean> callback);
+```
+##### 【代码范例】
+```java
+mFeedbackMsg.addMsg(
+    "再次反馈问题","abc@qq.com", 
+    new ITuyaDataCallback<FeedbackMsgBean>() {
+        @Override
+        public void onSuccess(FeedbackMsgBean result) {
+        }
+
+        @Override
+        public void onError(String errorCode, String errorMessage) {
+        }
+});
+```
+
 ## 集成Push
 基于Tuya SDK开发的app，Tuya平台支持Push功能，支持给用户发送运营Push和产品的告警Push。
 
