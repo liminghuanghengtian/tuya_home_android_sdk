@@ -1122,7 +1122,7 @@ public interface ITuyaHomeChangeListener {
 ```
 
 ### 家庭成员管理类
-ITuyaHomeMember提供了家庭成员管理接口，包括添加、删除成员，更新成员的控制权限、获取家庭成员列表等.调用方式:`TuyaHomeSdk.newMemberInstance(memberId)`.家庭成员管理逻辑主要提供MemberBean用于获取成员信息的接口
+ITuyaHomeMember提供了家庭成员管理接口，包括添加、删除成员，更新成员的控制权限、获取家庭成员列表等.调用方式:`TuyaHomeSdk.newMemberInstance(memberId)`(目前如果调用添加成员，此方法传参可传0，将在下个版本优化初始化和调用逻辑).家庭成员管理逻辑主要提供MemberBean用于获取成员信息的接口
 ```java
 	private long homeId; //家庭id
     private String nickName;//备注名
@@ -1145,7 +1145,7 @@ ITuyaHomeMember提供了家庭成员管理接口，包括添加、删除成员�
      * @param admin       是否拥有管理员权限
      * @param callback
      */
-    void addMember(int countryCode, String userAccount, String name, boolean admin, ITuyaMemberResultCallback callback);
+    void addMember(long homeId ,int countryCode, String userAccount, String name, boolean admin, ITuyaMemberResultCallback callback);
 
 ```
 
@@ -1158,7 +1158,7 @@ ITuyaHomeMember提供了家庭成员管理接口，包括添加、删除成员�
      * @param id
      * @param callback
      */
-    void removeMember(long id, IResultCallback callback);
+    void removeMember(long memberId, IResultCallback callback);
 ```
 
 #### 更新成员备注名和权限
@@ -1180,7 +1180,7 @@ void updateMember(String name, boolean admin, IResultCallback callback);
      *
      * @param callback
      */
-    void queryMemberList(ITuyaGetMemberListCallback callback);
+    void queryMemberList(long homeId,ITuyaGetMemberListCallback callback);
 ```
 
 ###  房间管理类
@@ -1249,15 +1249,9 @@ ITuyaRoom 提供房间的管理类，负责房间的新增、删除设备或群�
 
 ### 对家庭的缓存数据操作
 
-ITuyaHomeDataManager 可以通过 TuyaHomeSdk.getDataInstance() 调用
-
-ITuyaHomeDataManager是内存缓存的快捷操作，从这里获取到的数据都是设备最新数据。在进行此操作之前，APP要加载调用一次getHomeDetail 进行数据初始化。
-如果网络变更后，也需要调用一次getHomeDetail方法进行数据更新
-
-离线操作数据通过这个处理 getHomeLocalCache
-
 ```
 
+获取此数据前，应该调用家庭的初始化接口 getHomeDetail、或者getHomeLocalCache 之后才会有
 
 public interface ITuyaHomeDataManager {
 
