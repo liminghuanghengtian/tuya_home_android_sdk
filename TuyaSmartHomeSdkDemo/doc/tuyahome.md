@@ -124,7 +124,9 @@ android:value="应用密钥" />
 
 
 添加必要的service和receiver
-<service android:name="org.eclipse.paho.android.service.MqttService" />
+//<service android:name="org.eclipse.paho.android.service.MqttService" />
+//from 2.6.3 com.tuya.smart.mqtt.MqttService replace the org.eclipse.paho.android.service.mqttservice
+    <service android:name="com.tuya.smart.mqtt.MqttService" android:stopWithTask="true"/>
 
 <receiver android:name="com.tuya.smart.android.base.broadcast.NetworkBroadcastReceiver">
 <intent-filter>
@@ -271,6 +273,30 @@ public class TuyaSmartApp extends Application {
 
 
 ## 用户管理
+
+### 1系列SDK账户迁移
+需要登陆后在升级
+
+```
+    /**
+     * 检测是否要升级用户数据
+     *
+     * @return
+     */
+    boolean checkVersionUpgrade();
+    
+    /**
+    * 升级账号
+    /
+    void upgradeVersion(IResultCallback callback);
+    
+	检测是否升级
+	TuyaHomeSdk.getUserInstance().checkVersionUpgrade()
+	升级用户账号
+	TuyaHomeSdk.getUserInstance().upgradeVersion()
+```
+
+
 ### 用户手机验证码登陆
 
 涂鸦智能提供手机验证码登陆体系。
@@ -3166,6 +3192,7 @@ TuyaHomeSdk.getSceneManagerInstance().getSceneList(new ITuyaResultCallback<List<
     ```
 
     注: PlaceFacadeBean类对象请从[获取城市列表](####10.2.4),[根据经纬度获取城市](####10.2.6), [根据城市id获取城市](####10.2.5)接口获取。
+        目前获取城市接口只支持国内。
 	
 - 设备型
 	
@@ -3655,7 +3682,34 @@ TuyaHomeSdk.getSceneManagerInstance().getCityByLatLng(
 
 ### 场景动作
 场景动作指当条件触发时执行的控制设备动作。手动场景可执行的动作包含自动化场景和智能设备，自动化场景可执行的动作包含手动场景、其他自动化场景和智能设备。用户可设定的任务视用户的设备而定，请注意，并不是每一款产品都支持场景。
+#### 创建动作
+##### 【描述】
+用于创建场景动作。
+##### 【方法原型】
+```java
+/**
+ * 创建场景动作
+ *
+ * @param devId 设备id
+ * @param tasks 要执行的任务 格式: { dpId: dp点值 }
+ *                          例：
+ *                          {
+ *                              "1": true,
+ *                          }
+ * @return 场景动作
+ */
+public static SceneTask createDpTask(@NonNull String devId, HashMap<String, Object> tasks)
 
+```
+##### 【代码范例】
+```java
+HashMap<String, Object> taskMap = new HashMap<>();
+taskMap.put("1", true); //开启设备
+SceneTask task = SceneTask.createDpTask(
+    devId,      //设备id
+    taskMap     //设备动作
+);
+```
 #### 获取执行动作支持的设备列表
 ##### 【描述】
 获取支持场景动作的设备列表， 用于选择添加到要执行的动作中。
