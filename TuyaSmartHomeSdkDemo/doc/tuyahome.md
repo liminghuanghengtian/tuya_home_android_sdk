@@ -1354,7 +1354,7 @@ public interface ITuyaHomeDataManager {
 ```
 
 ## 设备配网
-TuyaActivator 集成了WiFi配网、ZigBee配网、蓝牙mesh配网等。
+ITuyaActivator 集成了WiFi配网、ZigBee配网、蓝牙mesh配网等。
 
 ### WiFi配网
 ##### 【描述】
@@ -1380,7 +1380,7 @@ TuyaHomeSdk.getActivatorInstance().newActivator(new ActivatorBuilder()
 ###### 【入参】
 
 ```java
-* @param token  配网所需要的激活key。需要通过方法TuyaActivator.getInstance().getActivatorToken ()接口获取;Token的有效期为10分钟，且配置成功后就会失效（再次配网需要重新获取）
+* @param token  配网所需要的激活key。需要通过方法TuyaHomeSdk.getActivatorInstance().getActivatorToken ()接口获取;Token的有效期为10分钟，且配置成功后就会失效（再次配网需要重新获取）
 * @param ssid   配网之后，设备工作WiFi的名称。（家庭网络）
 * @param password   配网之后，设备工作WiFi的密码。（家庭网络）
 * @param activatorModel:	现在给设备配网有以下两种方式:
@@ -1957,7 +1957,7 @@ mDevice.renameDevice("设备名称", new IResultCallback() {
 调用以下方法获取最新数据，然后刷新设备信息即可。
 
 ```java
-TuyaHomeDataManager.getInstance().getDeviceBean(String devId);
+TuyaHomeSdk.getDataInstance().getDeviceBean(String devId);
 ```
 
 #### 获取数据点的历史数据
@@ -3083,11 +3083,11 @@ mITuyaGroup.getGroupDevList(new IGetDevicesInGroupCallback() {
 * 本地获取群组数据bean
 * @param groupId 群组id
 * @return GroupBean  群组数据类
-TuyaHomeDataManager.getInstance().getGroupBean(long groupId);
+TuyaHomeSdk.getDataInstance().getGroupBean(long groupId);
 
 * 本地获取群组数据列表
 * @return  List<GroupBean>  群组列表
-TuyaHomeDataManager.getInstance().getGroupDeviceList(long groupId);
+TuyaHomeSdk.getDataInstance().getGroupDeviceList(long groupId);
 ```
 #### （8）群组数据销毁
 
