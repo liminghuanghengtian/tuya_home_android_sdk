@@ -59,13 +59,15 @@ dirs 'libs'
 }
 dependencies {
 
-compile 'com.alibaba:fastjson:1.1.45.android'
-compile 'com.squareup.okhttp3:okhttp-urlconnection:3.2.0'
-compile 'de.greenrobot:eventbus:2.4.0'
+compile 'com.alibaba:fastjson:1.1.67.android'
+compile 'com.squareup.okhttp3:okhttp-urlconnection:3.6.0'
+
+// compile 'de.greenrobot:eventbus:2.4.0'  Deprecated in 2.7.2
+    
 compile 'io.reactivex.rxjava2:rxandroid:2.0.1'
 compile 'io.reactivex.rxjava2:rxjava:2.1.7'
 compile 'org.eclipse.paho:org.eclipse.paho.client.mqttv3:1.2.0'
-compile 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1'
+// compile 'org.eclipse.paho:org.eclipse.paho.android.service:1.1.1' Deprecated in 2.7.2
 compile(name: 'tuyasmart-x.x.x', ext: 'aar')
 }
 
@@ -121,6 +123,9 @@ android:value="应用密钥" />
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.WAKE_LOCK"android:required="false" />
+<!-- added from 2.7.2 -->
+  <uses-permission android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE" android:required="false"/>
+
 
 
 添加必要的service和receiver
@@ -161,16 +166,6 @@ android:process=":monitor">
 在proguard-rules.pro文件配置相应混淆配置
 
 ```
-#EventBus
--keep class de.greenrobot.event.**{*;}
--dontwarn de.greenrobot.event.**
--keepclassmembers class ** {
-public void onEvent*(**);
-}
-
-#commons
--keep class org.apache.commons.**{*;}
--dontwarn org.apache.commons.**
 
 #fastJson
 -keep class com.alibaba.fastjson.**{*;}
@@ -181,10 +176,7 @@ public void onEvent*(**);
 -dontwarn io.netty.**
 
 #mqtt
--keep class org.eclipse.paho.android.service.** { *; }
 -keep class org.eclipse.paho.client.mqttv3.** { *; }
-
--dontwarn org.eclipse.paho.android.service.**
 -dontwarn org.eclipse.paho.client.mqttv3.**
 
 -dontwarn okio.**
@@ -274,7 +266,7 @@ public class TuyaSmartApp extends Application {
 
 ## 用户管理
 
-### 1系列SDK账户迁移
+### 1系列SDK账户迁移（非1系列用户可以忽略此步）
 需要登陆后在升级
 
 ```
@@ -717,7 +709,7 @@ TuyaHomeSdk.getUserInstance().loginOrRegisterWithUid("86", "1234", "123456", new
 
 TuyaHomeSdk.getUserInstance().loginByTwitter(String countryCode, String key, String secret, ILoginCallback callback);
 ```
-   
+
 
 #### QQ登陆
 
@@ -1511,30 +1503,30 @@ mTuyaActivator.onDestroy();
 ```
 
 ##### 【代码范例】
-	
+
 	//初始化监听
 	ITuyaSmartActivatorListener  listener =new ITuyaSmartActivatorListener() {
-                    @Override
-                    public void onError(String errorCode, String errorMsg) {
+	                @Override
+	                public void onError(String errorCode, String errorMsg) {
 							
-                    }
-
-                    @Override
-                    public void onActiveSuccess(DeviceBean deviceBean) {
-                    	
-                    }
-
-                    @Override
-                    public void onStep(String step, Object data) {
-
-                    }
-                })
+	                }
+	
+	                @Override
+	                public void onActiveSuccess(DeviceBean deviceBean) {
+	                	
+	                }
+	
+	                @Override
+	                public void onStep(String step, Object data) {
+	
+	                }
+	            })
 	ITuyaActivator mITuyaActivator = TuyaHomeSdk.getActivatorInstance().newGwActivator(new TuyaGwActivatorBuilder()
-                .setToken(token)
-                .setTimeOut(100)
-                .setContext(this)
-                .setListener(listener);
-                
+	            .setToken(token)
+	            .setTimeOut(100)
+	            .setContext(this)
+	            .setListener(listener);
+	            
 	//开始配网
 	mITuyaActivator.start()
 	//停止配网
@@ -1559,7 +1551,7 @@ mTuyaActivator.stop();
 //退出页面销毁一些缓存和监听
 mTuyaActivator.onDestroy();
 ```
-	
+
 ##### 【代码范例】
 
 ```java
@@ -1960,39 +1952,8 @@ mDevice.renameDevice("设备名称", new IResultCallback() {
 TuyaHomeSdk.getDataInstance().getDeviceBean(String devId);
 ```
 
-#### 获取数据点的历史数据
-
-##### 【描述】
-获取dp点的历史状态数据，例如电量等信息。
-##### 【方法调用】
-
-```java
-* @param type           获取历史数据type类型值 hour day month
-* @param number         获取历史数据点最大个数 value(1-50)
-* @param dpId           获取历史数据的dp点值
-* @param startTime      获取历史数据点的坐标日期
-getDataPointStat(DataPointTypeEnum type, long startTime, int number, String dpId, final IGetDataPointStatCallback callback)
-```
-
-
-```java
-long startTime = System.currentTimeMillis(); //startTime起始时间
-int number = 12;//往前获取历史数据结果值的个数 ，最大是50
-String dpId = "1";
-mDevice.getDataPointStat(DataPointTypeEnum.DAY, startTime, number, dpId, new IGetDataPointStatCallback() {
-    @Override
-    public void onError(String errorCode, String errorMsg) {
-        Toast.makeText(mContext, "获取历史数据失败" + errorMsg, Toast.LENGTH_SHORT).show();
-    }
-
-    @Override
-    public void onSuccess(DataPointStatBean bean) {
-        Toast.makeText(mContext, "获取历史数据成功：", Toast.LENGTH_SHORT).show();
-    }
-});
-```
-
 #### 移除设备
+
 ##### 【描述】
 用于从用户设备列表中移除设备
 ##### 【方法调用】
@@ -2017,7 +1978,67 @@ mDevice.removeDevice(new IResultCallback() {
 });
 ```
 
+### 设备数据流通道
+
+主要用于扫地机地图数据等大量实时上报的场景
+
+```java
+ITuyaSingleTransfer singleTransfer = TuyaHomeSdk.getTransferInstance();
+```
+
+```java
+public interface ITuyaSingleTransfer {
+	/**
+	 * 开始连接
+	 */
+    void startConnect();
+
+	/**
+	 * 是否在线
+	 */
+    boolean isOnline();
+
+	/**
+	 * 订阅设备数据，订阅设备之后，设备如果有数据上报上来，便可以通过 registerTransferDataListener 回调上来。需要注意的是，每次通道连接成功都需要重新订阅设备数据
+	 */
+    void subscribeDevice(String devId);
+
+	/**
+	 * 取消订阅设备信息，则设备数据不在收到
+	 *
+	 */
+    void unSubscribeDevice(String devId);
+
+	/**
+	 * 注册设备数据流，SDK不做数据解析，具体格式需要和硬件上报方协商一致，然后解析。
+	 */
+    void registerTransferDataListener(ITuyaDataCallback<TransferDataBean> callback);
+	/**
+	 * 取消订阅设备数据流
+	 */
+    void unRegisterTransferDataListener(ITuyaDataCallback<TransferDataBean> callback);
+
+    /**
+     * 注册通道状态变化，在网络波动的情况下会导致通道断开重连的情况 
+     */
+    void registerTransferCallback(ITuyaTransferCallback callback);
+
+    /** 取消注册
+    */
+    void unRegisterTransferCallback(ITuyaTransferCallback callback);
+
+    /**
+    	断开数据流通道
+    */
+    void stopConnect();
+}
+
+```
+
+
+
 ### 数据模型
+
 #### DeviceBean
 
 * iconUrl 设备图标链接地址
@@ -2035,7 +2056,6 @@ mDevice.removeDevice(new IResultCallback() {
 * lon、lat用来标示经纬度信息，需要用户使用sdk前，调用TuyaSdk.setLatAndLong 设置经纬度信息。
 * isZigBeeWifi 是否是ZigBee网关设备
 * hasZigBee 是否包含ZigBee能力（网关设备或者子设备）
-
 
 ---
 
@@ -2456,12 +2476,12 @@ TuyaHomeSdk.getDeviceShareInstance().removeReceivedUserShare(memberId, new IResu
 ```java
 @param devId 设备Id
 @param memberId 用户成员Id 从SharedUserInfoBean中获取
-void removeDevShare(String devId, long memberId, IResultCallback callback);
+void disableDevShare(String devId, long memberId, IResultCallback callback);
 ```
 ##### 【代码范例】
 
 ```java
-TuyaHomeSdk.getDeviceShareInstance().removeDevShare(devId, memberId, new IResultCallback() {
+TuyaHomeSdk.getDeviceShareInstance().disableDevShare(devId, memberId, new IResultCallback() {
     @Override
     public void onError(String code, String error) {
 
@@ -2527,7 +2547,7 @@ TuyaHomeSdk.getDeviceShareInstance().renameShareNickname(memberId, name, new IRe
     }
 })
 ```
-        
+
 #### (2)修改接收到的分享人的备注名
 ##### 【描述】
 
@@ -3116,9 +3136,10 @@ mITuyaGroup.onDestroy();
 ```java
 /**
  * 获取场景列表
+ * @param homeId 家庭Id
  * @param callback 回调
  */
-public void getSceneList(ITuyaDataCallback<List<SceneBean>> callback)
+public void getSceneList(long homeId,ITuyaDataCallback<List<SceneBean>> callback)
 ```
 
 其中，`SceneBean`的接口定义如下
@@ -3155,7 +3176,7 @@ public List<SceneTask> getActions()
 ##### 【代码范例】
 
 ```java
-TuyaHomeSdk.getSceneManagerInstance().getSceneList(new ITuyaResultCallback<List<SceneBean>>() {
+TuyaHomeSdk.getSceneManagerInstance().getSceneList(long homeId, new ITuyaResultCallback<List<SceneBean>>() {
     @Override
     public void onSuccess(List<SceneBean> result) {
     }
@@ -3170,8 +3191,8 @@ TuyaHomeSdk.getSceneManagerInstance().getSceneList(new ITuyaResultCallback<List<
 ### 自动化条件
 
 用户可设置的条件包括天气状况、设备状况、定时。
-	
-	
+​	
+​	
 - 天气型
 	
 	天气条件包括温度、湿度、天气、PM2.5、空气质量、日出日落， 可自由选定城市。根据用户账号中设备的不同，可选择的天气条件也不同。
@@ -3192,7 +3213,7 @@ TuyaHomeSdk.getSceneManagerInstance().getSceneList(new ITuyaResultCallback<List<
     ```
 
     注: PlaceFacadeBean类对象请从[获取城市列表](####10.2.4),[根据经纬度获取城市](####10.2.6), [根据城市id获取城市](####10.2.5)接口获取。
-        目前获取城市接口只支持国内。
+  ​      目前获取城市接口只支持国内。
 	
 - 设备型
 	
@@ -3214,11 +3235,11 @@ TuyaHomeSdk.getSceneManagerInstance().getSceneList(new ITuyaResultCallback<List<
     ```
 
     注: SceneDevBean类对象请从[获取条件设备列表](####10.2.2)接口获取。
-    
+  
 - 定时
 
    定时指到达指定时间执行预定任务  
-   
+
    ```java
    /**
      * 创建定时条件
@@ -3231,10 +3252,9 @@ TuyaHomeSdk.getSceneManagerInstance().getSceneList(new ITuyaResultCallback<List<
      public static SceneCondition createTimerCondition(String display,String name,String type,Rule rule)
    
    ```
-	
-	
+
 rule-条件规则有四种规则:
-	
+​	
 - 数值型
 	
 	以温度为例，数值型条件的最终表达式为"temp > 20"的格式。您可以从获取条件列表接口获得目前支持的温度最大值、最小值、粒度（步进)，您可以从获取条件列表获取支持的温度等。在用户界面上完成配置后， 调用`ValueRule.newInstance`方法构建规则，并用规则构成条件。
@@ -4301,7 +4321,7 @@ TuyaHomeSdk.getTuyaFeekback().getFeedbackManager().getFeedbackList(new ITuyaData
     public void onError(String errorCode, String errorMessage) {
     }
 }); 
-```   
+```
 ### 获取反馈类型列表
 ##### 【描述】
 获取可选择的反馈类型列表，用于创建反馈之前选择。
