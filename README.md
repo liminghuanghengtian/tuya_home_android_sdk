@@ -14,4 +14,4 @@ Tuya Smart APP SDK provides the interface package for the communication with har
 
 ## Doc
 
-Refer to details: [Tuya Smart Doc - Android SDK](TuyaSmartHomeSdkDemo/doc/tuyahome.md)
+Refer to details: [Tuya Smart Doc - Android SDK](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/en/)
