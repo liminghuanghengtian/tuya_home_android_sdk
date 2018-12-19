@@ -1,4 +1,4 @@
-##Tuya Smart Android SDK
+## Tuya Smart Android SDK  [![CircleCI](https://circleci.com/gh/TuyaInc/tuyasmart_home_android_sdk/tree/master.svg?style=svg)](https://circleci.com/gh/TuyaInc/tuyasmart_home_android_sdk/tree/master)
 
 
 [中文版](README-zh.md) | [English](README.md)
