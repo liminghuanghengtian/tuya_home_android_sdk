@@ -23,10 +23,6 @@
 -keep class com.alibaba.fastjson.**{*;}
 -dontwarn com.alibaba.fastjson.**
 
-#netty
--keep class io.netty.** { *; }
--dontwarn io.netty.**
-
 #mqtt
 -keep class org.eclipse.paho.client.mqttv3.** { *; }
 -dontwarn org.eclipse.paho.client.mqttv3.**
