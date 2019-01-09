@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.tuya.smart.android.demo">
+
+    <application
+        android:name=".TuyaSmartApp"
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="false"
+        android:theme="@style/AppTheme">
+        <meta-data
+            android:name="TUYA_SMART_APPKEY"
+            android:value="${TUYA_SMART_APPKEY}" />
+        <meta-data
+            android:name="TUYA_SMART_SECRET"
+            android:value="${TUYA_SMART_SECRET}" />
+
+        <activity
+            android:name=".base.activity.SplashActivity"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".device.CommonDeviceDebugActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".login.activity.CountryListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".login.activity.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".login.activity.LoginWithPhoneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".login.activity.AccountInputActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".login.activity.AccountConfirmActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".base.activity.HomeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".base.activity.PersonalInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".config.ECBindActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".config.AddDeviceAPTipActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".device.SwitchActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".config.ECFailedActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".config.ECActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".config.AddDeviceTipActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".base.activity.BrowserActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".device.common.DeviceCommonActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolrTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".device.common.DpSendActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolrTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".scene.activity.SceneEditActivity" />
+        <activity android:name=".personal.FeedbackActivity" />
+        <activity
+            android:name=".base.activity.ZigBeeConfigActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ToolrTheme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".family.activity.FamilyIndexActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".family.activity.FamilyAddActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".family.activity.FamilyInfoActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".family.activity.FamilyEmptyActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".config.AddDeviceTypeActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity
+            android:name=".config.ZigbeeConfigActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
+    </application>
+
+</manifest>
