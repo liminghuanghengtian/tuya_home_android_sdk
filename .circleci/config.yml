@@ -15,4 +15,4 @@ jobs:
       - run:
           name: Build app
           path: ./TuyaSmartHomeSdkDemo
-          command: ./gradlew assembleDebug
+          command: ./gradlew androidDependencies
