@@ -17,4 +17,4 @@ jobs:
           command: cd ./TuyaSmartHomeSdkDemo
       - run:
           name: Build app
-          command: ls -la
+          command: ./TuyaSmartHomeSdkDemo/gradlew assambleDebug
