@@ -7,9 +7,9 @@ jobs:
       - image: circleci/android:api-28-alpha
     environment:
       JVM_OPTS: -Xmx3200m
-    checkout: post: - cp ./TuyaSmartHomeSdkDemo/local.properties.ci ./TuyaSmartHomeSdkDemo/local.properties
     steps:
-      - checkout
+      - checkout:
+          post: - cp ./TuyaSmartHomeSdkDemo/local.properties.ci ./TuyaSmartHomeSdkDemo/local.properties
       - run:
           name: Build app
           path: ./TuyaSmartHomeSdkDemo
