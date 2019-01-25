@@ -13,8 +13,6 @@ jobs:
 #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
 #         command: sudo chmod +x ./gradlew
       - run:
-          name: Change dir
-          command: cd ./TuyaSmartHomeSdkDemo
-      - run:
           name: Build app
-          command: ./TuyaSmartHomeSdkDemo/gradlew assambleDebug
+          path: ./TuyaSmartHomeSdkDemo
+          command: ./gradlew assambleDebug
