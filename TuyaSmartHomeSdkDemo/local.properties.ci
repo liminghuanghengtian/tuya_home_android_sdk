@@ -5,5 +5,3 @@
 # For customization when using a Version Control System, please read the
 # header note.
 #Fri Jan 25 14:21:20 CST 2019
-ndk.dir=/ndk-bundle
-sdk.dir=/sdk
