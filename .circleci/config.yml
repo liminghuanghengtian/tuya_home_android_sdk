@@ -9,11 +9,9 @@ jobs:
       JVM_OPTS: -Xmx3200m
     steps:
       - checkout
-      - restore_cache:
-          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "tuyasmart_home_android_sdk/TuyaSmartHomeSdkDemo/build.gradle" }}
 #      - run:
 #         name: Chmod permissions #if permission for Gradlew Dependencies fail, use this.
 #         command: sudo chmod +x ./gradlew
       - run:
           name: Build app
-          command: ./TuyaSmartHomeSdkDemo/gradlew assembleDebug
+          command: ./tuyasmart_home_android_sdk/TuyaSmartHomeSdkDemo/gradlew assembleDebug
