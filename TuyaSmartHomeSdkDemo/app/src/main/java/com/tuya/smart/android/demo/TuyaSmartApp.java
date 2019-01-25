@@ -8,6 +8,7 @@ import android.content.Intent;
 
 import com.tuya.smart.android.common.utils.L;
 import com.tuya.smart.android.demo.login.activity.LoginActivity;
+import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.TuyaSdk;
 import com.tuya.smart.sdk.api.INeedLoginListener;
 
@@ -33,7 +34,7 @@ public class TuyaSmartApp extends Application {
                 startActivity(intent);
             }
         });
-        TuyaSdk.setDebugMode(true);
+        TuyaHomeSdk.setDebugMode(true);
     }
 
     public static String getProcessName(Context context) {

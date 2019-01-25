@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.CompoundButton;
@@ -167,7 +168,7 @@ public class CommonDeviceDebugPresenter extends BasePresenter implements IDevLis
 
             @Override
             public void onSuccess() {
-
+                Log.i("CommonDeviceDebugPresenter","onSuccess");
             }
         });
 
@@ -229,7 +230,11 @@ public class CommonDeviceDebugPresenter extends BasePresenter implements IDevLis
     @Override
     public void onDpUpdate(String devId, String dpStr) {
         mView.updateView(dpStr);
-        boolean isFromCloud = false;
+        boolean isFromCloud = true;
+        DeviceBean deviceBean = TuyaHomeSdk.getDataInstance().getDeviceBean(devId);
+        if (deviceBean != null && deviceBean.getIsLocalOnline()) {
+            isFromCloud = false;
+        }
         mView.logDpReport((isFromCloud ? "云端" : "局域网") + " " + dpStr);
         JSONObject jsonObject = getDpValueWithOutROMode(devId, dpStr);
         if (mDownLatch != null && mDownLatch.getCount() > 0 && !jsonObject.isEmpty()) {
