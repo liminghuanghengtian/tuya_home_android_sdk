@@ -2,7 +2,29 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.tuya.smart.android.demo">
 
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- sdcard -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission
+        android:name="android.permission.READ_PHONE_STATE"
+        android:required="false" />
+    <!-- 网络 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+    <uses-permission
+        android:name="android.permission.ACCESS_FINE_LOCATION"
+        android:required="false" />
+    <uses-permission
+        android:name="android.permission.WAKE_LOCK"
+        android:required="false" />
+    <!-- added from 2.7.2 -->
+    <uses-permission
+        android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"
+        android:required="false" />
+
     <application
         android:name=".TuyaSmartApp"
         android:allowBackup="true"
@@ -13,10 +35,10 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="TUYA_SMART_APPKEY"
-            android:value="${TUYA_SMART_APPKEY}" />
+            android:value="" />
         <meta-data
             android:name="TUYA_SMART_SECRET"
-            android:value="${TUYA_SMART_SECRET}" />
+            android:value="" />
 
         <activity
             android:name=".base.activity.SplashActivity"

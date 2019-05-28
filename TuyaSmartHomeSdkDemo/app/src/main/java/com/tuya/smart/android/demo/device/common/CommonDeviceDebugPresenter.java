@@ -235,7 +235,7 @@ public class CommonDeviceDebugPresenter extends BasePresenter implements IDevLis
         if (deviceBean != null && deviceBean.getIsLocalOnline()) {
             isFromCloud = false;
         }
-        mView.logDpReport((isFromCloud ? "云端" : "局域网") + " " + dpStr);
+        mView.logDpReport((isFromCloud ? "Cloud" : "local area network") + " " + dpStr);
         JSONObject jsonObject = getDpValueWithOutROMode(devId, dpStr);
         if (mDownLatch != null && mDownLatch.getCount() > 0 && !jsonObject.isEmpty()) {
             Object o = jsonObject.get(mDownLatch.getDpId());
