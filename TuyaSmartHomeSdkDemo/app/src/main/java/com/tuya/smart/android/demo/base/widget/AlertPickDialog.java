@@ -6,11 +6,11 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.widget.NumberPicker;
 import android.widget.TextView;
 
 import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.bean.AlertPickBean;
+import com.tuya.smart.android.demo.test.widget.NumberPicker;
 
 
 /**
