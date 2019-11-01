@@ -307,6 +307,7 @@
     <string name="head_icon">Picture</string>
     <string name="home_add_device">Add Device</string>
     <string name="home_my_device">Devices</string>
+    <string name="home_scene">Smart</string>
     <string name="home_personal_center">Profile</string>
     <string name="input_new_user_phone_number">Enter new member\'s phone number</string>
     <string name="input_password">Password</string>
@@ -623,6 +624,8 @@
     <string name="ty_dp_test_log_window">Log window</string>
     <string name="ty_dp_test_log_report">Result Window</string>
     <string name="add_demo_device">Add Demo Device</string>
+    <string name="add_scene">Add Scene</string>
+    <string name="add_auto">Add Automation</string>
     <string name="group_device">Group Device</string>
     <string name="property">Property:</string>
     <string name="log_window">Log Window</string>
@@ -711,4 +714,25 @@
     <string name="ty_add_device_wifi">wifi device</string>
     <string name="ty_add_device_gateway">gateway device</string>
     <string name="ty_add_device_gateway_sub">gateway sub-device</string>
+    <string name="ty_scene">Scene</string>
+    <string name="ty_auto">Automation</string>
+    <string name="ty_exe">Execute</string>
+    <string name="ty_condition">Condtion</string>
+    <string name="ty_task">Task</string>
+    <string name="ty_add_condition">Add Condition</string>
+    <string name="ty_add_task">Add Task</string>
+    <string name="ty_scene_device">Device</string>
+    <string name="ty_scene_select_condition">Select Condition</string>
+    <string name="ty_scene_select_task">Select Task</string>
+    <string name="ty_scene_select_device">Select Device</string>
+    <string name="ty_scene_operator_list">Operator List</string>
+    <string name="ty_scene_add_name">Add Name</string>
+    <string name="ty_scene_add_bg">Add Background Image</string>
+    <string name="ty_operator_value">Operator Value</string>
+    <string name="ty_scene_device_is_not_exsit">Device is not exist</string>
+    <string name="ty_scene_name_is_not_empty">Scene name can not empty</string>
+    <string name="ty_scene_bg_is_not_empty">Scene backgourd can not empty</string>
+    <string name="ty_scene_condition_is_not_empty">Condition can not empty</string>
+    <string name="ty_scene_action_is_not_empty">Action can not empty</string>
+    <string name="ty_scene_operator_not_support">Operator not support</string>
 </resources>

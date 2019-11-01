@@ -10,6 +10,7 @@ import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.app.Constant;
 import com.tuya.smart.android.demo.base.fragment.DeviceListFragment;
 import com.tuya.smart.android.demo.base.fragment.PersonalCenterFragment;
+import com.tuya.smart.android.demo.base.fragment.SceneFragment;
 import com.tuya.smart.android.demo.base.utils.ActivityUtils;
 import com.tuya.smart.android.demo.base.utils.CollectionUtils;
 import com.tuya.smart.android.demo.base.utils.DialogUtil;
@@ -37,6 +38,7 @@ public class HomePresenter extends BasePresenter {
 
     public static final int TAB_MY_DEVICE = 0;
     public static final int TAB_PERSONAL_CENTER = 1;
+    public static final int TAB_SCENE = 2;
 
     protected int mCurrentTab = -1;
 
@@ -99,6 +101,11 @@ public class HomePresenter extends BasePresenter {
         showTab(TAB_MY_DEVICE);
     }
 
+    //场景
+    public void showScene() {
+        showTab(TAB_SCENE);
+    }
+
     public void gotoAddDevice() {
         ActivityUtils.gotoActivity(mActivity, AddDeviceTypeActivity.class, ActivityUtils.ANIMATE_SLIDE_TOP_FROM_BOTTOM, false);
     }
@@ -116,7 +123,7 @@ public class HomePresenter extends BasePresenter {
     }
 
     public int getFragmentCount() {
-        return 2;
+        return 3;
     }
 
     public Fragment getFragment(int type) {
@@ -124,6 +131,8 @@ public class HomePresenter extends BasePresenter {
             return DeviceListFragment.newInstance();
         } else if (type == TAB_PERSONAL_CENTER) {
             return PersonalCenterFragment.newInstance();
+        } else if (type == TAB_SCENE) {
+            return SceneFragment.newInstance();
         }
         return null;
     }

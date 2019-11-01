@@ -38,6 +38,8 @@ public class HomeActivity extends BaseActivity implements IHomeView {
     private int mFuncBarTextNormalColor = Color.BLACK;
     private int mFuncBarTextSelectColor = Color.RED;
     private HomeFragmentAdapter mHomeFragmentAdapter;
+    private TextView mTvHomeScene;
+    private ImageView mIvHomeScene;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +91,13 @@ public class HomeActivity extends BaseActivity implements IHomeView {
         mIvMyDevice.setOnClickListener(mClickListener);
         mIvMyDevice.setColorFilter(mFuncBarTextSelectColor);
 
+        mTvHomeScene = findViewById(R.id.tv_home_my_scene);
+        mTvHomeScene.setOnClickListener(mClickListener);
+        mIvHomeScene = findViewById(R.id.iv_my_scene);
+        mIvHomeScene.setImageResource(R.drawable.my_scene);
+        mIvHomeScene.setOnClickListener(mClickListener);
+        mIvHomeScene.setColorFilter(mFuncBarTextNormalColor);
+
         mTvHomeCenter = (TextView) findViewById(R.id.tv_home_center);
         mTvHomeCenter.setOnClickListener(mClickListener);
         mIvHomeCenter = (ImageView) findViewById(R.id.iv_home_center);
@@ -105,6 +114,8 @@ public class HomeActivity extends BaseActivity implements IHomeView {
                 mHomePresenter.showMyDevicePage();
             } else if (v.getId() == R.id.tv_home_center || v.getId() == R.id.iv_home_center) {
                 mHomePresenter.showPersonalCenterPage();
+            } else if (v.getId() == R.id.tv_home_my_scene || v.getId() == R.id.iv_my_scene) {
+                mHomePresenter.showScene();
             }
         }
     };
@@ -173,6 +184,12 @@ public class HomeActivity extends BaseActivity implements IHomeView {
                 mIvHomeCenter.setImageDrawable(VectorDrawable.getDrawable(TuyaSdk.getApplication(), R.drawable.ty_home_center_selected));
                 mFragmentContainer.setCurrentItem(idToPosition(id), true);
                 break;
+            case HomePresenter.TAB_SCENE:
+                mTvHomeScene.setTextColor(mFuncBarTextSelectColor);
+                mIvHomeScene.setColorFilter(mFuncBarTextSelectColor);
+                mIvHomeScene.setImageResource(R.drawable.my_scene);
+                mFragmentContainer.setCurrentItem(idToPosition(id), true);
+                break;
         }
     }
 
@@ -188,6 +205,11 @@ public class HomeActivity extends BaseActivity implements IHomeView {
                 mTvHomeCenter.setTextColor(mFuncBarTextNormalColor);
                 mIvHomeCenter.setColorFilter(mFuncBarTextNormalColor);
                 mIvHomeCenter.setImageDrawable(VectorDrawable.getDrawable(TuyaSdk.getApplication(), R.drawable.ty_home_center));
+                break;
+            case HomePresenter.TAB_SCENE:
+                mTvHomeScene.setTextColor(mFuncBarTextNormalColor);
+                mIvHomeScene.setColorFilter(mFuncBarTextNormalColor);
+                mIvHomeScene.setImageResource(R.drawable.my_scene);
                 break;
         }
     }
@@ -231,6 +253,8 @@ public class HomeActivity extends BaseActivity implements IHomeView {
                 return HomePresenter.TAB_MY_DEVICE;
             case 1:
                 return HomePresenter.TAB_PERSONAL_CENTER;
+            case 2:
+                return HomePresenter.TAB_SCENE;
 
         }
 
@@ -244,6 +268,8 @@ public class HomeActivity extends BaseActivity implements IHomeView {
                 return 0;
             case HomePresenter.TAB_PERSONAL_CENTER:
                 return 1;
+            case HomePresenter.TAB_SCENE:
+                return 2;
 
         }
         return 0;

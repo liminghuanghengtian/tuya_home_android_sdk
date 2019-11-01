@@ -280,6 +280,7 @@
     <string name="head_icon">头像</string>
     <string name="home_add_device">添加设备</string>
     <string name="home_my_device">我的设备</string>
+    <string name="home_scene">智能</string>
     <string name="home_personal_center">个人中心</string>
     <string name="input_new_user_phone_number">输入新成员手机号码</string>
     <string name="input_password">密码</string>
@@ -576,6 +577,8 @@
     <string name="ty_dp_test_log_report">测试结果输出</string>
     <string name="cannot_set_no_cloud_and_no_lan">局域网模式或者云模式必须选择其中之一</string>
     <string name="add_demo_device">添加演示设备</string>
+    <string name="add_scene">添加场景</string>
+    <string name="add_auto">添加自动化</string>
     <string name="group_device">群组设备</string>
     <string name="property">属性：</string>
     <string name="log_window">日志窗口</string>
@@ -641,4 +644,25 @@
     <string name="ty_add_device_wifi">wifi设备</string>
     <string name="ty_add_device_gateway">网关设备</string>
     <string name="ty_add_device_gateway_sub">网关子设备</string>
+    <string name="ty_scene">场景</string>
+    <string name="ty_auto">自动化</string>
+    <string name="ty_exe">执行</string>
+    <string name="ty_condition">条件</string>
+    <string name="ty_task">任务</string>
+    <string name="ty_add_condition">添加条件</string>
+    <string name="ty_add_task">添加任务</string>
+    <string name="ty_scene_device">设备</string>
+    <string name="ty_scene_select_condition">选择条件</string>
+    <string name="ty_scene_select_task">选择任务</string>
+    <string name="ty_scene_select_device">选择设备</string>
+    <string name="ty_scene_operator_list">功能列表</string>
+    <string name="ty_scene_add_name">添加名称</string>
+    <string name="ty_scene_add_bg">添加背景图片</string>
+    <string name="ty_operator_value">操作值</string>
+    <string name="ty_scene_device_is_not_exsit">设备不存在</string>
+    <string name="ty_scene_name_is_not_empty">场景名称不能为空</string>
+    <string name="ty_scene_bg_is_not_empty">背景图片不能为空</string>
+    <string name="ty_scene_condition_is_not_empty">条件不能为空</string>
+    <string name="ty_scene_action_is_not_empty">动作不能为空</string>
+    <string name="ty_scene_operator_not_support">不支持的类型</string>
 </resources>

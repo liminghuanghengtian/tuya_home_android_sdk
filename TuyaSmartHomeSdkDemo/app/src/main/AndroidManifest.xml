@@ -35,10 +35,10 @@
         android:theme="@style/AppTheme">
         <meta-data
             android:name="TUYA_SMART_APPKEY"
-            android:value="${TUYA_SMART_APPKEY}" />
+            android:value="YOUR TUYA_SMART_APPKEY !" />
         <meta-data
             android:name="TUYA_SMART_SECRET"
-            android:value="${TUYA_SMART_SECRET}" />
+            android:value="YOUR TUYA_SMART_SECRET !" />
 
         <activity
             android:name=".base.activity.SplashActivity"
@@ -171,6 +171,21 @@
             android:screenOrientation="portrait"
             android:theme="@style/Splash.Theme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+        <activity android:name=".scene.activity.SceneActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"/>
+        <activity android:name=".scene.activity.ConditionTaskChooseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"/>
+        <activity android:name=".scene.activity.DeviceChooseActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"/>
+        <activity android:name=".scene.activity.OperateorListActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"/>
+        <activity android:name=".scene.activity.OperatorValueActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"/>
     </application>
 
 </manifest>

@@ -8,6 +8,8 @@ import android.content.Intent;
 
 import com.tuya.smart.android.common.utils.L;
 import com.tuya.smart.android.demo.login.activity.LoginActivity;
+import com.tuya.smart.android.network.IApiUrlProvider;
+import com.tuya.smart.android.network.TuyaSmartNetWork;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.sdk.TuyaSdk;
 import com.tuya.smart.sdk.api.INeedLoginListener;
@@ -23,6 +25,13 @@ public class TuyaSmartApp extends Application {
         context = this;
         L.d(TAG, "onCreate " + getProcessName(this));
         L.setSendLogOn(true);
+//        TuyaSdk.init(this,
+//                "8wyyfuw7u8ttp3pktkux",
+//                "gpppfrr9g9m7agp44nvu33xa5r85mrd4",
+//                "android",
+//                "sdk",
+//                (String)null,
+//                new UnicomApiUrlProvider(this));
         TuyaSdk.init(this);
         TuyaSdk.setOnNeedLoginListener(new INeedLoginListener() {
             @Override

@@ -49,7 +49,31 @@
                 android:textColor="?attr/list_secondary_color"
                 android:textSize="@dimen/ts_10"/>
         </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
+            <ImageView
+                android:id="@+id/iv_my_scene"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="4dp"
+                />
+            <TextView
+                android:id="@+id/tv_home_my_scene"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_below="@id/iv_my_scene"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:gravity="center"
+                android:text="@string/home_scene"
+                android:textColor="?attr/list_secondary_color"
+                android:textSize="@dimen/ts_10"/>
+        </RelativeLayout>
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="match_parent"
