@@ -2,9 +2,7 @@
 
 
 
-
-[中文版](README-zh.md) | [English](README.md)
-
+[中文版](README-zh.md)
 
 ## Features Overview
 
@@ -17,3 +15,7 @@ Tuya Smart APP SDK provides the interface package for the communication with har
 ## Doc
 
 Refer to details: [Tuya Smart Doc - Android SDK](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/en/)
+
+## Latest version
+
+3.13.0
