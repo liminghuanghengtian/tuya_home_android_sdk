@@ -3,7 +3,7 @@ package com.tuya.smart.android.demo.scene.presenter;
 import android.app.Activity;
 import android.content.Intent;
 
-import com.tuya.smart.android.base.utils.PreferencesUtil;
+import com.tuya.smart.android.demo.family.FamilyManager;
 import com.tuya.smart.android.demo.scene.activity.OperateorListActivity;
 import com.tuya.smart.android.demo.base.app.Constant;
 import com.tuya.smart.android.demo.base.utils.ActivityUtils;
@@ -35,7 +35,7 @@ public class DeviceChoosePresenter extends BasePresenter implements ScenePageClo
     public DeviceChoosePresenter(Activity activity, IDeviceChooseView view){
         mAc = activity;
         mView = view;
-        Constant.HOME_ID = PreferencesUtil.getLong("homeId", Constant.HOME_ID);
+        Constant.HOME_ID = FamilyManager.getInstance().getCurrentHomeId();
         TuyaSdk.getEventBus().register(this);
     }
     public void getDevList(){
