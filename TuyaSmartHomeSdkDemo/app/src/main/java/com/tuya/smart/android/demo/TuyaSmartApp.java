@@ -25,13 +25,8 @@ public class TuyaSmartApp extends Application {
         context = this;
         L.d(TAG, "onCreate " + getProcessName(this));
         L.setSendLogOn(true);
-//        TuyaSdk.init(this,
-//                "8wyyfuw7u8ttp3pktkux",
-//                "gpppfrr9g9m7agp44nvu33xa5r85mrd4",
-//                "android",
-//                "sdk",
-//                (String)null,
-//                new UnicomApiUrlProvider(this));
+
+        TuyaHomeSdk.setDebugMode(true);
         TuyaSdk.init(this);
         TuyaSdk.setOnNeedLoginListener(new INeedLoginListener() {
             @Override
@@ -43,7 +38,6 @@ public class TuyaSmartApp extends Application {
                 startActivity(intent);
             }
         });
-        TuyaHomeSdk.setDebugMode(true);
     }
 
     public static String getProcessName(Context context) {
