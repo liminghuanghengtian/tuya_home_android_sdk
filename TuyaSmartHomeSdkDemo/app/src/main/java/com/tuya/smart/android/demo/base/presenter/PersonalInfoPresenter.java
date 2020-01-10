@@ -15,6 +15,7 @@ import com.tuya.smart.android.mvp.bean.Result;
 import com.tuya.smart.android.mvp.presenter.BasePresenter;
 import com.tuya.smart.android.user.bean.User;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
+import static com.tuya.smart.android.demo.personal.PersonalInfoModel.WHAT_SETTING_LOGOUT_SUCCESS;
 
 
 /**
@@ -71,6 +72,11 @@ public class PersonalInfoPresenter extends BasePresenter {
                 break;
             case PersonalInfoModel.RENAME_NICKNAME_SUCCESS:
                 saveNickName((String) ((Result) msg.obj).getObj());
+                break;
+            case WHAT_SETTING_LOGOUT_SUCCESS:
+                mView.onLogout();
+                break;
+            default:
                 break;
         }
 
