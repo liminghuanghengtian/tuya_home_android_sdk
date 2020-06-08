@@ -24,11 +24,10 @@ public class TuyaSmartApp extends Application {
         super.onCreate();
         context = this;
         L.d(TAG, "onCreate " + getProcessName(this));
-        L.setSendLogOn(true);
 
         TuyaHomeSdk.setDebugMode(true);
-        TuyaSdk.init(this);
-        TuyaSdk.setOnNeedLoginListener(new INeedLoginListener() {
+        TuyaHomeSdk.init(this);
+        TuyaHomeSdk.setOnNeedLoginListener(new INeedLoginListener() {
             @Override
             public void onNeedLogin(Context context) {
                 Intent intent = new Intent(context, LoginActivity.class);

@@ -20,20 +20,20 @@
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
 #fastJson
+#fastJson
 -keep class com.alibaba.fastjson.**{*;}
 -dontwarn com.alibaba.fastjson.**
 
 #mqtt
--keep class org.eclipse.paho.client.mqttv3.** { *; }
--dontwarn org.eclipse.paho.client.mqttv3.**
+-keep class com.tuya.smart.mqttclient.mqttv3.** { *; }
+-dontwarn com.tuya.smart.mqttclient.mqttv3.**
 
--dontwarn okio.**
--dontwarn rx.**
--dontwarn javax.annotation.**
 -keep class com.squareup.okhttp.** { *; }
 -keep interface com.squareup.okhttp.** { *; }
--keep class okio.** { *; }
 -dontwarn com.squareup.okhttp.**
+
+-keep class okio.** { *; }
+-dontwarn okio.**
 
 -keep class com.tuya.**{*;}
 -dontwarn com.tuya.**

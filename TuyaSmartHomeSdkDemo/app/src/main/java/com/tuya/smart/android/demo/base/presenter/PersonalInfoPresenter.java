@@ -50,7 +50,6 @@ public class PersonalInfoPresenter extends BasePresenter {
 
     public void logout() {
         mPersonalInfoModel.logout();
-        mView.onLogout();
     }
 
     public String getMobile() {

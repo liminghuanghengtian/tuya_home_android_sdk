@@ -20,5 +20,5 @@ Refer to details: [Tuya Smart Doc - Android SDK](https://tuyainc.github.io/tuyas
 
 ## Latest version
 
-3.15.0
+3.17.0
 
