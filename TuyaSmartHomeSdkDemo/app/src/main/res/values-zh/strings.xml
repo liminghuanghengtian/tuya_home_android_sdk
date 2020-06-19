@@ -665,4 +665,7 @@
     <string name="ty_scene_condition_is_not_empty">条件不能为空</string>
     <string name="ty_scene_action_is_not_empty">动作不能为空</string>
     <string name="ty_scene_operator_not_support">不支持的类型</string>
+
+    <string name="goto_shortcut_parser_demo">进入快捷控制/状态页面</string>
+    <string name="shortcut_device_none">设备没有快捷控制能力</string>
 </resources>

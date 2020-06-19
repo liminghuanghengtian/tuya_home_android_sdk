@@ -24,6 +24,7 @@ import com.tuya.smart.android.demo.config.CommonConfig;
 import com.tuya.smart.android.demo.device.CommonDeviceDebugActivity;
 import com.tuya.smart.android.demo.device.SwitchActivity;
 import com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter;
+import com.tuya.smart.android.demo.shortcut.ShortcutDeviceActivity;
 import com.tuya.smart.android.mvp.presenter.BasePresenter;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.api.ITuyaHomeStatusListener;
@@ -121,6 +122,11 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
     private void gotoDeviceCommonActivity(DeviceBean devBean) {
         Intent intent = new Intent(mActivity, CommonDeviceDebugActivity.class);
         intent.putExtra(CommonDeviceDebugPresenter.INTENT_DEVID, devBean.getDevId());
+        mActivity.startActivity(intent);
+    }
+
+    public void gotoShortcutActivity(){
+        Intent intent = new Intent(mActivity, ShortcutDeviceActivity.class);
         mActivity.startActivity(intent);
     }
 

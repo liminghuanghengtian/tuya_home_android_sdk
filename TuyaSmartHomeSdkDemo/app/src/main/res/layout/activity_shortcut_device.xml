@@ -1,24 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="?attr/fragment_bg_color">
-
-    <include
-        android:id="@+id/action_bar_layout"
-        layout="@layout/toolbar_top_view"/>
-
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <TextView
         android:id="@+id/network_tip"
         android:layout_width="match_parent"
         android:layout_height="30dp"
-        android:layout_below="@id/action_bar_layout"
-        android:background="?attr/notice_bg_color"
+        android:background="@color/red"
         android:gravity="center"
         android:padding="@dimen/mg_3"
         android:text="@string/network_time_out"
-        android:textColor="?attr/notice_font_color"
+        android:textColor="@color/black"
         android:textSize="@dimen/ts_14"
         android:visibility="gone"
         />
@@ -26,9 +20,8 @@
         android:id="@+id/rl_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/mg_60"
         android:layout_below="@id/network_tip"
-    >
+        >
         <android.support.v4.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
@@ -42,19 +35,6 @@
 
 
     </RelativeLayout>
-
-    <TextView
-        android:id="@+id/tv_shortcut"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/mg_60"
-        android:background="@color/gray"
-        android:textColor="@color/black"
-        android:textSize="@dimen/mg_20"
-        android:gravity="center"
-        android:text="@string/goto_shortcut_parser_demo"
-        android:layout_alignParentBottom="true"
-        />
-
     <RelativeLayout
         android:id="@+id/list_background_tip"
         android:layout_width="wrap_content"

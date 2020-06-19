@@ -51,7 +51,7 @@ public class SchemaListAdapter extends BaseAdapter {
         } else {
             holder = (SchemaViewHolder) convertView.getTag();
         }
-        holder.initData(mSchemaBeen.get(position));
+        holder.updateData(mSchemaBeen.get(position));
         return convertView;
     }
 
@@ -76,7 +76,7 @@ public class SchemaListAdapter extends BaseAdapter {
         }
 
         @Override
-        public void initData(SchemaBean schemaBean) {
+        public void updateData(SchemaBean schemaBean) {
             schemaId.setText(schemaBean.getId());
             schemaName.setText(schemaBean.getName());
             schemaMode.setText(schemaBean.getMode().toString());

@@ -13,7 +13,7 @@ public abstract class ViewHolder<T> {
         this.contentView = contentView;
     }
 
-    public abstract void initData(T data);
+    public abstract void updateData(T data);
 
     public View getContentView() {
         return contentView;

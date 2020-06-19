@@ -1,6 +1,14 @@
 <resources>
-    <string name="app_name">TuyaSmart-Test</string>
+    <array name="family_add_default_name_array">
+        <item>living room</item>
+        <item>master bedroom</item>
+        <item>secondary bedroom</item>
+        <item>dining room</item>
+        <item>kitchen</item>
+        <item>study</item>
+    </array>
 
+    <string name="app_name">TuyaSmart-Test</string>
     <string name="action_settings">Settings</string>
     <string name="device_list">Device list</string>
     <string name="share_list">Share list</string>
@@ -11,8 +19,8 @@
     <string name="ap_start">Start APConfig</string>
     <string name="offline">Off-line</string>
     <string name="IntranetControl">Online-Intranet</string>
-    <string name="OnlineControl">Online</string>
     <!-- 通用 -->
+    <string name="OnlineControl">Online</string>
     <string name="Confirm">Confirm</string>
     <string name="at_login_sns">Sign in with social media account</string>
     <string name="binding">Binding&#046;&#046;</string>
@@ -182,9 +190,9 @@
     <string name="ty_virtual_device_add_fail">Failed to add the virtual device</string>
     <string name="ty_virtual_device_add_succ">Successfully add virtual device</string>
     <string name="ty_write_new_keyword">New password</string>
-    <string name="ty_write_old_keyword">Old password</string>
 
     <!-- old -->
+    <string name="ty_write_old_keyword">Old password</string>
     <string name="about">About</string>
     <string name="action_back">Back</string>
     <string name="action_cancel">Cancel</string>
@@ -429,10 +437,10 @@
     <string name="wpa2_must_with_eghit_characters">WPA2 passphrase length must be minimum 8
         characters
     </string>
+    <!-- 共享 -->
     <string name="wpa_must_with_eghit_characters">WPA passphrase length must be minimum 8
         characters
     </string>
-    <!-- 共享 -->
     <string name="new_share">Add Sharing</string>
     <string name="shared_title">My Sharings</string>
     <string name="ty_add_share_nickname">Nickname</string>
@@ -458,8 +466,8 @@
         symbols
     </string>
     <string name="ty_share_default_info">Enter mobile number/E-mail</string>
-    <string name="ty_no_data">No data</string>
     <!-- EZ配置 -->
+    <string name="ty_no_data">No data</string>
     <string name="ez_notSupport_5G">This app is supported only on 2.4GHz Wi-Fi channels</string>
     <string name="ez_notSupport_5G_change">Change</string>
     <string name="ez_notSupport_5G_continue">Continue</string>
@@ -479,10 +487,10 @@
     <string name="ty_ec_find_add_device">Add</string>
     <string name="ty_ec_find_add_device_title">Add Device</string>
     <string name="ty_ez_add_progress">Progress</string>
+
     <string name="ty_ez_connecting_device_note2">Keep router, phone and device within\n valid
         distance
     </string>
-
     <string name="ty_ez_connecting_device_title">Try to connect device</string>
     <string name="ty_ez_connecting_devicei_note1">Device is connecting</string>
     <string name="ty_ez_current_no_wifi">Phone is not connecting Wi-Fi at present</string>
@@ -524,11 +532,11 @@
     <string name="ty_ez_status_success_android">
         <![CDATA[<font color="#7ed321">Add successfully</font>]]></string>
     <string name="ty_ez_wifi_title">Set up the Wi-Fi for device</string>
+
+    <!-- 登录注册 -->
     <string name="ty_offline_note">1. Whether device is powered on; \n2.Wi-Fi network is
         normal；\n3.Reset and re-add device
     </string>
-
-    <!-- 登录注册 -->
     <string name="code_has_send_to_email">The verification code is sent to your email:</string>
     <string name="code_has_send_to_phone">Verification code is sent to your phone:</string>
     <string name="direct_login">Directly login?</string>
@@ -541,9 +549,9 @@
     <string name="ty_login_register">Register</string>
     <string name="ty_login_sms">SMS verify and sign in</string>
     <string name="ty_login_sms_confirm">Sign in with SMS verfication</string>
-    <string name="user_exists">The user has existed</string>
 
     <!-- 个人中心 -->
+    <string name="user_exists">The user has existed</string>
     <string name="mobile_binding">Bind mobile phone</string>
     <string name="mobile_binding_notsamecountry">Please enter the number with the same country as
         yours
@@ -565,8 +573,8 @@
     <string name="clear">Clear</string>
     <string name="please_input_dp_value">Please add Dp test\'s values</string>
     <string name="save_success">Save success</string>
-    <string name="save_failed">Save failed</string>
 
+    <string name="save_failed">Save failed</string>
     <string name="get_validate_code">Get validate code</string>
     <string name="input_validate_code">Input validate code</string>
     <string name="register_phonenumber">Register with Phone</string>
@@ -582,9 +590,9 @@
     <string name="reset_password">Reset success</string>
     <string name="default_country_code">CountryCode</string>
     <string name="please_input_username">Please Input Uid Name</string>
+
+
     <string name="username_email">Please Input Email</string>
-
-
     <string name="add_share_success">Add Successs</string>
     <string name="add_share_failure">Add Failure</string>
     <string name="delete_share_success">Delete Success</string>
@@ -651,18 +659,18 @@
     <string name="failure_reason">Reason of failure: </string>
     <string name="device_offLine">Device offline</string>
     <string name="device_network_error">Network Error</string>
-    <string name="edit_dp_value">Edit Test Value</string>
 
+    <string name="edit_dp_value">Edit Test Value</string>
     <string name="activity_ec_cancel_config">取消配置</string>
     <string name="cannot_set_no_cloud_and_no_lan">局域网模式或者云模式必须选择其中之一</string>
     <string name="device_state">设备状态：</string>
     <string name="firmware_upgrad_tips0">固件信息。新版本: %1$s,当前版本: %2$s,升级信息: %3$s</string>
+
     <string name="firmware_upgrad_tips1">固件信息。新版本: %1$s,当前版本: %2$s,升级信息: %3$s,升级状态: %4$d,升级类型:
         %5$d
     </string>
 
     <string name="device_name">设备名称</string>
-
     <string name="get_history_data">获取历史数据</string>
     <string name="get_device_status">获取状态</string>
     <string name="get_all_timer">获取所有定时</string>
@@ -677,36 +685,28 @@
     <string name="control_timer_task_switch_status">控制定时任务中所有定时器的开关状态</string>
     <string name="switch_demo">SwitchDemo</string>
     <string name="operation_failure">Operation failure</string>
-    <string name="input_raw_value">输入RAW类型数据:</string>
 
 
     <!-- 家庭管理 -->
+    <string name="input_raw_value">输入RAW类型数据:</string>
     <string name="family_empty_btn_text">add family</string>
-    <string name="family_index_title">Family management</string>
 
     <!-- 添加家庭 -->
+    <string name="family_index_title">Family management</string>
     <string name="family_add_title">Add Family</string>
     <string name="family_add_family_name">Family Name</string>
     <string name="family_add_finish">finish</string>
     <string name="family_add_name_check_tip">family name can not be empty</string>
-    <string name="family_add_room_check_tip">please choose room</string>
 
     <!-- 家庭信息 -->
+    <string name="family_add_room_check_tip">please choose room</string>
     <string name="family_info_title">Family Info</string>
     <string name="family_info_member_head_txt">family member</string>
     <string name="family_info_member_admin_txt">admin</string>
     <string name="family_info_member_normal_txt">ordinary member</string>
     <string name="family_info_remove_txt">remove the family</string>
-    <string name="family_info_remove_currenthome_tip">can not remove current home</string>
 
-    <array name="family_add_default_name_array">
-        <item>living room</item>
-        <item>master bedroom</item>
-        <item>secondary bedroom</item>
-        <item>dining room</item>
-        <item>kitchen</item>
-        <item>study</item>
-    </array>
+    <string name="family_info_remove_currenthome_tip">can not remove current home</string>
 
     <string name="ty_add_device_sort">Select Device Type</string>
     <string name="ty_notify_location_setup">Enable phone location permission to find nearby Wi-Fi devices</string>
@@ -735,4 +735,7 @@
     <string name="ty_scene_condition_is_not_empty">Condition can not empty</string>
     <string name="ty_scene_action_is_not_empty">Action can not empty</string>
     <string name="ty_scene_operator_not_support">Operator not support</string>
+
+    <string name="goto_shortcut_parser_demo">goto shortcut control/status page.</string>
+    <string name="shortcut_device_none">The device does not have quick control capabilities</string>
 </resources>

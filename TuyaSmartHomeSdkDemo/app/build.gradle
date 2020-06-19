@@ -14,7 +14,7 @@ android {
         ndk {
             abiFilters "armeabi-v7a"
         }
-   }
+    }
     buildTypes {
         debug {
             minifyEnabled false
@@ -26,17 +26,24 @@ android {
         }
     }
 
+    repositories {
+        flatDir {
+            dirs 'libs'
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_7
         targetCompatibility JavaVersion.VERSION_1_7
     }
 
     dependencies {
-//        implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
+        implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
         //***** required ****//
         implementation 'com.alibaba:fastjson:1.1.67.android'
         implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.12.3'
         implementation 'com.tuya.smart:tuyasmart:3.17.0'
+        implementation 'com.tuya.smart:tuyasmart-shortcutparser:0.0.1'
         //***** required ****//
 
         //***** not required ****//
@@ -52,4 +59,9 @@ android {
         implementation 'com.readystatesoftware.systembartint:systembartint:1.0.3'
         //***** not required ****//
     }
+}
+
+dependencies {
+    implementation 'com.android.support:appcompat-v7:28.+'
+    implementation 'com.android.support.constraint:constraint-layout:+'
 }

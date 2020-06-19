@@ -59,7 +59,7 @@ public class CommonDebugDeviceAdapter extends BaseListArrayAdapter<SchemaBean> {
 
     @Override
     protected void bindView(ViewHolder viewHolder, SchemaBean data) {
-        viewHolder.initData(data);
+        viewHolder.updateData(data);
     }
 
     public void updateViewData(String dpId, Object value) {
@@ -145,7 +145,7 @@ public class CommonDebugDeviceAdapter extends BaseListArrayAdapter<SchemaBean> {
         }
 
         @Override
-        public void initData(SchemaBean schemaBean) {
+        public void updateData(SchemaBean schemaBean) {
             dpName.setText(schemaBean.getName());
             dpNumber.setText(schemaBean.getId());
             dpProperty.setText(getProperty(schemaBean));
