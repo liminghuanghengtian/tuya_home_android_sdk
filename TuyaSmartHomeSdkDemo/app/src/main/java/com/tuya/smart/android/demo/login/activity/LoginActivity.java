@@ -37,6 +37,8 @@ public class LoginActivity extends BaseActivity implements ILoginView, TextWatch
     @BindView(R.id.login_submit)
     public Button mLoginSubmit;
 
+    @BindView(R.id.bnt_qrcode_login)
+    public Button mQRLogin;
     @BindView(R.id.country_name)
     public TextView mCountryName;
 
@@ -175,6 +177,11 @@ public class LoginActivity extends BaseActivity implements ILoginView, TextWatch
             ProgressUtil.showLoading(LoginActivity.this, R.string.logining);
             mLoginPresenter.login(userName, mPassword.getText().toString());
         }
+    }
+    @OnClick(R.id.bnt_qrcode_login)
+    public void qrCodeLogin(){
+        Intent intent = new Intent(this, QRCodeLoginActivity.class);
+        startActivity(intent);
     }
 
     @Override

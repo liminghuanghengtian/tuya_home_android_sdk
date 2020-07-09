@@ -118,6 +118,7 @@
 
     <!--选项-->
     <RelativeLayout
+        android:id="@+id/login_sms"
         android:layout_width="match_parent"
         android:layout_height="@dimen/mg_20"
         android:layout_below="@id/login_submit"
@@ -144,6 +145,14 @@
             android:textSize="@dimen/ts_14"/>
 
     </RelativeLayout>
-
+    <Button
+        android:id="@+id/bnt_qrcode_login"
+        android:layout_below="@+id/login_sms"
+        android:layout_marginTop="100dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        style="@style/Button.Normal"
+        android:layout_marginBottom="10dp"
+        android:text="@string/login_qrcode"/>
 
 </RelativeLayout>

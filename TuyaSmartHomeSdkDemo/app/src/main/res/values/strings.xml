@@ -688,7 +688,7 @@
 
 
     <!-- 家庭管理 -->
-    <string name="input_raw_value">输入RAW类型数据:</string>
+    <string name="input_raw_value">please input RAW Type</string>
     <string name="family_empty_btn_text">add family</string>
 
     <!-- 添加家庭 -->
@@ -738,4 +738,9 @@
 
     <string name="goto_shortcut_parser_demo">goto shortcut control/status page.</string>
     <string name="shortcut_device_none">The device does not have quick control capabilities</string>
+
+    <string name="login_qr_app_info">Scan QR to login</string>
+    <string name="login_qrlogin_pad_info">Need to log in with your phone</string>
+    <string name="login_qrcode" >QR Code Login</string>
+
 </resources>

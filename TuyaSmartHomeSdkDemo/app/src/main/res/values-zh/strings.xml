@@ -668,4 +668,9 @@
 
     <string name="goto_shortcut_parser_demo">进入快捷控制/状态页面</string>
     <string name="shortcut_device_none">设备没有快捷控制能力</string>
+    <string name="input_raw_value">输入RAW类型数据:</string>
+    <string name="login_qr_app_info">扫码登录</string>
+    <string name="login_qrlogin_pad_info">需要使用手机 app 扫码</string>
+    <string name="login_qrcode">二维码扫码登录</string>
+
 </resources>

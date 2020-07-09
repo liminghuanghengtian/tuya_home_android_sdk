@@ -64,6 +64,12 @@
             android:screenOrientation="portrait"
             android:theme="@style/Splash.Theme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
+
+        <activity
+            android:name=".login.activity.QRCodeLoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden" />
         <activity
             android:name=".login.activity.LoginWithPhoneActivity"
             android:screenOrientation="portrait"
