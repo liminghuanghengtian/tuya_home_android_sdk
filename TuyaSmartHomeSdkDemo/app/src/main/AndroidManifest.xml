@@ -192,6 +192,12 @@
         <activity android:name=".scene.activity.OperatorValueActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Default_Public_Theme"/>
+        <activity android:name=".shortcut.ShortcutDeviceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"/>
+        <activity android:name=".shortcut.ShortcutOperateDeviceActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Default_Public_Theme"/>
     </application>
 
 </manifest>
