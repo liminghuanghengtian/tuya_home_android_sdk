@@ -8,11 +8,13 @@
 
 ## Features Overview
 
-Tuya Smart APP SDK provides the interface package for the communication with hardware and Tuya Cloud to accelerate the application development process, including the following features:
+Tuya Smart APP SDK provides the interface package for the communication with hardware and Tuya Cloud to accelerate the application development process
 
-- Hardware functions (network configuration, control, status reporting, regular tasks, groups, firmware upgrades, sharing)
+The SDK includes the following features:
+
 - Account system (phone number, email registration, login, password reset and other general account functions)
-- Tuya Cloud HTTP API interface package
+- Home system (home management, room management, home sharing and other functions)
+- Hardware functions (network configuration, control, status reporting, timed tasks, groups, firmware upgrades, sharing)
 
 ## Doc
 
@@ -20,5 +22,5 @@ Refer to details: [Tuya Smart Doc - Android SDK](https://tuyainc.github.io/tuyas
 
 ## Latest version
 
-3.17.0
+3.17.6
 
