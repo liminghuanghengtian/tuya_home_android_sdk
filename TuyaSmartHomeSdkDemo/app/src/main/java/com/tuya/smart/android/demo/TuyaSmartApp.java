@@ -6,6 +6,8 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 
+import androidx.multidex.MultiDexApplication;
+
 import com.tuya.smart.android.common.utils.L;
 import com.tuya.smart.android.demo.login.activity.LoginActivity;
 import com.tuya.smart.android.network.IApiUrlProvider;
@@ -15,7 +17,7 @@ import com.tuya.smart.sdk.TuyaSdk;
 import com.tuya.smart.sdk.api.INeedLoginListener;
 
 
-public class TuyaSmartApp extends Application {
+public class TuyaSmartApp extends MultiDexApplication {
 
     private static final String TAG = "TuyaSmartApp";
 

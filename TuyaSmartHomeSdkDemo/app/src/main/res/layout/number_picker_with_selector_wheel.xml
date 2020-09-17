@@ -31,13 +31,13 @@
         android:textColor="#303030"
         android:textSize="@dimen/ts_18" />
 
-    <android.support.v7.widget.AppCompatImageButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/np__increment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher" />
 
-    <android.support.v7.widget.AppCompatImageButton
+    <androidx.appcompat.widget.AppCompatImageButton
         android:id="@+id/np__decrement"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

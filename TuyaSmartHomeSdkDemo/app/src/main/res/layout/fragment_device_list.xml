@@ -29,7 +29,7 @@
         android:layout_marginBottom="@dimen/mg_60"
         android:layout_below="@id/network_tip"
     >
-        <android.support.v4.widget.SwipeRefreshLayout
+        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
@@ -38,7 +38,7 @@
                 android:id="@+id/lv_device_list"
                 style="@style/list_view"
                 android:background="@color/transparent"/>
-        </android.support.v4.widget.SwipeRefreshLayout>
+        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
 
     </RelativeLayout>
