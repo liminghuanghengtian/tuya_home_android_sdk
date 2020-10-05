@@ -58,7 +58,7 @@ android {
         //***** required ****//
         implementation 'com.alibaba:fastjson:1.1.67.android'
         implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
-        implementation 'com.tuya.smart:tuyasmart:3.19.0-beta2'
+        implementation 'com.tuya.smart:tuyasmart:3.19.0-beta4'
         implementation 'com.tuya.smart:tuyasmart-shortcutparser:0.0.1'
         implementation 'androidx.localbroadcastmanager:localbroadcastmanager:1.0.0'
         //***** required ****//
