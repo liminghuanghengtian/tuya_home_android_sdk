@@ -24,11 +24,11 @@ Refer to details: [Tuya Smart Doc - Android SDK](https://tuyainc.github.io/tuyas
 
 Release version: 
 
-* 3.17.9
+* 3.17.10
 
 Beta version:
 
-* 3.19.0-beta1
+* 3.19.0-beta4
 
 
 
