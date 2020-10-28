@@ -79,8 +79,8 @@ public class DeviceBindModel extends BaseModel implements IDeviceBindModel {
                     }
 
                     @Override
-                    public void onActiveSuccess(DeviceBean gwDevResp) {
-                        resultSuccess(WHAT_EC_ACTIVE_SUCCESS, gwDevResp);
+                    public void onActiveSuccess(DeviceBean deviceBean) {
+                        resultSuccess(WHAT_EC_ACTIVE_SUCCESS, deviceBean);
                     }
 
                     @Override
