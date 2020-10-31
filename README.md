@@ -1,6 +1,6 @@
 ## Tuya Smart Android SDK
 
-[![CircleCI](https://circleci.com/gh/TuyaInc/tuyasmart_home_android_sdk/tree/master.svg?style=svg)](https://circleci.com/gh/TuyaInc/tuyasmart_home_android_sdk/tree/master)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![version](https://img.shields.io/badge/release-3.17.10-brightgreen)](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/zh-hans/resource/Update_Log.html)[![version](https://img.shields.io/badge/docs-brightgreen)](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/)
+[![CircleCI](https://circleci.com/gh/TuyaInc/tuyasmart_home_android_sdk/tree/master.svg?style=svg)](https://circleci.com/gh/TuyaInc/tuyasmart_home_android_sdk/tree/master)  [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)[![version](https://img.shields.io/badge/release-3.19.1-brightgreen)](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/zh-hans/resource/Update_Log.html)[![version](https://img.shields.io/badge/docs-brightgreen)](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/)
 
 
 
