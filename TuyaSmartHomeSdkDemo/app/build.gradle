@@ -60,7 +60,7 @@ android {
         implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.14.9'
 
         // latest release version
-        //implementation 'com.tuya.smart:tuyasmart:3.19.3'
+        //implementation 'com.tuya.smart:tuyasmart:3.19.2'
 
         // latest beta version
         implementation 'com.tuya.smart:tuyasmart:3.20.0-beta1'
