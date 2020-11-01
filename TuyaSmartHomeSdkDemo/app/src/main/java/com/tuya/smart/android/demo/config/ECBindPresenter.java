@@ -9,7 +9,6 @@ import android.widget.Toast;
 import com.tuya.smart.android.common.utils.L;
 import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.activity.BrowserActivity;
-import com.tuya.smart.android.demo.base.app.Constant;
 import com.tuya.smart.android.demo.base.utils.ActivityUtils;
 import com.tuya.smart.android.demo.base.utils.ProgressUtil;
 import com.tuya.smart.android.demo.family.FamilyManager;
@@ -17,12 +16,8 @@ import com.tuya.smart.android.device.utils.WiFiUtil;
 import com.tuya.smart.android.mvp.bean.Result;
 import com.tuya.smart.android.mvp.presenter.BasePresenter;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
-import com.tuya.smart.interior.device.bean.GwDevResp;
 import com.tuya.smart.sdk.api.ITuyaActivatorGetToken;
-import com.tuya.smart.sdk.bean.BlueMeshBean;
 import com.tuya.smart.sdk.bean.DeviceBean;
-
-import java.util.List;
 
 
 /**
@@ -179,7 +174,7 @@ public class ECBindPresenter extends BasePresenter {
                 break;
             case DeviceBindModel.WHAT_BIND_DEVICE_SUCCESS:
                 L.d(TAG, "bind_device_success");
-                bindDeviceSuccess(((GwDevResp) ((Result) (msg.obj)).getObj()).getName());
+                bindDeviceSuccess(((DeviceBean) ((Result) (msg.obj)).getObj()).getName());
                 break;
 
         }
