@@ -293,6 +293,7 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
     private void updateDeviceData(List<DeviceBean> list) {
         if (list.size() == 0) {
             mView.showBackgroundView();
+            mView.loadFinish();
         } else {
             mView.hideBackgroundView();
             mView.updateDeviceData(list);
