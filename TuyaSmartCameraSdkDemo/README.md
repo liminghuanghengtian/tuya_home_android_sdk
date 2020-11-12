@@ -2,8 +2,6 @@
 
 点击查看中文版：[中文版](./README-zh.md)
 
-------
-
 ## Features Overview
 
 Tuya Smart Camera SDK provides the interface package for the communication with remote camera device to accelerate the application development process, including the following features:
@@ -14,70 +12,9 @@ Tuya Smart Camera SDK provides the interface package for the communication with 
 - Talk to the remote camera
 - Add Cloud storage module
 
-## Rapid Integration
-
-**Using AndroidStudio integration(Version 3.1.3 or above is supported)**
-
-add the following line to your project build.gradle:
-
-```gradle
-buildscript {
-    repositories {
-        ...
-        jcenter()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:4.0.1'
-    }
-}
-
-allprojects {
-    repositories {
-        ...
-        jcenter()
-    }
-}
-```
-add the following line to your module build.gradle:
-
-```gradle
-defaultConfig {
-    ndk {
-       abiFilters "armeabi-v7a","arm64-v8a"
-    }
-}   
-
-dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar', '*.aar'])
-    implementation 'com.alibaba:fastjson:1.1.67.android'
-    implementation 'com.squareup.okhttp3:okhttp-urlconnection:3.12.12'
-    
-    // required tuya home sdk
-    implementation 'com.tuya.smart:tuyasmart:3.20.0-beta1'
-
-    // tuya camera module
-    implementation 'com.tuya.smart:tuyasmart-ipc-camera-middleware:3.20.0'
-    implementation 'com.tuya.smart:tuyasmart-ipc-camera-v2:3.20.0'
-    implementation 'com.tuya.smart:tuyasmart-ipc-camera-utils:3.20.0'
-    implementation 'com.tuya.smart:tuyasmart-ipc-camera-diff-api:3.20.0'
-    implementation 'com.tuya.smart:tuyasmart-ipc-camera-outside:3.20.0'
-    implementation 'com.tuya.smart:tuyasmart-base-utils:3.18.0r143-rc.9'
-    //option
-    implementation 'com.tuya.smart:tuyasmart-ipc-camera-message:3.13.0r128'
-    implementation 'com.tuya.smart:tuyasmart-ipc-devicecontrol:3.17.0r139'
-
-    //encrypted image
-    implementation 'com.tuya.smart:tuyasmart-imagepipeline-okhttp3:0.0.1'
-    implementation 'com.facebook.fresco:fresco:2.2.0'
-}
-```
-
-For the instructions of AndroidStudio, please refer to: [AndroidStudio Guides](https://developer.android.com/studio/)
-
-
 ## Doc
 
-Refer to Details: [Tuya Smart Camera Android SDK Doc](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/en/resource/ipc/)
+Refer to details: [Tuya Smart Camera Android SDK Doc](https://tuyainc.github.io/tuyasmart_home_android_sdk_doc/en/resource/ipc/)
 
 ## Update log
 - 2020.11.10
