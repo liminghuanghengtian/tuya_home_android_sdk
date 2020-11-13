@@ -25,11 +25,10 @@ Refer to details: [Tuya Smart Doc - Android SDK](https://tuyainc.github.io/tuyas
 
 Beta version: 
 
-* 3.20.0-beta1
 
 Release version: 
 
-* 3.19.2
+* 3.20.0
 
 
 
