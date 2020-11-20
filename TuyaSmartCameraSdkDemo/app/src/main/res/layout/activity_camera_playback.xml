@@ -38,11 +38,30 @@
 
     </RelativeLayout>
 
+    <RelativeLayout
+        android:id="@+id/timeline_layout"
+        android:layout_below="@+id/camera_video_view_Rl"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <com.tuya.smart.android.camera.TuyaTimelineView
+            app:timeScaleColor="@color/black"
+            app:linesColor="@color/black"
+            app:bubbleColor="@color/gray"
+            app:bubbleTextColor="@color/white"
+            app:topTextMargin="10dp"
+            app:bottomTextMargin="5dp"
+            android:id="@+id/timeline"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"></com.tuya.smart.android.camera.TuyaTimelineView>
+
+    </RelativeLayout>
+
     <LinearLayout
         android:id="@+id/query_ll"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/camera_video_view_Rl"
+        android:layout_below="@+id/timeline_layout"
         android:orientation="horizontal"
         android:padding="@dimen/mg_10">
 

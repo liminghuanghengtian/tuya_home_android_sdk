@@ -97,7 +97,7 @@ dependencies {
     //encrypted image
     implementation 'com.tuya.smart:tuyasmart-imagepipeline-okhttp3:0.0.1'
     implementation 'com.facebook.fresco:fresco:2.2.0'
+    //timeline view
+    implementation 'com.tuya.smart:tuyasmart-ipc-camera-timeline:1.0.0-LOCAL'
 
-    //cloud service purchase
-//    implementation 'com.tuya.smart:tuyasmart-ipc-camera-cloud-purchase:3.20.0r149-sdk-rc.1'
 }

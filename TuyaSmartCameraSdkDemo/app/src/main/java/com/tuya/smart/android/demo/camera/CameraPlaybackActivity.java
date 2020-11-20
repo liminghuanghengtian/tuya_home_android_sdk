@@ -20,6 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
+import com.tuya.smart.android.camera.TuyaTimelineView;
+import com.tuya.smart.android.camera.bean.TimeBean;
+import com.tuya.smart.android.camera.listener.OnBarMoveListener;
+import com.tuya.smart.android.camera.listener.OnSelectedTimeListener;
 import com.tuya.smart.android.common.utils.L;
 import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.utils.MessageUtil;
@@ -36,6 +40,7 @@ import com.tuya.smart.camera.middleware.widget.AbsVideoViewCallback;
 import com.tuya.smart.camera.middleware.widget.TuyaCameraView;
 import com.tuya.smart.camera.utils.AudioUtils;
 
+import java.nio.ByteBuffer;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,6 +69,7 @@ public class CameraPlaybackActivity extends AppCompatActivity implements View.On
     private ImageView muteImg;
     private EditText dateInputEdt;
     private RecyclerView queryRv;
+    private TuyaTimelineView timelineView;
     private Button queryBtn, startBtn, pauseBtn, resumeBtn, stopBtn;
 
     private ITuyaSmartCameraP2P mCameraP2P;
@@ -106,10 +112,18 @@ public class CameraPlaybackActivity extends AppCompatActivity implements View.On
             List<TimePieceBean> timePieceBeans = mBackDataDayCache.get(mCameraP2P.getDayKey());
             if (timePieceBeans != null) {
                 queryDateList.addAll(timePieceBeans);
+                List<TimeBean> timelineData = new ArrayList<>();
+                for(TimePieceBean bean: timePieceBeans) {
+                    TimeBean b = new TimeBean();
+                    b.setStartTime(bean.getStartTime());
+                    b.setEndTime(bean.getEndTime());
+                    timelineData.add(b);
+                }
+                timelineView.setCurrentTimeConfig(timePieceBeans.get(0).getEndTime()*1000L);
+                timelineView.setRecordDataExistTimeClipsList(timelineData);
             } else {
                 showErrorToast();
             }
-
             adapter.notifyDataSetChanged();
         } else {
 
@@ -185,6 +199,8 @@ public class CameraPlaybackActivity extends AppCompatActivity implements View.On
 
     private void initView() {
         toolbar = findViewById(R.id.toolbar_view);
+        timelineView = findViewById(R.id.timeline);
+
         setSupportActionBar(toolbar);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -209,6 +225,33 @@ public class CameraPlaybackActivity extends AppCompatActivity implements View.On
         RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(width, height);
         layoutParams.addRule(RelativeLayout.BELOW, R.id.toolbar_view);
         findViewById(R.id.camera_video_view_Rl).setLayoutParams(layoutParams);
+
+        timelineView.setOnBarMoveListener(new OnBarMoveListener() {
+            @Override
+            public void onBarMove(long l, long l1, long l2) {
+
+            }
+
+            @Override
+            public void onBarMoveFinish(long startTime, long endTime, long currentTime) {
+                timelineView.setCanQueryData();
+                timelineView.setQueryNewVideoData(false);
+                if (startTime != -1 && endTime != -1) {
+                    playback((int)startTime, (int)endTime, (int)currentTime);
+                }
+            }
+
+            @Override
+            public void onBarActionDown() {
+
+            }
+        });
+        timelineView.setOnSelectedTimeListener(new OnSelectedTimeListener() {
+            @Override
+            public void onDragging(long selectStartTime, long selectEndTime) {
+
+            }
+        });
     }
 
     private void initData() {
@@ -265,32 +308,35 @@ public class CameraPlaybackActivity extends AppCompatActivity implements View.On
         adapter.setListener(new CameraPlaybackTimeAdapter.OnTimeItemListener() {
             @Override
             public void onClick(TimePieceBean timePieceBean) {
-
-                mCameraP2P.startPlayBack(timePieceBean.getStartTime(),
-                        timePieceBean.getEndTime(),
-                        timePieceBean.getStartTime(), new OperationDelegateCallBack() {
-                            @Override
-                            public void onSuccess(int sessionId, int requestId, String data) {
-                                isPlayback = true;
-                            }
-
-                            @Override
-                            public void onFailure(int sessionId, int requestId, int errCode) {
-                                isPlayback = false;
-                            }
-                        }, new OperationDelegateCallBack() {
-                            @Override
-                            public void onSuccess(int sessionId, int requestId, String data) {
-                                isPlayback = false;
-                            }
-
-                            @Override
-                            public void onFailure(int sessionId, int requestId, int errCode) {
-                                isPlayback = false;
-                            }
-                        });
+                playback(timePieceBean.getStartTime(), timePieceBean.getEndTime(), timePieceBean.getStartTime());
             }
         });
+    }
+
+    private void playback(int startTime, int endTime, int playTime) {
+        mCameraP2P.startPlayBack(startTime,
+                endTime,
+                playTime, new OperationDelegateCallBack() {
+                    @Override
+                    public void onSuccess(int sessionId, int requestId, String data) {
+                        isPlayback = true;
+                    }
+
+                    @Override
+                    public void onFailure(int sessionId, int requestId, int errCode) {
+                        isPlayback = false;
+                    }
+                }, new OperationDelegateCallBack() {
+                    @Override
+                    public void onSuccess(int sessionId, int requestId, String data) {
+                        isPlayback = false;
+                    }
+
+                    @Override
+                    public void onFailure(int sessionId, int requestId, int errCode) {
+                        isPlayback = false;
+                    }
+                });
     }
 
     @Override
@@ -466,8 +512,9 @@ public class CameraPlaybackActivity extends AppCompatActivity implements View.On
 
     private AbsP2pCameraListener p2pCameraListener = new AbsP2pCameraListener() {
         @Override
-        public void onSessionStatusChanged(Object o, int i, int i1) {
-            super.onSessionStatusChanged(o, i, i1);
+        public void onReceiveFrameYUVData(int i, ByteBuffer byteBuffer, ByteBuffer byteBuffer1, ByteBuffer byteBuffer2, int i1, int i2, int i3, int i4, long l, long l1, long l2, Object o) {
+            super.onReceiveFrameYUVData(i, byteBuffer, byteBuffer1, byteBuffer2, i1, i2, i3, i4, l, l1, l2, o);
+            timelineView.setCurrentTimeInMillisecond(l*1000L);
         }
     };
 
