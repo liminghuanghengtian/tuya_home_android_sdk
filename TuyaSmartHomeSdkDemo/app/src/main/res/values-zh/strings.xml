@@ -644,6 +644,7 @@
     <string name="ty_add_device_wifi">wifi设备</string>
     <string name="ty_add_device_gateway">网关设备</string>
     <string name="ty_add_device_gateway_sub">网关子设备</string>
+    <string name="ty_add_device_grcode">二维码配网</string>
     <string name="ty_scene">场景</string>
     <string name="ty_auto">自动化</string>
     <string name="ty_exe">执行</string>

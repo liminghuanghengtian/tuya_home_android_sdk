@@ -9,6 +9,7 @@ import android.content.Intent;
 import androidx.multidex.MultiDexApplication;
 
 import com.tuya.smart.android.common.utils.L;
+import com.tuya.smart.android.demo.camera.utils.FrescoManager;
 import com.tuya.smart.android.demo.login.activity.LoginActivity;
 import com.tuya.smart.android.network.IApiUrlProvider;
 import com.tuya.smart.android.network.TuyaSmartNetWork;
@@ -39,6 +40,7 @@ public class TuyaSmartApp extends MultiDexApplication {
                 startActivity(intent);
             }
         });
+        FrescoManager.initFresco(this);
     }
 
     public static String getProcessName(Context context) {

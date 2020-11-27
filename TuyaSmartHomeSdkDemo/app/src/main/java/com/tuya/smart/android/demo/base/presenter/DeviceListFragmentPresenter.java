@@ -19,6 +19,7 @@ import com.tuya.smart.android.demo.base.utils.DialogUtil;
 import com.tuya.smart.android.demo.base.utils.ProgressUtil;
 import com.tuya.smart.android.demo.base.utils.ToastUtil;
 import com.tuya.smart.android.demo.base.view.IDeviceListFragmentView;
+import com.tuya.smart.android.demo.camera.CameraPanelActivity;
 import com.tuya.smart.android.demo.config.AddDeviceTypeActivity;
 import com.tuya.smart.android.demo.config.CommonConfig;
 import com.tuya.smart.android.demo.device.CommonDeviceDebugActivity;
@@ -36,6 +37,9 @@ import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.bean.DeviceBean;
 
 import java.util.List;
+import java.util.Map;
+
+import static com.tuya.smart.android.demo.camera.utils.Constants.INTENT_P2P_TYPE;
 
 /**
  * Created by letian on 15/6/1.
@@ -113,6 +117,19 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
             Intent intent = new Intent(mActivity, SwitchActivity.class);
             intent.putExtra(SwitchActivity.INTENT_DEVID, devBean.getDevId());
             mActivity.startActivity(intent);
+        } else if ("sp".equals(devBean.getProductBean().getCategory())) {
+            Intent intent = new Intent(mActivity, CameraPanelActivity.class);
+            intent.putExtra(CommonDeviceDebugPresenter.INTENT_DEVID, devBean.getDevId());
+            Map<String, Object> map = devBean.getSkills();
+            int p2pType = -1;
+            if (map == null || map.size() == 0) {
+                p2pType = -1;
+            } else {
+                p2pType = (Integer) (map.get("p2pType"));
+            }
+            intent.putExtra(INTENT_P2P_TYPE, p2pType);
+            intent.putExtra(CommonDeviceDebugPresenter.INTENT_DEVID, devBean.getDevId());
+            mActivity.startActivity(intent);
         } else {
             gotoDeviceCommonActivity(devBean);
         }
@@ -125,7 +142,7 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
         mActivity.startActivity(intent);
     }
 
-    public void gotoShortcutActivity(){
+    public void gotoShortcutActivity() {
         Intent intent = new Intent(mActivity, ShortcutDeviceActivity.class);
         mActivity.startActivity(intent);
     }
@@ -190,7 +207,14 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
                     @Override
                     public void onSuccess(HomeBean bean) {
                         L.d(TAG, com.alibaba.fastjson.JSONObject.toJSONString(bean));
-                        updateDeviceData(bean.getDeviceList());
+                        if (mActivity != null) {
+                            mActivity.runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    updateDeviceData(bean.getDeviceList());
+                                }
+                            });
+                        }
                     }
 
                     @Override

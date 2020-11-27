@@ -714,6 +714,7 @@
     <string name="ty_add_device_wifi">wifi device</string>
     <string name="ty_add_device_gateway">gateway device</string>
     <string name="ty_add_device_gateway_sub">gateway sub-device</string>
+    <string name="ty_add_device_grcode">qrcode config</string>
     <string name="ty_scene">Scene</string>
     <string name="ty_auto">Automation</string>
     <string name="ty_exe">Execute</string>
