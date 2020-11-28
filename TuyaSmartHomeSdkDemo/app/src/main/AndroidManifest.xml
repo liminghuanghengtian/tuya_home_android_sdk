@@ -25,6 +25,8 @@
     <uses-permission
         android:name="android.permission.CHANGE_WIFI_MULTICAST_STATE"
         android:required="false" />
+    <!-- camera need -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:name=".TuyaSmartApp"
@@ -200,6 +202,23 @@
         <activity android:name=".shortcut.ShortcutOperateDeviceActivity"
             android:screenOrientation="portrait"
             android:theme="@style/Default_Public_Theme"/>
+        <!--  camera module -->
+        <activity
+            android:name=".camera.AlarmDetectionActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".camera.CameraCloudStorageActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".camera.CameraCloudVideoActivity"></activity>
+        <activity
+            android:name=".camera.CameraPanelActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".camera.CameraPlaybackActivity"
+            android:screenOrientation="portrait" />
+        <activity android:name=".camera.CameraSettingActivity" />
+        <activity android:name=".camera.QrCodeConfigActivity" />
+        <!--  camera module -->
     </application>
 
 </manifest>

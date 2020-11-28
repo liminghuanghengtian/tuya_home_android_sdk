@@ -15,6 +15,7 @@ The SDK includes the following features:
 - Account system (phone number, email registration, login, password reset and other general account functions)
 - Home system (home management, room management, home sharing and other functions)
 - Hardware functions (network configuration, control, status reporting, timed tasks, groups, firmware upgrades, sharing)
+- ipc module (including live video, playback, cloud storage, message panel）
 
 ## Doc
 

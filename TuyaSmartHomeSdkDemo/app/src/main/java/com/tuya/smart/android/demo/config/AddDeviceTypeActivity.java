@@ -6,6 +6,7 @@ import android.view.View;
 import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.activity.BaseActivity;
 import com.tuya.smart.android.demo.base.utils.ActivityUtils;
+import com.tuya.smart.android.demo.camera.QrCodeConfigActivity;
 
 public class AddDeviceTypeActivity extends BaseActivity {
     @Override
@@ -31,6 +32,12 @@ public class AddDeviceTypeActivity extends BaseActivity {
                 startGatewayDevConfig();
             }
         });
+        findViewById(R.id.grcode_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startQrCodeDevConfig();
+            }
+        });
     }
 
     private void startGatewayDevConfig() {
@@ -39,5 +46,9 @@ public class AddDeviceTypeActivity extends BaseActivity {
 
     private void startWifiDevConfig() {
         ActivityUtils.gotoActivity(this, AddDeviceTipActivity.class, ActivityUtils.ANIMATE_FORWARD, false);
+    }
+
+    private void startQrCodeDevConfig() {
+        ActivityUtils.gotoActivity(this, QrCodeConfigActivity.class, ActivityUtils.ANIMATE_FORWARD, false);
     }
 }

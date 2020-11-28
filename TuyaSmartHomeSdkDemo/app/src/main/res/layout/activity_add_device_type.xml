@@ -27,6 +27,12 @@
             android:layout_height="50dp"
             android:text="@string/ty_add_device_gateway"
             />
+        <Button
+            android:id="@+id/grcode_btn"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:text="@string/ty_add_device_grcode"
+            />
 
     </LinearLayout>
 </RelativeLayout>
