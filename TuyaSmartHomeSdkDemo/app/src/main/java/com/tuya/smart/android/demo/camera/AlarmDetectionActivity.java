@@ -36,7 +36,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import static com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter.INTENT_DEVID;
 import static com.tuya.smart.android.demo.camera.utils.Constants.ALARM_DETECTION_DATE_MONTH_FAILED;
 import static com.tuya.smart.android.demo.camera.utils.Constants.ALARM_DETECTION_DATE_MONTH_SUCCESS;
 import static com.tuya.smart.android.demo.camera.utils.Constants.ARG1_OPERATE_FAIL;
@@ -45,6 +44,7 @@ import static com.tuya.smart.android.demo.camera.utils.Constants.MOTION_CLASSIFY
 import static com.tuya.smart.android.demo.camera.utils.Constants.MOTION_CLASSIFY_SUCCESS;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_DELETE_ALARM_DETECTION;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_GET_ALARM_DETECTION;
+import static com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter.INTENT_DEVID;
 
 /**
  * huangdaju

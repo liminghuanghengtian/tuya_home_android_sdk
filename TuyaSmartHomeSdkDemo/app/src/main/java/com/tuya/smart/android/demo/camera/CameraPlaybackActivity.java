@@ -20,10 +20,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.alibaba.fastjson.JSONException;
 import com.alibaba.fastjson.JSONObject;
-import com.tuya.smart.android.camera.TuyaTimelineView;
-import com.tuya.smart.android.camera.bean.TimeBean;
-import com.tuya.smart.android.camera.listener.OnBarMoveListener;
-import com.tuya.smart.android.camera.listener.OnSelectedTimeListener;
+import com.tuya.smart.android.camera.timeline.OnBarMoveListener;
+import com.tuya.smart.android.camera.timeline.OnSelectedTimeListener;
+import com.tuya.smart.android.camera.timeline.TimeBean;
+import com.tuya.smart.android.camera.timeline.TuyaTimelineView;
 import com.tuya.smart.android.common.utils.L;
 import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.utils.MessageUtil;
@@ -48,14 +48,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.tuya.smart.android.demo.camera.utils.Constants.INTENT_P2P_TYPE;
-import static com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter.INTENT_DEVID;
 import static com.tuya.smart.android.demo.camera.utils.Constants.ARG1_OPERATE_FAIL;
 import static com.tuya.smart.android.demo.camera.utils.Constants.ARG1_OPERATE_SUCCESS;
+import static com.tuya.smart.android.demo.camera.utils.Constants.INTENT_P2P_TYPE;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_DATA_DATE;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_DATA_DATE_BY_DAY_FAIL;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_DATA_DATE_BY_DAY_SUCC;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_MUTE;
+import static com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter.INTENT_DEVID;
 
 
 /**

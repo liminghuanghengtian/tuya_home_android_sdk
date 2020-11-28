@@ -44,7 +44,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <com.tuya.smart.android.camera.TuyaTimelineView
+        <com.tuya.smart.android.camera.timeline.TuyaTimelineView
             app:timeScaleColor="@color/black"
             app:linesColor="@color/black"
             app:bubbleColor="@color/gray"
@@ -53,7 +53,7 @@
             app:bottomTextMargin="5dp"
             android:id="@+id/timeline"
             android:layout_width="match_parent"
-            android:layout_height="60dp"></com.tuya.smart.android.camera.TuyaTimelineView>
+            android:layout_height="60dp"></com.tuya.smart.android.camera.timeline.TuyaTimelineView>
 
     </RelativeLayout>
 

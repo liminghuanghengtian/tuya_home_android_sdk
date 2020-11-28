@@ -22,8 +22,8 @@ import com.tuya.smart.android.common.utils.L;
 import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.utils.MessageUtil;
 import com.tuya.smart.android.demo.base.utils.ToastUtil;
-import com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter;
 import com.tuya.smart.android.demo.camera.utils.Constants;
+import com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter;
 import com.tuya.smart.camera.camerasdk.typlayer.callback.AbsP2pCameraListener;
 import com.tuya.smart.camera.camerasdk.typlayer.callback.OnRenderDirectionCallback;
 import com.tuya.smart.camera.camerasdk.typlayer.callback.OperationDelegateCallBack;
@@ -42,10 +42,9 @@ import com.tuyasmart.camera.devicecontrol.model.PTZDirection;
 import java.io.File;
 import java.nio.ByteBuffer;
 
-import static com.tuya.smart.android.demo.camera.utils.Constants.INTENT_P2P_TYPE;
-import static com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter.INTENT_DEVID;
 import static com.tuya.smart.android.demo.camera.utils.Constants.ARG1_OPERATE_FAIL;
 import static com.tuya.smart.android.demo.camera.utils.Constants.ARG1_OPERATE_SUCCESS;
+import static com.tuya.smart.android.demo.camera.utils.Constants.INTENT_P2P_TYPE;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_CONNECT;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_GET_CLARITY;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_MUTE;
@@ -55,6 +54,7 @@ import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_TALK_BACK_O
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_VIDEO_RECORD_BEGIN;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_VIDEO_RECORD_FAIL;
 import static com.tuya.smart.android.demo.camera.utils.Constants.MSG_VIDEO_RECORD_OVER;
+import static com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter.INTENT_DEVID;
 import static com.tuya.smart.camera.ipccamerasdk.utils.CameraConstant.SDK_PROVIDER_V1;
 
 /**
