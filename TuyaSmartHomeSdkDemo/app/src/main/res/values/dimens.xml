@@ -140,4 +140,23 @@
     <dimen name="mg_120">120dp</dimen>
     <dimen name="mg_19">19dp</dimen>
     <dimen name="mg_32">32dp</dimen>
+    <dimen name="lamp_bar_margin_left">40dp</dimen>
+    <dimen name="lamp_bar_text_width">80dp</dimen>
+    <dimen name="edit_saturation_seekbar_height">2dp</dimen>
+    <dimen name="wh_300">300dp</dimen>
+    <dimen name="lamp_width">80dp</dimen>
+    <dimen name="lamp_height">109dp</dimen>
+
+    <dimen name="color_center_halo_radius">100dp</dimen>
+    <dimen name="color_center_radius">90dp</dimen>
+    <dimen name="color_pointer_halo_radius">15dp</dimen>
+    <dimen name="color_pointer_radius">13dp</dimen>
+    <dimen name="color_wheel_radius">135dp</dimen>
+    <dimen name="color_wheel_thickness">15dp</dimen>
+    <dimen name="color_circle_halo_thickness">50dp</dimen>
+
+    <dimen name="bar_length">240dp</dimen>
+    <dimen name="bar_pointer_halo_radius">12dp</dimen>
+    <dimen name="bar_pointer_radius">10dp</dimen>
+    <dimen name="bar_thickness">2dp</dimen>
 </resources>

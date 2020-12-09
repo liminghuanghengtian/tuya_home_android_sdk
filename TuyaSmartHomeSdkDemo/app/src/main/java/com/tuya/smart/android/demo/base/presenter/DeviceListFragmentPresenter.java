@@ -23,10 +23,12 @@ import com.tuya.smart.android.demo.camera.CameraPanelActivity;
 import com.tuya.smart.android.demo.config.AddDeviceTypeActivity;
 import com.tuya.smart.android.demo.config.CommonConfig;
 import com.tuya.smart.android.demo.device.CommonDeviceDebugActivity;
+import com.tuya.smart.android.demo.device.LampActivity;
 import com.tuya.smart.android.demo.device.SwitchActivity;
 import com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter;
 import com.tuya.smart.android.demo.shortcut.ShortcutDeviceActivity;
 import com.tuya.smart.android.mvp.presenter.BasePresenter;
+import com.tuya.smart.centralcontrol.TuyaLightDevice;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.api.ITuyaHomeStatusListener;
 import com.tuya.smart.home.sdk.bean.HomeBean;
@@ -35,6 +37,7 @@ import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.sdk.TuyaSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.bean.DeviceBean;
+import com.tuya.smart.sdk.centralcontrol.api.constants.LightType;
 
 import java.util.List;
 import java.util.Map;
@@ -67,44 +70,44 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
     private void showDevIsNotOnlineTip(final DeviceBean deviceBean) {
         final boolean isShared = deviceBean.isShare;
         DialogUtil.customDialog(mActivity, mActivity.getString(R.string.title_device_offline), mActivity.getString(R.string.content_device_offline),
-                mActivity.getString(isShared ? R.string.ty_offline_delete_share : R.string.cancel_connect),
-                mActivity.getString(R.string.right_button_device_offline), mActivity.getString(R.string.left_button_device_offline), new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        switch (which) {
-                            case DialogInterface.BUTTON_POSITIVE:
-                                if (isShared) {
+            mActivity.getString(isShared ? R.string.ty_offline_delete_share : R.string.cancel_connect),
+            mActivity.getString(R.string.right_button_device_offline), mActivity.getString(R.string.left_button_device_offline), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case DialogInterface.BUTTON_POSITIVE:
+                            if (isShared) {
 //                                    //跳转到删除共享
 //                                    Intent intent = new Intent(mActivity, SharedActivity.class);
 //                                    intent.putExtra(SharedActivity.CURRENT_TAB, SharedActivity.TAB_RECEIVED);
 //                                    mActivity.startActivity(intent);
-                                } else {
-                                    DialogUtil.simpleConfirmDialog(mActivity, mActivity.getString(R.string.device_confirm_remove), new DialogInterface.OnClickListener() {
+                            } else {
+                                DialogUtil.simpleConfirmDialog(mActivity, mActivity.getString(R.string.device_confirm_remove), new DialogInterface.OnClickListener() {
 
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            if (which == DialogInterface.BUTTON_POSITIVE) {
-                                                unBindDevice(deviceBean);
-                                            }
+                                    @Override
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        if (which == DialogInterface.BUTTON_POSITIVE) {
+                                            unBindDevice(deviceBean);
                                         }
-                                    });
-                                }
-                                break;
-                            case DialogInterface.BUTTON_NEUTRAL:
+                                    }
+                                });
+                            }
+                            break;
+                        case DialogInterface.BUTTON_NEUTRAL:
 //                                //重置说明
-                                Intent intent = new Intent(mActivity, BrowserActivity.class);
-                                intent.putExtra(BrowserActivity.EXTRA_LOGIN, false);
-                                intent.putExtra(BrowserActivity.EXTRA_REFRESH, true);
-                                intent.putExtra(BrowserActivity.EXTRA_TOOLBAR, true);
-                                intent.putExtra(BrowserActivity.EXTRA_TITLE, mActivity.getString(R.string.left_button_device_offline));
-                                intent.putExtra(BrowserActivity.EXTRA_URI, CommonConfig.RESET_URL);
-                                mActivity.startActivity(intent);
-                                break;
-                            case DialogInterface.BUTTON_NEGATIVE:
-                                break;
-                        }
+                            Intent intent = new Intent(mActivity, BrowserActivity.class);
+                            intent.putExtra(BrowserActivity.EXTRA_LOGIN, false);
+                            intent.putExtra(BrowserActivity.EXTRA_REFRESH, true);
+                            intent.putExtra(BrowserActivity.EXTRA_TOOLBAR, true);
+                            intent.putExtra(BrowserActivity.EXTRA_TITLE, mActivity.getString(R.string.left_button_device_offline));
+                            intent.putExtra(BrowserActivity.EXTRA_URI, CommonConfig.RESET_URL);
+                            mActivity.startActivity(intent);
+                            break;
+                        case DialogInterface.BUTTON_NEGATIVE:
+                            break;
                     }
-                }).show();
+                }
+            }).show();
 
     }
 
@@ -113,7 +116,19 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
             ToastUtil.showToast(mActivity, R.string.no_device_found);
             return;
         }
-        if (devBean.getProductId().equals("4eAeY1i5sUPJ8m8d")) {
+        boolean standardProduct = TuyaHomeSdk.getDataInstance().isStandardProduct(devBean.getProductId());
+        if (standardProduct) {
+            String category = TuyaHomeSdk.getDataInstance().getStandardProductConfig(devBean.getProductId()).category;
+            TuyaLightDevice tuyaLightDevice = new TuyaLightDevice(devBean.getDevId());
+            LightType type = tuyaLightDevice.lightType();
+            if (category.equals("dj") && (type == LightType.TYPE_RGB || type == LightType.TYPE_RGBC || type == LightType.TYPE_RGBCW)) {
+                Intent intent = new Intent(mActivity, LampActivity.class);
+                intent.putExtra(SwitchActivity.INTENT_DEVID, devBean.getDevId());
+                mActivity.startActivity(intent);
+            } else {
+                gotoDeviceCommonActivity(devBean);
+            }
+        } else if (devBean.getProductId().equals("4eAeY1i5sUPJ8m8d")) {
             Intent intent = new Intent(mActivity, SwitchActivity.class);
             intent.putExtra(SwitchActivity.INTENT_DEVID, devBean.getDevId());
             mActivity.startActivity(intent);

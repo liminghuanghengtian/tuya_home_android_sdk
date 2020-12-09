@@ -35,8 +35,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="false"
-        tools:replace="android:allowBackup"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        tools:replace="android:allowBackup">
         <meta-data
             android:name="TUYA_SMART_APPKEY"
             android:value="YOUR TUYA_SMART_APPKEY !" />
@@ -52,6 +52,13 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name=".device.LampActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Splash.Theme"
+            android:windowSoftInputMode="adjustPan|stateHidden">
+
         </activity>
         <activity
             android:name=".device.CommonDeviceDebugActivity"
@@ -181,27 +188,34 @@
             android:screenOrientation="portrait"
             android:theme="@style/Splash.Theme"
             android:windowSoftInputMode="adjustPan|stateHidden" />
-        <activity android:name=".scene.activity.SceneActivity"
+        <activity
+            android:name=".scene.activity.SceneActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Default_Public_Theme"/>
-        <activity android:name=".scene.activity.ConditionTaskChooseActivity"
+            android:theme="@style/Default_Public_Theme" />
+        <activity
+            android:name=".scene.activity.ConditionTaskChooseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Default_Public_Theme"/>
-        <activity android:name=".scene.activity.DeviceChooseActivity"
+            android:theme="@style/Default_Public_Theme" />
+        <activity
+            android:name=".scene.activity.DeviceChooseActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Default_Public_Theme"/>
-        <activity android:name=".scene.activity.OperateorListActivity"
+            android:theme="@style/Default_Public_Theme" />
+        <activity
+            android:name=".scene.activity.OperateorListActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Default_Public_Theme"/>
-        <activity android:name=".scene.activity.OperatorValueActivity"
+            android:theme="@style/Default_Public_Theme" />
+        <activity
+            android:name=".scene.activity.OperatorValueActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Default_Public_Theme"/>
-        <activity android:name=".shortcut.ShortcutDeviceActivity"
+            android:theme="@style/Default_Public_Theme" />
+        <activity
+            android:name=".shortcut.ShortcutDeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Default_Public_Theme"/>
-        <activity android:name=".shortcut.ShortcutOperateDeviceActivity"
+            android:theme="@style/Default_Public_Theme" />
+        <activity
+            android:name=".shortcut.ShortcutOperateDeviceActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/Default_Public_Theme"/>
+            android:theme="@style/Default_Public_Theme" />
         <!--  camera module -->
         <activity
             android:name=".camera.AlarmDetectionActivity"

@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public class Constant {
 
-    public static  long HOME_ID = 1099001;
+    public static  long HOME_ID = -1;
 
     private static ArrayList<WeakReference<Activity>> activityStack = new ArrayList<WeakReference<Activity>>();
 

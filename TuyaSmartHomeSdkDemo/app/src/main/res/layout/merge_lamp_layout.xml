@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <include
+        android:id="@+id/action_bar_layout"
+        layout="@layout/toolbar_top_view" />
+
+    <TextView
+        android:id="@+id/tv_lamp_color_mode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar_layout"
+        android:layout_centerHorizontal="true"
+        android:text="@string/lamp_color_saturation"
+        android:textColor="#66FFFFFF"
+        android:textSize="@dimen/ts_14" />
+
+    <TextView
+        android:id="@+id/tv_network_error_tip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/action_bar_layout"
+        android:layout_centerHorizontal="true"
+        android:text="@string/device_auto_switch_error"
+        android:textColor="#66FFFFFF"
+        android:textSize="@dimen/ts_14"
+        android:visibility="gone" />
+
+    <RelativeLayout
+        android:id="@+id/rl_lamp"
+        android:layout_width="@dimen/wh_300"
+        android:layout_height="@dimen/wh_300"
+        android:layout_below="@+id/toolbar_top_view"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/mg_100">
+
+        <com.tuya.smart.android.demo.base.widget.LampView
+            android:id="@+id/picker"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_centerInParent="true"
+            app:lamp_height="@dimen/lamp_height"
+            app:lamp_width="@dimen/lamp_width" />
+
+        <ImageView
+            android:id="@+id/iv_lamp_light"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ty_lamp_off_cover" />
+
+        <ImageView
+            android:id="@+id/iv_lamp_close"
+            android:layout_width="@dimen/lamp_width"
+            android:layout_height="@dimen/lamp_height"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ty_lamp_wick_line" />
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_lamp_operationTip"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rl_lamp"
+        android:layout_centerHorizontal="true"
+        android:text="@string/lamp_open_tip"
+        android:textColor="#99FFFFFF"
+        android:textSize="@dimen/ts_14" />
+</merge>
+

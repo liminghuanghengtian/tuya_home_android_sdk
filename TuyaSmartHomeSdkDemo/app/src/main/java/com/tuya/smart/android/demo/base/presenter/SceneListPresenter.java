@@ -5,10 +5,10 @@ import android.content.Intent;
 
 import com.tuya.smart.android.base.utils.PreferencesUtil;
 import com.tuya.smart.android.demo.R;
-import com.tuya.smart.android.demo.scene.activity.SceneActivity;
 import com.tuya.smart.android.demo.base.app.Constant;
 import com.tuya.smart.android.demo.base.utils.ActivityUtils;
 import com.tuya.smart.android.demo.base.utils.ToastUtil;
+import com.tuya.smart.android.demo.scene.activity.SceneActivity;
 import com.tuya.smart.android.demo.scene.view.ISceneListFragmentView;
 import com.tuya.smart.android.mvp.presenter.BasePresenter;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
@@ -29,37 +29,41 @@ public class SceneListPresenter extends BasePresenter {
     public static final int SMART_TYPE_AUTOMATION = 1;
     public static final String SMART_TYPE = "smart_type";
     public static final String SMART_IS_EDIT = "smart_is_edit";
-    public SceneListPresenter(Activity activity, ISceneListFragmentView iView){
+
+    public SceneListPresenter(Activity activity, ISceneListFragmentView iView) {
         mActivity = activity;
         mView = iView;
         Constant.HOME_ID = PreferencesUtil.getLong("homeId", Constant.HOME_ID);
     }
-    public void getSceneList(){
-        TuyaHomeSdk.getSceneManagerInstance().getSceneList(Constant.HOME_ID, new ITuyaResultCallback<List<SceneBean>>() {
-            @Override
-            public void onSuccess(List<SceneBean> result) {
-                if(null == result || result.isEmpty()){
-                    mView.showEmptyView();
-                } else {
-                    separateSceneAndAuto(result);
-                }
-                mView.loadFinish();
-            }
 
-            @Override
-            public void onError(String errorCode, String errorMessage) {
-                ToastUtil.shortToast(mActivity, errorMessage);
-                mView.loadFinish();
-            }
-        });
+    public void getSceneList() {
+        if (Constant.HOME_ID != -1) {
+            TuyaHomeSdk.getSceneManagerInstance().getSceneList(Constant.HOME_ID, new ITuyaResultCallback<List<SceneBean>>() {
+                @Override
+                public void onSuccess(List<SceneBean> result) {
+                    if (null == result || result.isEmpty()) {
+                        mView.showEmptyView();
+                    } else {
+                        separateSceneAndAuto(result);
+                    }
+                    mView.loadFinish();
+                }
+
+                @Override
+                public void onError(String errorCode, String errorMessage) {
+                    ToastUtil.shortToast(mActivity, errorMessage);
+                    mView.loadFinish();
+                }
+            });
+        }
     }
 
     private void separateSceneAndAuto(List<SceneBean> result) {
         List<SceneBean> scenes = new ArrayList<>();
         List<SceneBean> autos = new ArrayList<>();
         for (SceneBean sceneBean :
-                result) {
-            if (null == sceneBean.getConditions() || sceneBean.getConditions().isEmpty()){
+            result) {
+            if (null == sceneBean.getConditions() || sceneBean.getConditions().isEmpty()) {
                 scenes.add(sceneBean);
             } else {
                 autos.add(sceneBean);
@@ -97,7 +101,7 @@ public class SceneListPresenter extends BasePresenter {
     }
 
     public void switchAutomation(SceneBean bean) {
-        if(bean.isEnabled()){
+        if (bean.isEnabled()) {
             TuyaHomeSdk.newSceneInstance(bean.getId()).disableScene(bean.getId(), new IResultCallback() {
                 @Override
                 public void onError(String code, String error) {

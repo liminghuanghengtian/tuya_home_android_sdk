@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merge xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:id="@+id/ll_lamp_color_lighting"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="132dp"
+        android:layout_marginLeft="@dimen/lamp_bar_margin_left"
+        android:layout_marginRight="@dimen/lamp_bar_margin_left"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginEnd="@dimen/mg_10"
+            android:layout_marginRight="@dimen/mg_10"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:text="@string/lamp_color_light_min"/>
+
+        <SeekBar
+            android:id="@+id/sb_lamp_color_lighting"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:maxHeight="@dimen/edit_saturation_seekbar_height"
+            android:progressDrawable="@drawable/seekbar_edit_filter_style"
+            android:thumb="@drawable/edit_saturation_seekbar_selector"
+            android:thumbOffset="0dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="@dimen/mg_10"
+            android:layout_marginStart="@dimen/mg_10"
+            android:layout_weight="0"
+            android:gravity="center"
+            android:text="@string/lamp_color_light_max"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_lamp_color_saturation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center_horizontal"
+        android:layout_marginBottom="@dimen/mg_80"
+        android:layout_marginLeft="@dimen/lamp_bar_margin_left"
+        android:layout_marginRight="@dimen/lamp_bar_margin_left"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:visibility="visible">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginRight="10dp"
+            android:layout_weight="0"
+            android:text="@string/lamp_color_saturation_min"/>
+
+        <SeekBar
+            android:id="@+id/sb_lamp_color_saturation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="1"
+            android:maxHeight="@dimen/edit_saturation_seekbar_height"
+            android:progressDrawable="@drawable/seekbar_edit_filter_style"
+            android:thumb="@drawable/edit_saturation_seekbar_selector"
+            android:thumbOffset="0dp"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="0"
+            android:text="@string/lamp_color_saturation_max"/>
+    </LinearLayout>
+</merge>

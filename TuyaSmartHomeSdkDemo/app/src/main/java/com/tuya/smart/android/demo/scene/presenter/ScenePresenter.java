@@ -8,6 +8,7 @@ import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.app.Constant;
 import com.tuya.smart.android.demo.base.presenter.SceneListPresenter;
 import com.tuya.smart.android.demo.base.utils.ToastUtil;
+import com.tuya.smart.android.demo.family.FamilyManager;
 import com.tuya.smart.android.demo.scene.activity.ConditionTaskChooseActivity;
 import com.tuya.smart.android.demo.base.utils.ActivityUtils;
 import com.tuya.smart.android.demo.scene.event.SceneUpdateCondtionEvent;
@@ -54,6 +55,7 @@ public class ScenePresenter extends BasePresenter implements SceneUpdateCondtion
             mSceneBean = new SceneBean();
         }
         TuyaSdk.getEventBus().register(this);
+        Constant.HOME_ID = FamilyManager.getInstance().getCurrentHomeId();
     }
 
     public void addCondition(){
