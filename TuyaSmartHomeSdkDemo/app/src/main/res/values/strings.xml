@@ -743,5 +743,19 @@
     <string name="login_qr_app_info">Scan QR to login</string>
     <string name="login_qrlogin_pad_info">Need to log in with your phone</string>
     <string name="login_qrcode" >QR Code Login</string>
+    <string name="lamp_open_failure">打开灯失败</string>
+    <string name="lamp_close_failure">关闭灯失败</string>
+    <string name="lamp_close_tip">Touch OFF</string>
+    <string name="lamp_open_tip">Touch ON</string>
+    <string name="lamp_scene_leisure">Relax</string>
+    <string name="lamp_color_light_min">Dim</string>
+    <string name="lamp_color_light_max">Bright</string>
+    <string name="lamp_color_saturation_min">Plain</string>
+    <string name="lamp_color_saturation_max">Colorful</string>
+    <string name="lamp_color_temper_high">Warm</string>
+    <string name="lamp_color_temper_low">Cold</string>
+    <string name="lamp_color_saturation">Color mode</string>
+    <string name="lamp_color_mode">Color mode</string>
+    <string name="lamp" translatable="false">M160,80 C160,35.81722 124.18278,0 80,0 C35.81722,0 0,35.81722 0,80 C0,112.805105 19.7455235,140.998395 48,153.343301 L48,177.997226 C48,184.626175 53.3739559,190 60.0003513,190 L99.9996487,190 C106.62726,190 112,184.630544 112,177.997226 L112,153.343301 C140.254477,140.998395 160,112.805105 160,80 Z M64,216 C64,214.895431 64.8892617,214 66.0017433,214 L93.9982567,214 C95.103789,214 96,214.88773 96,216 L96,216 C96,217.104569 95.1107383,218 93.9982567,218 L66.0017433,218 C64.896211,218 64,217.11227 64,216 L64,216 Z M56,204 C56,202.895431 56.8949384,202 58.0013893,202 L101.998611,202 C103.103948,202 104,202.88773 104,204 L104,204 C104,205.104569 103.105062,206 101.998611,206 L58.0013893,206 C56.8960525,206 56,205.11227 56,204 L56,204 Z</string>
 
 </resources>

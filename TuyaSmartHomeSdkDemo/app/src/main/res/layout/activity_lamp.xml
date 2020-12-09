@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_lamp">
+
+    <include layout="@layout/merge_lamp_layout" />
+
+    <FrameLayout
+        android:id="@+id/fl_lamp_white_operation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:gravity="center_horizontal"
+        android:visibility="visible">
+        <include layout="@layout/merge_lamp_color_layout" />
+        <LinearLayout
+            android:id="@+id/ll_lamp_bottom_operation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/wh_50"
+            android:layout_gravity="bottom"
+            android:background="#19000000"
+            android:gravity="center">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:src="@drawable/ty_lamp_up_arrow" />
+        </LinearLayout>
+
+    </FrameLayout>
+
+</RelativeLayout>

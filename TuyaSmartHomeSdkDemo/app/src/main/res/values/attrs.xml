@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+
     <declare-styleable name="CircleProgressView">
         <!-- Text-->
         <attr name="cpv_text" format="string"/>
@@ -287,4 +288,10 @@
         <attr name="backgroundSelector" format="integer"/>
         <attr name="textTint" format="color"/>
     </declare-styleable>
+
+    <declare-styleable name="LampView">
+        <attr name="lamp_width" format="dimension" />
+        <attr name="lamp_height" format="dimension" />
+    </declare-styleable>
+
 </resources>
