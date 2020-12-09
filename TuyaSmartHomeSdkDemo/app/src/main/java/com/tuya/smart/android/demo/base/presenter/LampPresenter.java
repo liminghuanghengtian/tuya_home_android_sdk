@@ -30,7 +30,7 @@ public class LampPresenter extends BasePresenter implements ILightListener {
         mLampOperationColorFactory = new LampOperationColorFactory(activity, mView);
         mLightDevice = new TuyaLightDevice(devId);
         mLightDevice.registerLightListener(this);
-
+        updateLampSwitchStatus(mLightDevice.getLightDataPoint());
     }
 
     private void startCloseLamp() {
@@ -65,8 +65,7 @@ public class LampPresenter extends BasePresenter implements ILightListener {
     }
 
 
-    private void updateColorModeData() {
-        LightDataPoint lightDataPoint = mLightDevice.getLightDataPoint();
+    private void updateColorModeData(LightDataPoint lightDataPoint) {
         LightColourData data = lightDataPoint.colorHSV;
         updateLampView(changeToRGB(data));
     }
@@ -101,9 +100,10 @@ public class LampPresenter extends BasePresenter implements ILightListener {
 
     /**
      * 更新灯泡的开关状态
+     * @param lightDataPoint
      */
-    public void updateLampSwitchStatus() {
-        boolean isOpen = mLightDevice.getLightDataPoint().powerSwitch;
+    private void updateLampSwitchStatus(LightDataPoint lightDataPoint) {
+        boolean isOpen = lightDataPoint.powerSwitch;
         if (isOpen != mIsOpenLastStatus) {
             if (isOpen) {
                 mView.showLampView();
@@ -139,8 +139,8 @@ public class LampPresenter extends BasePresenter implements ILightListener {
 
     @Override
     public void onDpUpdate(LightDataPoint lightDataPoint) {
-        updateLampSwitchStatus();
-        updateColorModeData();
+        updateLampSwitchStatus(lightDataPoint);
+        updateColorModeData(lightDataPoint);
     }
 
     @Override

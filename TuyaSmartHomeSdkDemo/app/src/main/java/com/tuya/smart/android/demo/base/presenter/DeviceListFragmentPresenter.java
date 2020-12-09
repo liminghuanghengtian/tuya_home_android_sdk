@@ -28,6 +28,7 @@ import com.tuya.smart.android.demo.device.SwitchActivity;
 import com.tuya.smart.android.demo.device.common.CommonDeviceDebugPresenter;
 import com.tuya.smart.android.demo.shortcut.ShortcutDeviceActivity;
 import com.tuya.smart.android.mvp.presenter.BasePresenter;
+import com.tuya.smart.centralcontrol.TuyaLightDevice;
 import com.tuya.smart.home.sdk.TuyaHomeSdk;
 import com.tuya.smart.home.sdk.api.ITuyaHomeStatusListener;
 import com.tuya.smart.home.sdk.bean.HomeBean;
@@ -36,6 +37,7 @@ import com.tuya.smart.home.sdk.callback.ITuyaHomeResultCallback;
 import com.tuya.smart.sdk.TuyaSdk;
 import com.tuya.smart.sdk.api.IResultCallback;
 import com.tuya.smart.sdk.bean.DeviceBean;
+import com.tuya.smart.sdk.centralcontrol.api.constants.LightType;
 
 import java.util.List;
 import java.util.Map;
@@ -115,8 +117,9 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
             return;
         }
         String category = TuyaHomeSdk.getDataInstance().getStandardProductConfig(devBean.getProductId()).category;
-
-        if (category.equals("dj")) {
+        TuyaLightDevice tuyaLightDevice = new TuyaLightDevice(devBean.getDevId());
+        LightType type = tuyaLightDevice.lightType();
+        if (category.equals("dj") && (type == LightType.TYPE_RGB || type == LightType.TYPE_RGBC || type == LightType.TYPE_RGBCW)) {
             Intent intent = new Intent(mActivity, LampActivity.class);
             intent.putExtra(SwitchActivity.INTENT_DEVID, devBean.getDevId());
             mActivity.startActivity(intent);

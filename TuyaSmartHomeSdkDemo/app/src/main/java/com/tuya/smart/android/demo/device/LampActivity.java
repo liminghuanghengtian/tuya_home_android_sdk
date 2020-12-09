@@ -1,6 +1,5 @@
 package com.tuya.smart.android.demo.device;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.animation.Animation;
@@ -10,7 +9,6 @@ import android.widget.TextView;
 import com.tuya.smart.android.demo.R;
 import com.tuya.smart.android.demo.base.activity.BaseActivity;
 import com.tuya.smart.android.demo.base.bean.ColorBean;
-import com.tuya.smart.android.demo.base.bean.RgbBean;
 import com.tuya.smart.android.demo.base.presenter.LampPresenter;
 import com.tuya.smart.android.demo.base.utils.AnimationUtil;
 import com.tuya.smart.android.demo.base.view.ILampView;
@@ -54,7 +52,6 @@ public class LampActivity extends BaseActivity implements ILampView {
         initMenu();
         initView();
         initPresenter();
-        mLampPresenter.updateLampSwitchStatus();
     }
 
     private void initView() {
