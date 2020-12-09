@@ -116,13 +116,19 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
             ToastUtil.showToast(mActivity, R.string.no_device_found);
             return;
         }
-        String category = TuyaHomeSdk.getDataInstance().getStandardProductConfig(devBean.getProductId()).category;
-        TuyaLightDevice tuyaLightDevice = new TuyaLightDevice(devBean.getDevId());
-        LightType type = tuyaLightDevice.lightType();
-        if (category.equals("dj") && (type == LightType.TYPE_RGB || type == LightType.TYPE_RGBC || type == LightType.TYPE_RGBCW)) {
-            Intent intent = new Intent(mActivity, LampActivity.class);
-            intent.putExtra(SwitchActivity.INTENT_DEVID, devBean.getDevId());
-            mActivity.startActivity(intent);
+        boolean standardProduct = TuyaHomeSdk.getDataInstance().isStandardProduct(devBean.getProductId());
+        TuyaHomeSdk.getDataInstance().getStandardProductConfig("");
+        if (standardProduct) {
+            String category = TuyaHomeSdk.getDataInstance().getStandardProductConfig(devBean.getProductId()).category;
+            TuyaLightDevice tuyaLightDevice = new TuyaLightDevice(devBean.getDevId());
+            LightType type = tuyaLightDevice.lightType();
+            if (category.equals("dj") && (type == LightType.TYPE_RGB || type == LightType.TYPE_RGBC || type == LightType.TYPE_RGBCW)) {
+                Intent intent = new Intent(mActivity, LampActivity.class);
+                intent.putExtra(SwitchActivity.INTENT_DEVID, devBean.getDevId());
+                mActivity.startActivity(intent);
+            } else {
+                gotoDeviceCommonActivity(devBean);
+            }
         } else if (devBean.getProductId().equals("4eAeY1i5sUPJ8m8d")) {
             Intent intent = new Intent(mActivity, SwitchActivity.class);
             intent.putExtra(SwitchActivity.INTENT_DEVID, devBean.getDevId());
