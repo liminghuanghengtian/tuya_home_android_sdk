@@ -117,7 +117,6 @@ public class DeviceListFragmentPresenter extends BasePresenter implements NetWor
             return;
         }
         boolean standardProduct = TuyaHomeSdk.getDataInstance().isStandardProduct(devBean.getProductId());
-        TuyaHomeSdk.getDataInstance().getStandardProductConfig("");
         if (standardProduct) {
             String category = TuyaHomeSdk.getDataInstance().getStandardProductConfig(devBean.getProductId()).category;
             TuyaLightDevice tuyaLightDevice = new TuyaLightDevice(devBean.getDevId());
