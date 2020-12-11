@@ -48,8 +48,12 @@ public class FamilyMemberItem extends BaseItem<MemberBean> {
         nameTxt.setText(getData().getNickName());
         accountTxt.setText(getData().getAccount());
 
+        String path = getData().getHeadPic();
+        if (path != null && path.isEmpty()) {
+            path = null;
+        }
         Picasso.with(holder.getContext())
-                .load(getData().getHeadPic())
+                .load(path)
                 .centerCrop()
                 .placeholder(R.drawable.ty_nolist_logo)
                 .into(headIv);
