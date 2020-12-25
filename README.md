@@ -31,7 +31,6 @@ Beta version:
 
 Release version: 
 
-* 3.20.0
 * 3.22.0
 
 
