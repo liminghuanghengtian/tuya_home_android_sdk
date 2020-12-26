@@ -1,4 +1,0 @@
-var interfacecom_1_1tuya_1_1smart_1_1interior_1_1device_1_1_i_tuya_hardware_online_status_listener =
-[
-    [ "onDeviceOnlineStatusUpdate", "interfacecom_1_1tuya_1_1smart_1_1interior_1_1device_1_1_i_tuya_hardware_online_status_listener.html#a1496311e6dcc2d11590536023cf49e77", null ]
-];

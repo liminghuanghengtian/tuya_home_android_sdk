@@ -1,4 +1,0 @@
-var interfacecom_1_1tuya_1_1smart_1_1interior_1_1hardware_1_1_i_dev_response_without_dp_data_listener =
-[
-    [ "onResponse", "interfacecom_1_1tuya_1_1smart_1_1interior_1_1hardware_1_1_i_dev_response_without_dp_data_listener.html#a441a904048dd64e5731b722b7b1de4a4", null ]
-];
