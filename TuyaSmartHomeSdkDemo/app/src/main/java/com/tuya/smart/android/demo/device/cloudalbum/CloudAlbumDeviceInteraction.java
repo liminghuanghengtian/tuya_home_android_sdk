@@ -59,10 +59,6 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
     private static final int REQUEST_SELECT_MULTI_IMAGE = 16001;
     private static final int REQUEST_SELECT_VIDEO = 16002;
 
-    private int mSelectMaxSize = 9;
-    private int mVideoMaxLength = 100 * 1000;
-    private Boolean mIsShowImage = true;
-    private Boolean mIsShowVideo = true;
     private Activity mActivity;
     private DeviceBean mDeviceBean;
     private SelectType mType;
@@ -74,7 +70,7 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
     public CloudAlbumDeviceInteraction(Activity activity, DeviceBean deviceBean) {
         mActivity = activity;
         mDeviceBean = deviceBean;
-        IOssUploadPlugin plugin = new OssUploadPlugin(activity.getApplicationContext());
+        IOssUploadPlugin plugin = new OssUploadPlugin(activity);
         if (plugin != null) {
             mImageUploadApi = plugin.imageUploader();
             mVideoUploadApi = plugin.videoUploader();
@@ -114,7 +110,8 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
 
     @Override
     public void gotoAlbumToSelect(Activity activity) {
-        requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE}, REQUEST_READ_STORAGE);
+        requestPermissions(activity, new String[]{Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE},
+                REQUEST_READ_STORAGE);
     }
 
     @Override
@@ -133,41 +130,13 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
     //     activity.startActivityForResult(intent, REQUEST_SELECT_MULTI_IMAGE);
     // }
 
-    private void openGallery(Activity activity) {
+    private void openAlbum(Activity activity) {
         if (activity == null) return;
 
         if (SelectType.IMAGE == mType) {
-            Intent intent = new Intent();
-            intent.setType("image/*");
-            intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true);
-            intent.setAction(Intent.ACTION_GET_CONTENT);
-            activity.startActivityForResult(Intent.createChooser(intent, "Select Pictures"),
-                    REQUEST_SELECT_MULTI_IMAGE);
+            AlbumUtils.selectPictures(activity, REQUEST_SELECT_MULTI_IMAGE);
         } else {
-            Intent intent = new Intent(Intent.ACTION_PICK, SelectType.VIDEO.externalContentUri);
-            activity.startActivityForResult(intent, REQUEST_SELECT_VIDEO);
-        }
-
-        // Bundle args = new Bundle();
-        // args.putInt("max_picker", mSelectMaxSize);
-        // args.putInt("videoMaxLength", mVideoMaxLength);
-        // args.putBoolean("isShowImage", mIsShowImage);
-        // args.putBoolean("isShowVideo", mIsShowVideo);
-        //
-        // Intent intent = new Intent(activity, GalleryPickerAct.class);
-        // intent.putExtras(args);
-        //
-        // activity.startActivityForResult(intent, REQUEST_SELECT_MULTI_IMAGE);
-    }
-
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == REQUEST_READ_STORAGE && permissions != null && grantResults != null) {
-            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                openGallery(mActivity);
-            } else {
-                showPermissionDialog();
-            }
+            AlbumUtils.selectMovie(activity, SelectType.VIDEO.externalContentUri, REQUEST_SELECT_VIDEO);
         }
     }
 
@@ -178,31 +147,70 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
     }
 
     @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == REQUEST_READ_STORAGE && permissions != null && grantResults != null) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                openAlbum(mActivity);
+            } else {
+                showPermissionDialog();
+            }
+        }
+    }
+
+    @Override
     public boolean onActivityResult(@NonNull Activity activity, int requestCode, int resultCode, @Nullable Intent data) {
+        L.e(TAG, "onActivityResult, reqCode: " + requestCode + ", resultCode: " + resultCode);
         if (requestCode == REQUEST_SELECT_MULTI_IMAGE) {
             if (resultCode == Activity.RESULT_OK && null != data) {
-                Uri uri;
                 List<ImgBean> fileList = new ArrayList<>();
                 ClipData imageNames = data.getClipData();
+                // 多选
                 if (imageNames != null) {
                     for (int i = 0; i < imageNames.getItemCount(); i++) {
                         Uri imageUri = imageNames.getItemAt(i).getUri();
-                        ImgBean bean = new ImgBean();
-                        bean.setImage(imageUri.toString());
-                        bean.setTitle("No." + i + "-" + System.currentTimeMillis());
-                        fileList.add(bean);
-                        L.d(TAG, String.format("Image[%d] uri: %s", i, imageUri.toString()));
-                    }
-                } else {
-                    uri = data.getData();
-                    if (uri != null) {
-                        ImgBean bean = new ImgBean();
-                        bean.setImage(uri.toString());
-                        bean.setTitle("Image-1-" + System.currentTimeMillis());
-                        fileList.add(bean);
-                        L.d(TAG, String.format("Image uri: %s", uri.toString()));
+                        L.d(TAG, "original image uri: " + (imageUri != null ? imageUri.toString() : "null"));
+                        if (imageUri == null) continue;
+
+                        String path = AlbumUtils.getPath(activity, imageUri);
+                        if (path == null) {
+                            return false;
+                        }
+
+                        Uri newUri = Uri.parse(path);
+                        if (newUri != null) {
+                            activity.grantUriPermission(activity.getPackageName(), newUri,
+                                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                            L.i(TAG, String.format("Transfer Image[%d] uri: %s", i, newUri.toString()));
+                            ImgBean bean = new ImgBean();
+                            bean.setImageUri(newUri.toString());
+                            bean.setTitle("No." + i + "-" + System.currentTimeMillis());
+                            fileList.add(bean);
+                        }
                     }
                 }
+                // 单选
+                else {
+                    Uri imageUri = data.getData();
+                    L.d(TAG, "original image uri: " + (imageUri != null ? imageUri.toString() : "null"));
+                    if (imageUri == null) return false;
+
+                    String path = AlbumUtils.getPath(activity, imageUri);
+                    if (path == null) {
+                        return false;
+                    }
+
+                    Uri newUri = Uri.parse(path);
+                    if (newUri != null) {
+                        activity.grantUriPermission(activity.getPackageName(), newUri,
+                                Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                        L.i(TAG, String.format("Transfer Image uri: %s", newUri.toString()));
+                        ImgBean bean = new ImgBean();
+                        bean.setImageUri(newUri.toString());
+                        bean.setTitle("Image-1-" + System.currentTimeMillis());
+                        fileList.add(bean);
+                    }
+                }
+
                 if (mImageUploadApi != null) {
                     mImageUploadApi.batchUploadToDevice(mDeviceBean.getDevId(), fileList, new IUploadProcessCallback<ImgsUploadProgressBean, ImgsUploadCompleteBean>() {
                         @Override
@@ -214,6 +222,10 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
                         public void onProgress(ImgsUploadProgressBean imgsUploadProgressBean) {
                             L.d(TAG,
                                     "onProgress, current: " + imgsUploadProgressBean.getCurrentImage() + ", fileId: " + imgsUploadProgressBean.getEncryptFileId());
+                            // mock cancelBatchUpload when upload images more than 2
+                            if (!imgsUploadProgressBean.getComplete() && imgsUploadProgressBean.getUploaded() >= 2) {
+                                mImageUploadApi.cancelBatchUpload(imgsUploadProgressBean.getBatchTaskId());
+                            }
                         }
 
                         @Override
@@ -226,130 +238,96 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
             }
         } else if (requestCode == REQUEST_SELECT_VIDEO) {
             if (resultCode == Activity.RESULT_OK && null != data) {
-                Uri selectedVideo = data.getData();
-                if (selectedVideo == null) return false;
+                Uri videoUri = data.getData();
+                L.d(TAG, "original video uri: " + (videoUri != null ? videoUri.toString() : "null"));
+                if (videoUri == null) return false;
 
-                String[] filePathColumn = {SelectType.VIDEO.data, MediaStore.Video.Media.SIZE,
-                        MediaStore.Video.Media.DURATION, MediaStore.Video.Media.TITLE, MediaStore.Images.Media.DATA};
-                Cursor cursor = activity.getContentResolver().query(selectedVideo,
-                        filePathColumn, null, null, null);
-                if (cursor != null && cursor.moveToFirst()) {
-                    try {
+                Cursor cursor = null;
+                String videoPath = null;
+                int size = 0;
+                int duration = 0;
+                String title = "";
+                try {
+                    String[] filePathColumn = {SelectType.VIDEO.data, MediaStore.Video.Media.SIZE,
+                            MediaStore.Video.Media.DURATION, MediaStore.Video.Media.TITLE};
+                    cursor = activity.getContentResolver().query(videoUri,
+                            filePathColumn, null, null, null);
+                    if (cursor != null && cursor.moveToFirst()) {
                         // videoPath
                         int columnIndex = cursor.getColumnIndexOrThrow(filePathColumn[0]);
-                        String videoPath = cursor.getString(columnIndex);
+                        videoPath = cursor.getString(columnIndex);
                         L.d(TAG, "videoPath: " + videoPath);
                         // size
                         columnIndex = cursor.getColumnIndexOrThrow(filePathColumn[1]);
-                        int size = cursor.getInt(columnIndex);
+                        size = cursor.getInt(columnIndex);
                         L.d(TAG, "videoSize: " + size);
                         // duration
                         columnIndex = cursor.getColumnIndexOrThrow(filePathColumn[2]);
-                        int duration = cursor.getInt(columnIndex);
+                        duration = cursor.getInt(columnIndex);
                         L.d(TAG, "videoDuration: " + duration);
                         // title
                         columnIndex = cursor.getColumnIndexOrThrow(filePathColumn[3]);
-                        String title = cursor.getString(columnIndex);
+                        title = cursor.getString(columnIndex);
                         L.d(TAG, "videoTitle: " + title);
-                        // thumbnailPath
-                        columnIndex = cursor.getColumnIndexOrThrow(filePathColumn[4]);
-                        String thumbPath = cursor.getString(columnIndex);
-                        L.d(TAG, "videoThumbPath: " + thumbPath);
+                    }
+                } catch (Exception e) {
+                    L.e(TAG, e.getMessage(), e);
+                } finally {
+                    if (cursor != null) {
                         cursor.close();
+                    }
+                }
 
-                        VideoUploadBean bean = new VideoUploadBean();
-                        bean.setVideoUri(selectedVideo.toString());
-                        bean.setName(title + "-" + System.currentTimeMillis());
-                        bean.setDuration(duration);
-                        bean.setSize(size);
-                        if (mVideoUploadApi != null) {
-                            mVideoUploadApi.uploadVideoToDevice(mDeviceBean.getDevId(), bean, new IVideoUploadProcessCallback<VideoProgressBean, Object>() {
-                                @Override
-                                public void onProgress(VideoProgressBean videoProgressBean) {
-                                    L.d(TAG,
-                                            "onProgress, code: " + videoProgressBean.getCode() + ", extInfo: " + videoProgressBean.getExtInfo().toString());
-                                }
+                String path = AlbumUtils.getPath(activity, videoUri);
+                if (path == null) {
+                    return false;
+                }
 
-                                @Override
-                                public void onProcessStart(String s) {
-                                    L.d(TAG, "onProcessStart, taskId: " + s);
-                                }
+                Uri newUri = Uri.parse(path);
+                if (newUri != null) {
+                    activity.grantUriPermission(activity.getPackageName(), newUri,
+                            Intent.FLAG_GRANT_WRITE_URI_PERMISSION | Intent.FLAG_GRANT_READ_URI_PERMISSION);
+                    L.i(TAG, String.format("Transfer Video uri: %s", newUri.toString()));
+                    VideoUploadBean bean = new VideoUploadBean();
+                    bean.setVideoUri(newUri.toString());
+                    bean.setName(title + "-" + System.currentTimeMillis());
+                    bean.setDuration(duration);
+                    bean.setSize(size);
 
-                                @Override
-                                public void onComplete(Object o) {
-                                    L.i(TAG, "onComplete");
+                    if (mVideoUploadApi != null) {
+                        mVideoUploadApi.uploadVideoToDevice(mDeviceBean.getDevId(), bean, new IVideoUploadProcessCallback<VideoProgressBean, Object>() {
+                            @Override
+                            public void onProgress(VideoProgressBean videoProgressBean) {
+                                L.d(TAG, "onProgress, code: " + videoProgressBean.getCode() + ", extInfo: " +
+                                        (videoProgressBean.getExtInfo() != null ? videoProgressBean.getExtInfo().toString() : "null"));
+                                // mock cancelBatchTask when progress over 60%
+                                if (videoProgressBean.getExtInfo().containsKey("progress")) {
+                                    int progress = (Integer) videoProgressBean.getExtInfo().get("progress");
+                                    if (progress > 60) {
+                                        mVideoUploadApi.cancelBatchTask(videoProgressBean.taskId);
+                                    }
                                 }
+                            }
 
-                                @Override
-                                public void onProcessStart(VideoProcessTaskBean videoProcessTaskBean) {
-                                    L.d(TAG, "onProcessStart, taskId: " + videoProcessTaskBean.taskId);
-                                }
-                            });
-                        }
-                    } catch (Exception e) {
-                        L.e(TAG, e.getMessage(), e);
+                            @Override
+                            public void onProcessStart(String s) {
+                                L.d(TAG, "onProcessStart, taskId: " + s);
+                            }
+
+                            @Override
+                            public void onComplete(Object o) {
+                                L.i(TAG, "onComplete, result: " + (o != null ? o.toString() : "null"));
+                            }
+
+                            @Override
+                            public void onProcessStart(VideoProcessTaskBean videoProcessTaskBean) {
+                                L.d(TAG, "onProcessStart, taskId: " + videoProcessTaskBean.taskId);
+                            }
+                        });
                     }
                 }
             }
         }
-
-        // ThreadEnv.io().execute(new Runnable() {
-        //     @Override
-        //     public void run() {
-        //         WritableMap resultMap = Arguments.createMap();
-        //         if (resultCode == Activity.RESULT_OK && data != null) {
-        //             //获取图片集合
-        //             ArrayList<String> images = data.getStringArrayListExtra("pickImgs");
-        //             //获取视频集合
-        //             String videoListJson = data.getStringExtra("videoListJson");
-        //             //标记成功
-        //             resultMap.putBoolean("success", true);
-        //             if (images != null && images.size() > 0) {
-        //                 //说明是图片选择
-        //                 WritableArray array = Arguments.createArray();
-        //                 for (String imageUri : images) {
-        //                     WritableMap map = Arguments.createMap();
-        //                     map.putString("name", String.valueOf(new Random().nextInt(100)));
-        //                     map.putString("path", imageUri);
-        //                     array.pushMap(map);
-        //                 }
-        //                 //加入到结果集
-        //                 resultMap.putArray("result", array);
-        //             } else if (!TextUtils.isEmpty(videoListJson)) {
-        //                 //说明是视频选择
-        //                 WritableArray array = Arguments.createArray();
-        //                 try {
-        //                     JSONArray jsonArray = new JSONArray(videoListJson);
-        //                     for (int i = 0; i < jsonArray.length(); i++) {
-        //                         WritableMap map = Arguments.createMap();
-        //                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-        //                         map.putString("name", String.valueOf(new Random().nextInt(100)));
-        //                         map.putString("path", jsonObject.getString("path"));
-        //                         map.putBoolean("isVideo", true);
-        //                         map.putString("videoUri", jsonObject.getString("videoUri"));
-        //                         map.putInt("size", jsonObject.getInt("size"));
-        //                         map.putInt("duration", jsonObject.getInt("duration"));
-        //                         array.pushMap(map);
-        //                     }
-        //                 } catch (JSONException e) {
-        //                     e.printStackTrace();
-        //                 }
-        //                 //加入到结果集
-        //                 resultMap.putArray("result", array);
-        //             } else {
-        //                 //失败情况
-        //                 resultMap.putBoolean("success", false);
-        //                 resultMap.putString("error", "");
-        //             }
-        //         } else {
-        //             //失败情况
-        //             resultMap.putBoolean("success", false);
-        //             resultMap.putString("error", "");
-        //         }
-        //         mCallback.invoke(resultMap);
-        //         mCallback = null;
-        //     }
-        // });
         return false;
     }
 
