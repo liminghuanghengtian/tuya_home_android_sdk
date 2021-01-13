@@ -20,16 +20,8 @@
             style="@style/TY_List_Normal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_above="@+id/custom_operator"
-            android:layout_alignParentTop="true" />
-
-        <ViewStub
-            android:id="@+id/custom_operator"
-            android:layout="@layout/activity_common_debug_custom_layout"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
             android:layout_above="@+id/ll_log"
-            android:minHeight="50dp" />
+            android:layout_alignParentTop="true" />
 
         <LinearLayout
             android:id="@+id/ll_log"
@@ -39,6 +31,13 @@
             android:layout_marginTop="@dimen/mg_22"
             android:background="@color/white"
             android:orientation="vertical">
+
+            <ViewStub
+                android:id="@+id/custom_operator"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout="@layout/activity_common_debug_custom_layout"
+                android:minHeight="50dp" />
 
             <FrameLayout
                 android:id="@+id/fl_opertion"
