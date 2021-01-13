@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
 import com.tuya.smart.android.common.utils.L;
 import com.tuya.smart.android.demo.R;
@@ -38,6 +39,7 @@ import com.tuya.smart.uploader.api.bean.video.VideoProcessTaskBean;
 import com.tuya.smart.uploader.api.bean.video.VideoProgressBean;
 import com.tuya.smart.uploader.api.bean.video.VideoUploadBean;
 import com.tuya.smart.uploader.impl.OssUploadPlugin;
+import com.tuya.smart.uploader.impl.utils.EventHelper;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,6 +84,7 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
         List<View> list = new ArrayList<>();
         Button picture = new Button(context);
         picture.setText("Select Picture");
+        picture.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_btn_code));
         picture.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         picture.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +98,7 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
 
         Button video = new Button(context);
         video.setText("Select Movie");
+        picture.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_btn_code));
         video.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT));
         video.setOnClickListener(new View.OnClickListener() {
@@ -224,6 +228,7 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
                                     "onProgress, current: " + imgsUploadProgressBean.getCurrentImage() + ", fileId: " + imgsUploadProgressBean.getEncryptFileId());
                             // mock cancelBatchUpload when upload images more than 2
                             if (!imgsUploadProgressBean.getComplete() && imgsUploadProgressBean.getUploaded() >= 2) {
+                                L.e(TAG, "Image cancelBatchUpload");
                                 mImageUploadApi.cancelBatchUpload(imgsUploadProgressBean.getBatchTaskId());
                             }
                         }
@@ -301,11 +306,22 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
                                 L.d(TAG, "onProgress, code: " + videoProgressBean.getCode() + ", extInfo: " +
                                         (videoProgressBean.getExtInfo() != null ? videoProgressBean.getExtInfo().toString() : "null"));
                                 // mock cancelBatchTask when progress over 60%
-                                if (videoProgressBean.getExtInfo().containsKey("progress")) {
+                                if (videoProgressBean.getCode() == EventHelper.CODE_PROGRESS &&
+                                        videoProgressBean.getExtInfo().containsKey("progress")) {
                                     int progress = (Integer) videoProgressBean.getExtInfo().get("progress");
-                                    if (progress > 60) {
+                                    if (progress >= 60) {
+                                        L.e(TAG, "Video cancelBatchTask");
                                         mVideoUploadApi.cancelBatchTask(videoProgressBean.taskId);
                                     }
+                                }
+                                if (videoProgressBean.getCode() == EventHelper.CODE_CANCEL) {
+                                    L.i(TAG, "cancel success.");
+                                }
+                                if (videoProgressBean.getCode() == EventHelper.CODE_FAILED) {
+                                    L.e(TAG, "video upload failed.");
+                                }
+                                if (videoProgressBean.getCode() == EventHelper.CODE_SUCCESS) {
+                                    L.i(TAG, "then will call onComplete.");
                                 }
                             }
 
