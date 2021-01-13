@@ -40,6 +40,7 @@ import com.tuya.smart.uploader.api.bean.video.VideoProgressBean;
 import com.tuya.smart.uploader.api.bean.video.VideoUploadBean;
 import com.tuya.smart.uploader.impl.OssUploadPlugin;
 import com.tuya.smart.uploader.impl.utils.EventHelper;
+import com.tuya.smart.utils.DensityUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -82,11 +83,15 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
     @Override
     public List<View> getUploadIndicatorViews(Context context) {
         List<View> list = new ArrayList<>();
+        int mg = DensityUtil.dip2px(context, 4);
+
         Button picture = new Button(context);
         picture.setText("Select Picture");
         picture.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_btn_code));
-        picture.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+        LinearLayout.LayoutParams picLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        picLayoutParams.setMargins(mg, mg, mg, mg);
+        picture.setLayoutParams(picLayoutParams);
         picture.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -98,9 +103,11 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
 
         Button video = new Button(context);
         video.setText("Select Movie");
-        picture.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_btn_code));
-        video.setLayoutParams(new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
-                ViewGroup.LayoutParams.WRAP_CONTENT));
+        video.setBackground(ContextCompat.getDrawable(context, R.drawable.bg_btn_code));
+        LinearLayout.LayoutParams videoLayoutParams = new LinearLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.WRAP_CONTENT);
+        videoLayoutParams.setMargins(mg, mg, mg, mg);
+        video.setLayoutParams(videoLayoutParams);
         video.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +115,7 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
                 gotoAlbumToSelect(mActivity);
             }
         });
+
         list.add(video);
         return list;
     }
@@ -227,10 +235,10 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
                             L.d(TAG,
                                     "onProgress, current: " + imgsUploadProgressBean.getCurrentImage() + ", fileId: " + imgsUploadProgressBean.getEncryptFileId());
                             // mock cancelBatchUpload when upload images more than 2
-                            if (!imgsUploadProgressBean.getComplete() && imgsUploadProgressBean.getUploaded() >= 2) {
-                                L.e(TAG, "Image cancelBatchUpload");
-                                mImageUploadApi.cancelBatchUpload(imgsUploadProgressBean.getBatchTaskId());
-                            }
+                            // if (!imgsUploadProgressBean.getComplete() && imgsUploadProgressBean.getUploaded() >= 2) {
+                            //     L.e(TAG, "Image cancelBatchUpload");
+                            //     mImageUploadApi.cancelBatchUpload(imgsUploadProgressBean.getBatchTaskId());
+                            // }
                         }
 
                         @Override
@@ -306,14 +314,14 @@ public class CloudAlbumDeviceInteraction implements IAlbumDeviceApi, ActivityCom
                                 L.d(TAG, "onProgress, code: " + videoProgressBean.getCode() + ", extInfo: " +
                                         (videoProgressBean.getExtInfo() != null ? videoProgressBean.getExtInfo().toString() : "null"));
                                 // mock cancelBatchTask when progress over 60%
-                                if (videoProgressBean.getCode() == EventHelper.CODE_PROGRESS &&
-                                        videoProgressBean.getExtInfo().containsKey("progress")) {
-                                    int progress = (Integer) videoProgressBean.getExtInfo().get("progress");
-                                    if (progress >= 60) {
-                                        L.e(TAG, "Video cancelBatchTask");
-                                        mVideoUploadApi.cancelBatchTask(videoProgressBean.taskId);
-                                    }
-                                }
+                                // if (videoProgressBean.getCode() == EventHelper.CODE_PROGRESS &&
+                                //         videoProgressBean.getExtInfo().containsKey("progress")) {
+                                //     int progress = (Integer) videoProgressBean.getExtInfo().get("progress");
+                                //     if (progress >= 60) {
+                                //         L.e(TAG, "Video cancelBatchTask");
+                                //         mVideoUploadApi.cancelBatchTask(videoProgressBean.taskId);
+                                //     }
+                                // }
                                 if (videoProgressBean.getCode() == EventHelper.CODE_CANCEL) {
                                     L.i(TAG, "cancel success.");
                                 }
